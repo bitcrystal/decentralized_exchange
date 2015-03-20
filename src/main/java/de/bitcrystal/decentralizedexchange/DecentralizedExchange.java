@@ -25,8 +25,9 @@ public class DecentralizedExchange {
     private static TCPServer tcpServer;
     private static int nodeServerPort;
     private static int nodeClientPort;
-
-    public DecentralizedExchange() {
+    
+    public static void start()
+    {
         connection();
         tcpServer = new TCPServer(nodeClientPort);
         tcpServer.start();
@@ -45,6 +46,11 @@ public class DecentralizedExchange {
         return argsd;
     }
 
+    public static void main(String[] args) {
+        DecentralizedExchange.start();
+        command(args);
+    }
+    
     public static void command(final String command) {
         if (command == null || command.isEmpty()) {
             return;
