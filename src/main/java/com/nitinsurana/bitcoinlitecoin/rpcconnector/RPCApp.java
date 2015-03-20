@@ -275,8 +275,32 @@ public class RPCApp {
         return jsonObj.get("result").getAsString();
     }
     
+     public String createrawtransaction_multisig(Object[] values) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.CREATE_RAW_TRANSACTION_MULTISIG, values);
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsString();
+    }
+     
      public String signrawtransaction_multisig(Object[] values) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.SIGN_RAW_TRANSACTION_MULTISIG, values);
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsString();
+    }
+     
+     public String sendrawtransaction_multisig(Object[] values) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.SEND_RAW_TRANSACTION_MULTISIG, values);
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
 //        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));

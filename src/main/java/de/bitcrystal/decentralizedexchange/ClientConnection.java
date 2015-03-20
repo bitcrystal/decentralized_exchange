@@ -28,37 +28,21 @@ public class ClientConnection implements Runnable {
 
     public void run() {
         try {
-            String recv = server.recv();
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            String decodeDataSecurityEmail = bitcrystalrpc.decodeDataSecurityEmail(recv);
-            String decodeDataSecurityEmailHash = bitcrystalrpc.decodeDataSecurityEmailHash(decodeDataSecurityEmail);
-            if (!decodeDataSecurityEmailHash.contains(",")) {
+            if(!command.contains(" ")) {
                 this.server.close();
                 return;
             }
-            String[] split = decodeDataSecurityEmailHash.split(",");
+            String[] split = command.split(" ");
             if (split.length < 1) {
                 this.server.close();
                 return;
             }
             switch (split.length) {
-                case 5: {
-                    if (split[0].equalsIgnoreCase("register")) {
-                        if(traders.containsKey(split[3]))
-                        {
-                            this.server.close();
-                            return;
-                        }
-                        String bitcoinAddressOfPubKey = bitcrystalrpc.getBitcoinAddressOfPubKey(split[2]);
-                        if(!split[1].equals(bitcoinAddressOfPubKey))
-                        {
-                            this.server.close();
-                            return;
-                        }
-                        traders.put(split[3], split[1]);
-                        traderspw.put(split[3], split[4]);
-                    }
+                case 5:
+                {
+                    
                 }
                 break;
             }
