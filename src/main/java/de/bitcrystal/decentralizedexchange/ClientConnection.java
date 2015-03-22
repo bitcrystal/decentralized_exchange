@@ -195,7 +195,7 @@ public class ClientConnection implements Runnable {
                             tradebtcry2btc="";
                             return;
                         }
-                        tradebtc2btcry=tradeAccount+","+amount+","+price+","+tradeAccount+","+tradeAccount2;
+                        tradebtc2btcry=amount+","+price+","+tradeAccount+","+tradeAccount2;
                         tradebtcry2btc="";
                     }
                 }
