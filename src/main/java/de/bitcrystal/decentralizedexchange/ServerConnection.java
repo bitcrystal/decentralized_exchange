@@ -40,7 +40,8 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> pubKeysMap2 = new ConcurrentHashMap<String, String>();
     private static List<String> serverPubKeys = new CopyOnWriteArrayList<String>();
     private static List<String> tradeAccounts = new CopyOnWriteArrayList<String>();
-
+    private static Map<String,String> ipsTradeAccounts = new ConcurrentHashMap<String, String>();
+     private static Map<String,String> ipsTradeAccounts2 = new ConcurrentHashMap<String, String>();
     public ServerConnection(TCPClient client) {
         this.client = client;
     }
@@ -164,11 +165,15 @@ public class ServerConnection implements Runnable {
                     bitcoinrpc.addmultisigaddressex(values2);
                     bitcrystalrpc.addmultisigaddressex(values3);
                     tradeAccounts.add(account);
+                    ipsTradeAccounts.put(account,hostAddress);
+                    ipsTradeAccounts2.put(account, get);
                 }
                 if (!tradeAccounts.contains(account2)) {
                     bitcoinrpc.addmultisigaddressex(values4);
                     bitcrystalrpc.addmultisigaddressex(values5);
                     tradeAccounts.add(account2);
+                    ipsTradeAccounts.put(account2,hostAddress);
+                    ipsTradeAccounts2.put(account2, get);
                 }
             } catch (Exception ex) {
                 try {
