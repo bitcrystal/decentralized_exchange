@@ -94,11 +94,29 @@ public class ServerConnection implements Runnable {
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
                 String[] split = recv.split(",");
-                if (!pubKeys.contains(split[1])) {
+                if (!pubKeys.contains(split[1])&&!split[1].contains(".")) {
+                    
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
+                } else {
+                    if(!pubKeysMap.containsKey(split[1]))
+                    {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    }
+                    String get10 = pubKeysMap.get(split[1]);
+                    if(get10.equals(hostAddress))
+                    {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    }
+                    split[1]=get10;
                 }
                 if (!pubKeysMap.containsKey(hostAddress)) {
                     this.client.send("E_ERROR");
