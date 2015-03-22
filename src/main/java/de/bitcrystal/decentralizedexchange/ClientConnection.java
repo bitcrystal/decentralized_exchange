@@ -83,7 +83,7 @@ public class ClientConnection implements Runnable {
                 {
                     if(split[0].equalsIgnoreCase("TRADEWITH"))
                     {
-                        if(!tradeAccount.isEmpty())
+                        if(!tradeAccount.isEmpty()&&!tradeAccount2.isEmpty())
                         {
                             this.server.send("E_ERROR");
                             this.server.close();
@@ -119,6 +119,7 @@ public class ClientConnection implements Runnable {
                              bitcoinrpc.addmultisigaddressex(values1);
                              bitcrystalrpc.addmultisigaddressex(values2);
                              tradeAccount=split[2];
+                             tradeAccount2=split[2];
                             
                         }
                         if(!tradeAccount2.equals(split[3]))
