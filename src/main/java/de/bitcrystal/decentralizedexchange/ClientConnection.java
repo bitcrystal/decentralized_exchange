@@ -25,7 +25,10 @@ public class ClientConnection implements Runnable {
     private static Map<String, String> trader = new ConcurrentHashMap<String, String>();
     private static List<String> list = new CopyOnWriteArrayList<String>();
     private static PublicKey lastPubKey=null;
-    private static List<String> tradeAccounts  = new CopyOnWriteArrayList<String>();
+    private static String tradeAccount  = "";
+    private static String tradeAccount2  = "";
+    private static String tradebtcry2btc="";
+    private static String tradebtc2btcry="";
     private TCPClient server;
     private String command;
     public ClientConnection(TCPClient server, String command) {
@@ -63,6 +66,16 @@ public class ClientConnection implements Runnable {
                         this.server.recv();
                         this.server.close();
                     }
+                    
+                    if(split[0].equalsIgnoreCase("TRADEABORT"))
+                    {
+                        tradeAccount="";
+                        tradebtc2btcry="";
+                        tradebtcry2btc="";
+                        this.server.send("E_ERROR");
+                        this.server.close();
+                        return;
+                    }
                 }
                 break;
                    
@@ -70,6 +83,12 @@ public class ClientConnection implements Runnable {
                 {
                     if(split[0].equalsIgnoreCase("TRADEWITH"))
                     {
+                        if(!tradeAccount.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
                         this.server.send("tradewith,"+split[1]);
                         String recv = this.server.recv();
                         if(recv.equals("E_ERROR")){
@@ -95,21 +114,89 @@ public class ClientConnection implements Runnable {
                         Object[] values2 = {split1[1],split[2]};
                         Object[] values3 = {split1[0],split[3]};
                         Object[] values4 = {split1[1],split[3]};
-                        if(!tradeAccounts.contains(split[2]))
+                        if(!tradeAccount.equals(split[2]))
                         {
                              bitcoinrpc.addmultisigaddressex(values1);
                              bitcrystalrpc.addmultisigaddressex(values2);
-                             tradeAccounts.add(split[2]);
+                             tradeAccount=split[2];
                             
                         }
-                        if(!tradeAccounts.contains(split[3]))
+                        if(!tradeAccount2.equals(split[3]))
                         {
                             bitcoinrpc.addmultisigaddressex(values3);
                             bitcrystalrpc.addmultisigaddressex(values4);
-                            tradeAccounts.add(split[3]);
+                            tradeAccount2=split[3];
                         }
                         this.server.send("ALL_OK");
                         this.server.close();
+                    }
+                }
+                break;
+                    
+                case 3:
+                {
+                    if(split[0].equalsIgnoreCase("CREATETRADEBTCRY2BTC"))
+                    {
+                        tradebtc2btcry="";
+                        if(tradeAccount.isEmpty()||tradeAccount2.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        if(!tradebtcry2btc.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        this.server.send("E_ERROR");
+                        this.server.close();
+                        double amount=0;
+                        double price=0;
+                        try
+                        {
+                            amount=Double.parseDouble(split[1]);
+                            price= Double.parseDouble(split[2]);
+                        } catch (Exception ex) {
+                            tradebtcry2btc="";
+                            tradebtc2btcry="";
+                            return;
+                        }
+                        tradebtcry2btc=amount+","+price+","+tradeAccount+","+tradeAccount2;
+                        tradebtc2btcry="";
+                    }
+                    
+                    if(split[0].equalsIgnoreCase("CREATETRADEBTC2BTCRY"))
+                    {
+                        tradebtcry2btc="";
+                        if(tradeAccount.isEmpty()||tradeAccount2.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        if(!tradebtc2btcry.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        this.server.send("E_ERROR");
+                        this.server.close();
+                        double amount=0;
+                        double price=0;
+                        try
+                        {
+                            amount=Double.parseDouble(split[1]);
+                            price= Double.parseDouble(split[2]);
+                        } catch (Exception ex) {
+                            tradebtc2btcry="";
+                            tradebtcry2btc="";
+                            return;
+                        }
+                        tradebtc2btcry=tradeAccount+","+amount+","+price+","+tradeAccount+","+tradeAccount2;
+                        tradebtcry2btc="";
                     }
                 }
                 break;
