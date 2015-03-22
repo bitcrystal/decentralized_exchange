@@ -153,7 +153,7 @@ public class DecentralizedExchange {
         if (!tcpClient.isValidConnection()) {
             return false;
         }
-        serverConnection(host, port, command);
+        serverConnection(tcpClient, command);
         return true;
     }
 }

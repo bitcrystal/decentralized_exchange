@@ -9,14 +9,18 @@ package de.bitcrystal.decentralizedexchange;
  * @author ABC
  */
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
+import de.bitcrystal.decentralizedexchange.security.HashFunctions;
 import java.io.*;
 import java.net.*;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class TCPServer {
+final class TCPServer {
 
     private int port;
     private ServerSocket serverSocket;
@@ -26,8 +30,8 @@ class TCPServer {
 
     public TCPServer(int port) {
         isrunning = false;
-        canrunned=false;
-        canstopped=false;
+        canrunned = false;
+        canstopped = false;
         serverSocket = null;
         this.port = port;
         try {
@@ -38,16 +42,15 @@ class TCPServer {
             if (!isValidConnection()) {
                 this.stop();
             } else {
-                canrunned=true;
+                canrunned = true;
             }
         }
     }
 
     public void start() {
-        if(canrunned)
-        {
-            isrunning=true;
-            canrunned=false;
+        if (canrunned) {
+            isrunning = true;
+            canrunned = false;
         } else {
             return;
         }
@@ -59,7 +62,7 @@ class TCPServer {
                         Socket connectionSocket = serverSocket.accept();
                         clientConnection(connectionSocket);
                     }
-                    canstopped=true;
+                    canstopped = true;
                 } catch (IOException ex) {
                     Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -73,15 +76,15 @@ class TCPServer {
 
     public void stop() {
         if (!isValidConnection()) {
-            isrunning=false;
+            isrunning = false;
             return;
         }
         if (!isrunning) {
             return;
         }
-        this.isrunning=false;
-        while(!canstopped);
-        this.canrunned=false;
+        this.isrunning = false;
+        while (!canstopped);
+        this.canrunned = false;
         try {
             this.serverSocket.close();
             this.serverSocket = null;

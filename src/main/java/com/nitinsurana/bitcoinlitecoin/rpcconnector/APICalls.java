@@ -83,7 +83,13 @@ public enum APICalls {
     GET_AVERAGE_CONFIRMATIONS_OF_TXIDS("getaverageconfirmationsoftxids"),
     DECODE_RAW_TRANSACTION_MULTISIG("decoderawtransaction_multisig"),
     CREATE_TRANSACTION_MULTISIG("createtransaction_multisig"),
-    CREATE_RAW_TRANSACTION_MULTISIG("createrawtransaction_multisig");
+    CREATE_RAW_TRANSACTION_MULTISIG("createrawtransaction_multisig"),
+    ENCODE_RANDOM_PUB_KEYS("encoderandompubkeys"),
+    DECODE_RANDOM_PUB_KEYS("decoderandompubkeys"),
+    ENCODE_TRADE("encodetrade"),
+    DECODE_TRADE("decodetrade"),
+    ENCODE_TRADE_WITH("encodetradewith"),
+    DECODE_TRADE_WITH("decodetradewith");
     private String value;
 
     private APICalls(String value) {

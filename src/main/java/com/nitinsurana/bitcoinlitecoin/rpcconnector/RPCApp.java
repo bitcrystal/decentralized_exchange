@@ -238,7 +238,6 @@ public class RPCApp {
     
      public String createmultisigaddressex(Object[] values) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.CREATE_MULTISIG_ADDRESS_EX, values);
-
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
 //        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
         if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
@@ -247,6 +246,78 @@ public class RPCApp {
         }
 
         return jsonObj.get("result").getAsString();
+    }
+     
+     public String encodetrade(String tradelogin,String tradepw) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.ENCODE_TRADE, tradelogin,tradepw);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsString();
+    } 
+     
+     public JsonObject decodetrade(String x) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.DECODE_TRADE, x);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsJsonObject();
+    } 
+     
+     public String encodetradewith(String tradelogin,String tradepw,String tradelogin2,String tradepw2) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.ENCODE_TRADE_WITH, tradelogin,tradepw, tradelogin2,tradepw2);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsString();
+    } 
+     
+     public JsonObject decodetradewith(String x) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.DECODE_TRADE_WITH, x);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsJsonObject();
+    } 
+     
+    public String encoderandompubkeys(String tradelogin,String tradepw) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.ENCODE_RANDOM_PUB_KEYS, tradelogin,tradepw);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsString();
+    }
+    
+    public JsonObject decoderandompubkeys(String x) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.DECODE_RANDOM_PUB_KEYS, x);
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+
+        return jsonObj.get("result").getAsJsonObject();
     }
      
      public String addmultisigaddressex(Object[] values) throws Exception {

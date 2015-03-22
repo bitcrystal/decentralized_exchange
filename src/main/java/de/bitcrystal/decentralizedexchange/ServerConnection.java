@@ -4,14 +4,29 @@
  */
 package de.bitcrystal.decentralizedexchange;
 
+import com.google.gson.JsonObject;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
+import com.sun.xml.internal.bind.v2.util.CollisionCheckStack;
 import de.bitcrystal.decentralizedexchange.security.BitCrystalKeyGenerator;
 import de.bitcrystal.decentralizedexchange.security.HashFunctions;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -19,112 +34,136 @@ import java.util.logging.Logger;
  */
 public class ServerConnection implements Runnable {
 
-    private static Map<String, String> traders = new ConcurrentHashMap<String, String>();
-    private static Map<String, String> traderspw = new ConcurrentHashMap<String, String>();
-    private static Map<String, Map<String, String>> users = new ConcurrentHashMap<String, Map<String, String>>();
     private TCPClient client;
+    private static List<String> pubKeys = new CopyOnWriteArrayList<String>();
+    private static Map<String, String> pubKeysMap = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> pubKeysMap2 = new ConcurrentHashMap<String, String>();
+    private static List<String> serverPubKeys = new CopyOnWriteArrayList<String>();
+    private static List<String> tradeAccounts = new CopyOnWriteArrayList<String>();
 
     public ServerConnection(TCPClient client) {
         this.client = client;
     }
 
     public void run() {
-        try {
-            String recv = client.recv();
-            if (recv.equals("0")) {
-                sniffersex();
-                return;
-            }
-            String hostAddress = client.getSocket().getInetAddress().getHostAddress();
-            if (!users.containsKey(hostAddress)) {
-                client.close();
-                return;
-            }
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            String decodeDataSecurityEmail = bitcrystalrpc.decodeDataSecurityEmail(recv);
-            String decodeDataSecurityEmailHash = bitcrystalrpc.decodeDataSecurityEmailHash(decodeDataSecurityEmail);
-            if (!decodeDataSecurityEmailHash.contains(",")) {
-                this.client.close();
-                return;
-            }
-            String[] split = decodeDataSecurityEmailHash.split(",");
-            if (split.length < 1) {
-                this.client.close();
-                return;
-            }
-            switch (split.length) {
-                case 5: {
-                    if (split[0].equalsIgnoreCase("register")) {
-                        if (traders.containsKey(split[3])) {
-                            this.client.close();
-                            return;
-                        }
-                        String bitcoinAddressOfPubKey = bitcrystalrpc.getBitcoinAddressOfPubKey(split[2]);
-                        if (!split[1].equals(bitcoinAddressOfPubKey)) {
-                            this.client.close();
-                            return;
-                        }
-                        traders.put(split[3], split[1]);
-                        traderspw.put(split[3], split[4]);
-                    }
-                }
-                break;
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        String recv = client.recv();
+        if (recv == null || recv.isEmpty()) {
+            this.client.close();
+            return;
         }
-    }
+        if (recv.startsWith("add,")) {
+            String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+            try {
+                RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+                RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+                String[] split = recv.split(",");
+                if (!pubKeys.contains(split[1])) {
+                    pubKeys.add(split[1]);
+                    pubKeysMap.put(hostAddress, split[1]);
+                    pubKeysMap2.put(split[1], hostAddress);
+                    String newAddress = bitcoinrpc.getNewAddress();
+                    String pubKey = bitcoinrpc.getPubKey(newAddress);
+                    String privKey = bitcoinrpc.getPrivKey(newAddress);
+                    bitcrystalrpc.importPrivKey(privKey);
+                    serverPubKeys.add(pubKey);
+                    this.client.send("ALL_OK");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                }
+                this.client.send("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
 
-    private void sniffersex() {
-        final String hostAddress = client.getSocket().getInetAddress().getHostAddress();
-        this.client.send("SNIFFER_IS_FUCKED");
-        this.client.close();
-        new Thread(new Runnable() {
+            } catch (Exception ex) {
+                try {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex1) {
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+        }
 
-            public void run() {
-                Map<String, String> map = null;
-                if (users.containsKey(hostAddress)) {
-                    map = users.get(hostAddress);
-                    String get1 = map.get("currentPasswdIterations");
-                    String get2 = map.get("byteSizeHash");
-                    String get3 = map.get("byteSizeKey");
-                    int cpi = 0;
-                    int bsh = 0;
-                    int bsk = 0;
-                    try {
-                        cpi = Integer.parseInt(get1);
-                    } catch (Throwable ex) {
-                    }
-                    try {
-                        bsh = Integer.parseInt(get2);
-                    } catch (Throwable ex) {
-                    }
-                    try {
-                        bsk = Integer.parseInt(get3);
-                    } catch (Throwable ex) {
-                    }
-                    map.put("currentPasswdIterations", "" + BitCrystalKeyGenerator.getPasswordIterations(cpi));
-                    map.put("byteSizeHash", "" + BitCrystalKeyGenerator.getByteSizeHash(bsh));
-                    map.put("byteSizeKey", "" + BitCrystalKeyGenerator.getByteSizeKey(bsk));
-                    users.put(hostAddress, map);
+        if (recv.startsWith("tradewith,")) {
+            String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+            try {
+                RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+                RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+                String[] split = recv.split(",");
+                if (!pubKeys.contains(split[1])) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
                     return;
                 }
-                map = new ConcurrentHashMap<String, String>();
-                String sha256 = "";
-                while (true) {
-                    sha256 = HashFunctions.sha256(HashFunctions.sha256(hostAddress));
-                    if (sha256.startsWith("000000")) {
-                        break;
-                    }
+                if (!pubKeysMap.containsKey(hostAddress)) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
                 }
-                map.put("iphash", sha256);
-                map.put("currentPasswdIterations", "65534");
-                map.put("byteSizeHash", "499");
-                map.put("byteSizeKey", "999");
-                users.put(hostAddress, map);
+                if (!pubKeysMap2.containsKey(split[1])) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                }
+                String get = pubKeysMap2.get(split[1]);
+                if (get.equals(hostAddress)) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                }
+                if (pubKeys.size() <= 0) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                }
+                String get1 = pubKeys.get(pubKeys.size() - 1);
+                pubKeys.remove(pubKeys.size() - 1);
+                String get2 = pubKeysMap.get(hostAddress);
+                String ba = bitcoinrpc.getBitcoinAddressOfPubKey(get2);
+                String ba2 = bitcoinrpc.getBitcoinAddressOfPubKey(split[1]);
+                String account = ba + "," + ba2;
+                String account2 = ba2 + "," + ba;
+                Object[] values = {get2, split[1], get1};
+                String createmultisigaddressex = bitcoinrpc.createmultisigaddressex(values);
+                String createmultisigaddressex2 = bitcrystalrpc.createmultisigaddressex(values);
+                this.client.send(createmultisigaddressex + "," + createmultisigaddressex2 + "," + account + "," + account2);
+                this.client.recv();
+                this.client.close();
+                Object[] values2 = {createmultisigaddressex, account};
+                Object[] values3 = {createmultisigaddressex2, account};
+                Object[] values4 = {createmultisigaddressex, account2};
+                Object[] values5 = {createmultisigaddressex2, account2};
+                if (!tradeAccounts.contains(account)) {
+                    bitcoinrpc.addmultisigaddressex(values2);
+                    bitcrystalrpc.addmultisigaddressex(values3);
+                    tradeAccounts.add(account);
+                }
+                if (!tradeAccounts.contains(account2)) {
+                    bitcoinrpc.addmultisigaddressex(values4);
+                    bitcrystalrpc.addmultisigaddressex(values5);
+                    tradeAccounts.add(account2);
+                }
+            } catch (Exception ex) {
+                try {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex1) {
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
-        }).start();
-        return;
+        }
     }
 }

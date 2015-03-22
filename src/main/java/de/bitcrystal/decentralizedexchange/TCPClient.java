@@ -11,6 +11,7 @@ package de.bitcrystal.decentralizedexchange;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import java.io.*;
 import java.net.*;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +44,7 @@ final class TCPClient {
     public TCPClient(String host) {
         this(host, 6739);
     }
-    
+
     public TCPClient(int port) {
         this("127.0.0.1", port);
     }
