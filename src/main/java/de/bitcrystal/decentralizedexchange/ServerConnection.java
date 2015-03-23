@@ -4,29 +4,13 @@
  */
 package de.bitcrystal.decentralizedexchange;
 
-import com.google.gson.JsonObject;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
-import com.sun.xml.internal.bind.v2.util.CollisionCheckStack;
-import de.bitcrystal.decentralizedexchange.security.BitCrystalKeyGenerator;
-import de.bitcrystal.decentralizedexchange.security.HashFunctions;
-import java.io.UnsupportedEncodingException;
-import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -40,8 +24,11 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> pubKeysMap2 = new ConcurrentHashMap<String, String>();
     private static List<String> serverPubKeys = new CopyOnWriteArrayList<String>();
     private static List<String> tradeAccounts = new CopyOnWriteArrayList<String>();
-    private static Map<String,String> ipsTradeAccounts = new ConcurrentHashMap<String, String>();
-     private static Map<String,String> ipsTradeAccounts2 = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> ipsTradeAccounts = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> ipsTradeAccounts2 = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> tradeAccountsIp = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> ips = new ConcurrentHashMap<String, String>();
+
     public ServerConnection(TCPClient client) {
         this.client = client;
     }
@@ -92,32 +79,36 @@ public class ServerConnection implements Runnable {
         if (recv.startsWith("tradewith,")) {
             String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
             try {
+                if (ips.containsKey(hostAddress)) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                }
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
                 String[] split = recv.split(",");
-                if (!pubKeys.contains(split[1])&&!split[1].contains(".")) {
-                    
+                if (!pubKeys.contains(split[1]) && !split[1].contains(".")) {
+
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
                 } else {
-                    if(!pubKeysMap.containsKey(split[1]))
-                    {
+                    if (!pubKeysMap.containsKey(split[1])) {
                         this.client.send("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     }
                     String get10 = pubKeysMap.get(split[1]);
-                    if(get10.equals(hostAddress))
-                    {
+                    if (get10.equals(hostAddress)) {
                         this.client.send("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     }
-                    split[1]=get10;
+                    split[1] = get10;
                 }
                 if (!pubKeysMap.containsKey(hostAddress)) {
                     this.client.send("E_ERROR");
@@ -165,16 +156,21 @@ public class ServerConnection implements Runnable {
                     bitcoinrpc.addmultisigaddressex(values2);
                     bitcrystalrpc.addmultisigaddressex(values3);
                     tradeAccounts.add(account);
-                    ipsTradeAccounts.put(account,hostAddress);
+                    ipsTradeAccounts.put(account, hostAddress);
                     ipsTradeAccounts2.put(account, get);
+                    tradeAccountsIp.put(hostAddress, account);
+                    tradeAccountsIp.put(get, account);
                 }
                 if (!tradeAccounts.contains(account2)) {
                     bitcoinrpc.addmultisigaddressex(values4);
                     bitcrystalrpc.addmultisigaddressex(values5);
                     tradeAccounts.add(account2);
-                    ipsTradeAccounts.put(account2,hostAddress);
+                    ipsTradeAccounts.put(account2, hostAddress);
                     ipsTradeAccounts2.put(account2, get);
+                    tradeAccountsIp.put(hostAddress, account2);
+                    tradeAccountsIp.put(get, account2);
                 }
+                ips.put(hostAddress, get);
             } catch (Exception ex) {
                 try {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,6 +183,49 @@ public class ServerConnection implements Runnable {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
+        }
+
+
+        if (recv.startsWith("synctrade,")) {
+            String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+            if (!ips.containsKey(hostAddress)) {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+            }
+            String get = ips.get(hostAddress);
+            if (!ips.containsKey(get)) {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+            }
+            String get1 = ips.get(get);
+            if (!get1.equals(hostAddress)) {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+            }
+            this.client.send("TRADE IS SYNCED");
+            this.client.recv();
+            this.client.close();
         }
     }
 }

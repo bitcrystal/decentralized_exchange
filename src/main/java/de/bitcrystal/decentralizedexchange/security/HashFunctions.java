@@ -40,8 +40,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 public class HashFunctions {
 
@@ -212,14 +210,12 @@ public class HashFunctions {
 
     public static String pubKeyToString(PublicKey pubKey) {
         byte[] array = pubKey.getEncoded();
-        BASE64Encoder encoder = new BASE64Encoder();
-        String string = encoder.encode(array);
+        String string = Base64.encodeBase64String(array);
         return string;
     }
 
     public static PublicKey stringToPubKey(String key) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] decodeBuffer = decoder.decodeBuffer(key);
+        byte[] decodeBuffer = Base64.decodeBase64(key);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodeBuffer);
         KeyFactory keyFact = KeyFactory.getInstance("RSA", "BC");
         PublicKey generatePublic = keyFact.generatePublic(x509KeySpec);
@@ -228,14 +224,12 @@ public class HashFunctions {
 
     public static String privKeyToString(PrivateKey pubKey) {
         byte[] array = pubKey.getEncoded();
-        BASE64Encoder encoder = new BASE64Encoder();
-        String string = encoder.encode(array);
+        String string = Base64.encodeBase64String(array);
         return string;
     }
 
     public static PrivateKey stringToPrivKey(String key) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] decodeBuffer = decoder.decodeBuffer(key);
+        byte[] decodeBuffer = Base64.decodeBase64(key);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodeBuffer);
         KeyFactory keyFact = KeyFactory.getInstance("RSA", "BC");
         PrivateKey generatePrivate = keyFact.generatePrivate(x509KeySpec);

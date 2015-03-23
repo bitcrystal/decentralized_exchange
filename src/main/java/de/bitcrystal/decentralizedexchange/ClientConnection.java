@@ -72,9 +72,26 @@ public class ClientConnection implements Runnable {
                         tradeAccount="";
                         tradebtc2btcry="";
                         tradebtcry2btc="";
-                        this.server.send("E_ERROR");
+                        this.server.send("CANCEL_ALL");
+                        this.server.recv();
                         this.server.close();
                         return;
+                    }
+                    
+                     if(split[0].equalsIgnoreCase("SYNCTRADE"))
+                    {
+                        if(tradebtc2btcry.isEmpty()&&tradebtcry2btc.isEmpty())
+                        {
+                             this.server.send("E_ERROR");
+                             this.server.close();
+                             return;
+                        }
+                        if(!tradebtc2btcry.isEmpty()&&!tradebtcry2btc.isEmpty())
+                        {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
                     }
                 }
                 break;
