@@ -844,4 +844,14 @@ public class RPCApp {
 //        return jsonResponse;
         return jsonObj;
     }
+
+    public boolean isValidPubKey(String string) throws RpcInvalidResponseException, Exception {
+              JsonObject jsonObj = callAPIMethod(APICalls.IS_VALID_PUB_KEY, string);
+
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsBoolean();
+    }
 }

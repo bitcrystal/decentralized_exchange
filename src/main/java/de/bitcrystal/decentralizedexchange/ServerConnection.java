@@ -28,7 +28,8 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> ipsTradeAccounts2 = new ConcurrentHashMap<String, String>();
     private static Map<String, String> tradeAccountsIp = new ConcurrentHashMap<String, String>();
     private static Map<String, String> ips = new ConcurrentHashMap<String, String>();
-
+    private static Map<String, String> addresses = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> syncedtrades = new ConcurrentHashMap<String, String>();
     public ServerConnection(TCPClient client) {
         this.client = client;
     }
@@ -45,6 +46,12 @@ public class ServerConnection implements Runnable {
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
                 String[] split = recv.split(",");
+                boolean isPubKey = bitcoinrpc.isValidPubKey(split[1]);
+                if (!isPubKey) {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                }
                 if (!pubKeys.contains(split[1])) {
                     pubKeys.add(split[1]);
                     pubKeysMap.put(hostAddress, split[1]);
@@ -102,13 +109,28 @@ public class ServerConnection implements Runnable {
                         return;
                     }
                     String get10 = pubKeysMap.get(split[1]);
-                    if (get10.equals(hostAddress)) {
+                    if(!pubKeysMap2.containsKey(get10))
+                    {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    }
+                    String get11 = pubKeysMap2.get(get10);
+                    if (get11.equals(hostAddress)) {
                         this.client.send("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     }
                     split[1] = get10;
+                }
+                if(addresses.containsKey(hostAddress))
+                {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
                 }
                 if (!pubKeysMap.containsKey(hostAddress)) {
                     this.client.send("E_ERROR");
@@ -139,6 +161,7 @@ public class ServerConnection implements Runnable {
                 pubKeys.remove(pubKeys.size() - 1);
                 String get2 = pubKeysMap.get(hostAddress);
                 String ba = bitcoinrpc.getBitcoinAddressOfPubKey(get2);
+                addresses.put(hostAddress, ba);
                 String ba2 = bitcoinrpc.getBitcoinAddressOfPubKey(split[1]);
                 String account = ba + "," + ba2;
                 String account2 = ba2 + "," + ba;
@@ -186,8 +209,34 @@ public class ServerConnection implements Runnable {
         }
 
 
-        if (recv.startsWith("synctrade,")) {
-            String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+        if (recv.startsWith("synctrade;")) {
+             String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+             if(syncedtrades.containsKey(hostAddress))
+             {
+                 try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+             }
+            String[] split = recv.split(";");
+            if(split.length!=2)
+            {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+                return;
+            }
             if (!ips.containsKey(hostAddress)) {
                 try {
                     this.client.send("E_ERROR");
@@ -223,6 +272,19 @@ public class ServerConnection implements Runnable {
                     this.client.close();
                 }
             }
+            if(!addresses.containsKey(hostAddress)||!addresses.containsKey(get1))
+            {
+                 try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                }
+            }
+            this.syncedtrades.put(hostAddress, split[1]);
             this.client.send("TRADE IS SYNCED");
             this.client.recv();
             this.client.close();
