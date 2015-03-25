@@ -29,8 +29,10 @@ public class ClientConnection implements Runnable {
     private static String tradeAccount2  = "";
     private static String tradebtcry2btc="";
     private static String tradebtc2btcry="";
+    private static String currentTradeAddress="";
     private TCPClient server;
     private String command;
+    
     public ClientConnection(TCPClient server, String command) {
         this.server = server;
         this.command = command;
@@ -58,10 +60,15 @@ public class ClientConnection implements Runnable {
                 case 1: {
                     if(split[0].equalsIgnoreCase("ADD"))
                     {
+                        if(!currentTradeAddress.isEmpty())
+                        {
+                            return;
+                        }
                         String newAddress = bitcoinrpc.getNewAddress();
+                        currentTradeAddress=newAddress;
                         String pubKey = bitcoinrpc.getPubKey(newAddress);
                         String privKey = bitcoinrpc.getPrivKey(newAddress);
-                        bitcrystalrpc.importPrivKey(privKey);
+                        bitcrystalrpc.importPrivKey(privKey);  
                         this.server.send("add,"+pubKey);
                         this.server.recv();
                         this.server.close();
@@ -94,7 +101,7 @@ public class ClientConnection implements Runnable {
                         }
                         if(!tradebtc2btcry.isEmpty())
                         {
-                            this.server.send("synctrade;btc2btcry,"+tradebtc2btcry);
+                            this.server.send("synctrade;btc2btcry,,"+tradebtc2btcry);
                             String recv = this.server.recv();
                             if(recv.equals("E_ERROR"))
                             {
@@ -109,7 +116,7 @@ public class ClientConnection implements Runnable {
                         
                         if(!tradebtcry2btc.isEmpty())
                         {
-                            this.server.send("synctrade,btcry2btc,"+tradebtcry2btc);
+                            this.server.send("synctrade;btcry2btc,,"+tradebtcry2btc);
                             String recv = this.server.recv();
                             if(recv.equals("E_ERROR"))
                             {
@@ -141,14 +148,14 @@ public class ClientConnection implements Runnable {
                             this.server.close();
                             return;
                         }
-                        if(!recv.contains(","))
+                        if(!recv.contains(",,"))
                         {
                             this.server.send("E_ERROR");
                             this.server.close();
                             return;
                         }
                         
-                        String[] split1 = recv.split(",");
+                        String[] split1 = recv.split(",,");
                         if(split1.length!=4)
                         {
                             this.server.send("E_ERROR");
@@ -210,7 +217,7 @@ public class ClientConnection implements Runnable {
                             tradebtc2btcry="";
                             return;
                         }
-                        tradebtcry2btc=amount+","+price+","+tradeAccount+","+tradeAccount2;
+                        tradebtcry2btc=amount+",,"+price+",,"+tradeAccount+",,"+tradeAccount2;
                         tradebtc2btcry="";
                     }
                     
@@ -242,7 +249,7 @@ public class ClientConnection implements Runnable {
                             tradebtcry2btc="";
                             return;
                         }
-                        tradebtc2btcry=amount+","+price+","+tradeAccount+","+tradeAccount2;
+                        tradebtc2btcry=amount+",,"+price+",,"+tradeAccount+",,"+tradeAccount2;
                         tradebtcry2btc="";
                     }
                 }
