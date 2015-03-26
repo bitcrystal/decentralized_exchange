@@ -152,28 +152,13 @@ public class ClientConnection implements Runnable {
                         isStarted = true;
                     }
 
-                    if (split[0].equalsIgnoreCase("ENDTRADE")) {
+                    if (split[0].equalsIgnoreCase("ENDTRADEME")) {
                         if (!isStarted) {
                             this.server.send("E_ERROR");
                             this.server.close();
                             return;
                         }
-                        String tradeAccount = ClientConnection.tradeAccount;
-                        String tradebtc2btcry = ClientConnection.tradebtc2btcry;
-                        String tradebtcry2btc = ClientConnection.tradebtcry2btc;
-                        String tradeWithAddress = ClientConnection.tradeWithAddress;
-                        if (isEnded) {
-                            tradeAccount = ClientConnection.tradeAccount2;
-                            if (!tradebtc2btcry.isEmpty()) {
-                                tradebtc2btcry = "";
-                                tradebtcry2btc = getReverseTradeBTC2BTCRY();
-                            } else if (!tradebtcry2btc.isEmpty()) {
-                                tradebtcry2btc = "";
-                                tradebtc2btcry = getReverseTradeBTCRY2BTC();
-                            }
-                            tradeWithAddress = currentTradeAddress;
-                        }
-                        this.server.send("endtrade;" + tradeAccount);
+                        this.server.send("endtrademe;" + tradeAccount);
                         String recv = this.server.recv();
                         if (recv.equals("E_ERROR")) {
                             this.server.send("E_ERROR");
@@ -237,54 +222,9 @@ public class ClientConnection implements Runnable {
                             Object[] values = {tradeAccount, tradeWithAddress, price};
                             String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                             if (!createrawtransaction_multisig.equals(myTransaction)) {
-                                String decodeDataSecurityEmail = bitcrystalrpc.decodeDataSecurityEmail(myTransaction);
-                                if (decodeDataSecurityEmail.equals("false")) {
-                                    this.server.send("E_ERROR");
-                                    this.server.close();
-                                    return;
-                                }
-                                JsonObject decodeRawTransactionMultisig = null;
-                                try {
-                                    decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(decodeDataSecurityEmail);
-                                    if (!decodeRawTransactionMultisig.has("signedAddresses")) {
-                                        this.server.send("E_ERROR");
-                                        this.server.close();
-                                        return;
-                                    }
-                                    JsonElement get = decodeRawTransactionMultisig.get("signedAddresses");
-                                    if (!get.isJsonArray()) {
-                                        this.server.send("E_ERROR");
-                                        this.server.close();
-                                        return;
-                                    }
-                                    JsonArray asJsonArray = get.getAsJsonArray();
-                                    int size = asJsonArray.size();
-                                    if (size != 1) {
-                                        this.server.send("E_ERROR");
-                                        this.server.close();
-                                        return;
-                                    }
-                                    JsonElement get1 = asJsonArray.get(0);
-                                    String asString = get1.getAsString();
-                                    if (asString.equals(currentTradeAddress)) {
-                                        this.server.send("E_ERROR");
-                                        this.server.close();
-                                        return;
-                                    }
-                                    if (!asString.equals(tradeWithAddress)) {
-                                        this.server.send("E_ERROR");
-                                        this.server.close();
-                                        return;
-                                    }
-                                    String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(decodeDataSecurityEmail);
-                                    this.server.send("COMPLETE_SIGN_TRANSACTION,,btc2btcry,," + tradeAccount + ",," + signrawtransaction_multisig);
-                                    this.server.recv();
-                                    this.server.close();
-                                } catch (Exception ex2) {
-                                    this.server.send("E_ERROR");
-                                    this.server.close();
-                                    return;
-                                }
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
                             }
                             JsonObject decodeRawTransactionMultisig = null;
                             try {
@@ -295,13 +235,217 @@ public class ClientConnection implements Runnable {
                                 return;
                             }
                             String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig);
-                            String encode = bitcrystalrpc.encodeDataSecurityEmail(signrawtransaction_multisig);
-                            if (encode.equals("false")) {
+                            this.server.send(signrawtransaction_multisig);
+                            String recv1 = this.server.recv();
+                            if (recv1.equals("E_ERROR")) {
                                 this.server.send("E_ERROR");
                                 this.server.close();
                                 return;
                             }
-                            this.server.send("SIGNED_TRANSACTION,,btc2btcry,," + tradeAccount + ",," + encode);
+                            if (recv1.equals("ALL_OK")) {
+                                this.server.close();
+                                return;
+                            }
+                            JsonObject decodeRawTransactionMultisig1 = null;
+                            try {
+                                decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(recv1);
+                                if (!decodeRawTransactionMultisig1.has("complete")) {
+                                    this.server.send("E_ERROR");
+                                    this.server.close();
+                                    return;
+                                }
+                            } catch (Exception ex2) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv1);
+                            try {
+                                decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
+                                JsonElement get = decodeRawTransactionMultisig1.get("complete");
+                                if(get.getAsBoolean()==true)
+                                {
+                                    throw new Exception();
+                                }
+                            } catch (Exception ex2) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            this.server.send(signrawtransaction_multisig1);
+                            this.server.recv();
+                            this.server.close();
+
+                        } else if (!tradebtcry2btc.isEmpty()) {
+                            if (!recv.startsWith("btcry2btc;;")) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            if (!recv.contains(";;")) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String[] split2 = recv.split(";;");
+                            if (split2.length != 5) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String myTradeAccount = split2[1];
+                            String myTradeWithAddress = split2[2];
+                            String myPrice = split2[3];
+                            String myTransaction = split2[4];
+                            if (!myTradeAccount.equals(tradeAccount)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            if (!myTradeWithAddress.equals(tradeWithAddress)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            double price = 0;
+                            try {
+                                price = Double.parseDouble(myPrice);
+                                if (price <= 0) {
+                                    throw new Exception();
+                                }
+                            } catch (Exception ex) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String[] split1 = tradebtcry2btc.split(";;");
+                            double thisprice = 0;
+                            try {
+                                thisprice = Double.parseDouble(split1[1]);
+                                if (thisprice <= 0 || price != thisprice) {
+                                    throw new Exception();
+                                }
+                            } catch (Exception ex) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            Object[] values = {tradeAccount, tradeWithAddress, price};
+                            String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
+                            if (!createrawtransaction_multisig.equals(myTransaction)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            JsonObject decodeRawTransactionMultisig = null;
+                            try {
+                                decodeRawTransactionMultisig = bitcrystalrpc.decodeRawTransactionMultisig(createrawtransaction_multisig);
+                            } catch (Exception ex2) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String signrawtransaction_multisig = bitcrystalrpc.signrawtransaction_multisig(createrawtransaction_multisig);
+                            this.server.send(signrawtransaction_multisig);
+                            String recv1 = this.server.recv();
+                            if (recv1.equals("E_ERROR")) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            if (recv1.equals("ALL_OK")) {
+                                this.server.close();
+                                return;
+                            }
+
+                            this.server.close();
+                        }
+                    }
+
+                    if (split[0].equalsIgnoreCase("ENDTRADEOTHER")) {
+                        if (!isStarted) {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        this.server.send("endtradeother;" + tradeAccount2);
+                        String recv = this.server.recv();
+                        if (recv.equals("E_ERROR")) {
+                            this.server.send("E_ERROR");
+                            this.server.close();
+                            return;
+                        }
+                        if (!tradebtc2btcry.isEmpty()) {
+                            if (!recv.startsWith("btc2btcry;;")) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            if (!recv.contains(";;")) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String[] split2 = recv.split(";;");
+                            if (split2.length != 5) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String myTradeAccount = split2[1];
+                            String myTradeWithAddress = split2[2];
+                            String myPrice = split2[3];
+                            String myTransaction = split2[4];
+                            if (!myTradeAccount.equals(tradeAccount)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            if (!myTradeWithAddress.equals(tradeWithAddress)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            double price = 0;
+                            try {
+                                price = Double.parseDouble(myPrice);
+                                if (price <= 0) {
+                                    throw new Exception();
+                                }
+                            } catch (Exception ex) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String[] split1 = tradebtc2btcry.split(";;");
+                            double thisprice = 0;
+                            try {
+                                thisprice = Double.parseDouble(split1[1]);
+                                if (thisprice <= 0 || price != thisprice) {
+                                    throw new Exception();
+                                }
+                            } catch (Exception ex) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            Object[] values = {tradeAccount, tradeWithAddress, price};
+                            String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
+                            if (!createrawtransaction_multisig.equals(myTransaction)) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            JsonObject decodeRawTransactionMultisig = null;
+                            try {
+                                decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(createrawtransaction_multisig);
+                            } catch (Exception ex2) {
+                                this.server.send("E_ERROR");
+                                this.server.close();
+                                return;
+                            }
+                            String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig);
+                            this.server.send(signrawtransaction_multisig);
                             String recv1 = this.server.recv();
                             this.server.close();
                         } else if (!tradebtcry2btc.isEmpty()) {

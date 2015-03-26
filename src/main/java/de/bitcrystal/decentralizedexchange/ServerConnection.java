@@ -36,7 +36,9 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> addresses = new ConcurrentHashMap<String, String>();
     private static Map<String, String> syncedtrades = new ConcurrentHashMap<String, String>();
     private static Map<String, String> startedtrades = new ConcurrentHashMap<String, String>();
-    private static Map<String,String> signedtrades = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> endtradesme = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> endtradesother = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
 
     public ServerConnection(TCPClient client) {
         this.client = client;
@@ -646,6 +648,8 @@ public class ServerConnection implements Runnable {
                     String tradeWithAccountSend = "btc2btcry;;" + values2[0] + ";;" + values2[1] + ";;" + values2[2] + ";;" + createrawtransaction_multisig1;
                     startedtrades.put(tradeAccount, tradeAccountSend);
                     startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                    startedtradesaccount.put(tradeAccount,tradeWithAccount);
+                    startedtradesaccount.put(tradeWithAccount,tradeAccount);
                     client.send("ALL_OK");
                     client.recv();
                     client.close();
@@ -658,24 +662,10 @@ public class ServerConnection implements Runnable {
             }
         }
 
-        if (recv.startsWith("endtrade;")) {
+        if (recv.startsWith("endtrademe;")) {
             String[] split = recv.split(";");
             if (split.length != 2) {
                 try {
-                    this.client.send("E_ERROR");
-                    Thread.sleep(3000L);
-                    this.client.close();
-                    return;
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
-                    this.client.close();
-                    return;
-                }
-            }
-            if(signedtrades.containsKey(split[1]))
-            {
-                 try {
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
@@ -700,10 +690,64 @@ public class ServerConnection implements Runnable {
                     return;
                 }
             }
-            
+            if (endtradesme.containsKey(split[1])) {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                    return;
+                }
+            }
+
             this.client.send(startedtrades.get(split[1]));
             String recv1 = this.client.recv();
-
+            if(recv1.equals("E_ERROR"))
+            {
+                try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                    return;
+                }
+            }
+            endtradesme.put(split[1], recv1);
+            String get = startedtradesaccount.get(split[1]);
+            if(!endtradesme.containsKey(get))
+            {
+                this.client.send("ALL_OK");
+                this.client.close();
+                return;
+            }
+            String get1 = endtradesme.get(get);
+            this.client.send(get1);
+            String recv2 = this.client.recv();
+            if(recv2.equals("E_ERROR"))
+            {
+                 try {
+                    this.client.send("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.send("E_ERROR");
+                    this.client.close();
+                    return;
+                }
+            }
+            endtradesother.put(get, recv2);
+            this.client.send("ALL_OK");
+            this.client.close();
         }
     }
 }
