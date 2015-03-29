@@ -37,11 +37,11 @@ public class ClientConnection implements Runnable {
     private static boolean isSynced = false;
     private static boolean isStarted = false;
     private static boolean isEnded = false;
-    private TCPClient server;
+    private TCPClientSecurity server;
     private String command;
 
     public ClientConnection(TCPClient server, String command) {
-        this.server = server;
+        this.server = DecentralizedExchange.getSecurityClient(server);
         this.command = command;
     }
 

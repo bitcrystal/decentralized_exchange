@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ServerConnection implements Runnable {
 
-    private TCPClient client;
+    private TCPClientSecurity client;
     private static List<String> pubKeys = new CopyOnWriteArrayList<String>();
     private static Map<String, String> addressesPubkeys = new ConcurrentHashMap<String, String>();
     private static Map<String, String> pubkeysAddresses = new ConcurrentHashMap<String, String>();
@@ -41,7 +41,7 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
 
     public ServerConnection(TCPClient client) {
-        this.client = client;
+        this.client = DecentralizedExchange.getSecurityClient(client);
     }
 
     public void run() {
