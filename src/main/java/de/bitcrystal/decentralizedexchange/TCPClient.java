@@ -137,4 +137,13 @@ final class TCPClient {
             }
         }
     }
+    
+    public String getHostAddress() {
+        return getSocket().getInetAddress().getHostAddress();
+    }
+    
+    public TCPClientSecurity getSecurityClient()
+    {
+        return new TCPClientSecurity(this);
+    }
 }

@@ -24,6 +24,8 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.RSAPrivateCrtKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,18 +45,53 @@ import org.apache.commons.codec.binary.Base64;
 
 public class HashFunctions {
 
+    public static String encryptRSA(String encrypt, String publicKey) {
+        try {
+            return encryptRSA(encrypt, stringToPubKey(publicKey));
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return "";
+        }
+    }
+
+    public static String decryptRSA(String decrypt, String privateKey) {
+        try {
+            return decryptRSA(decrypt, stringToPrivKey(privateKey));
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return "";
+        }
+    }
+
+    public static String encryptAES256(String plainText, String password, String salt) {
+        try {
+            return encryptAES256(plainText, password, 65535, salt);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public static String decryptAES256(String plainText, String password, String salt) {
+        try {
+            return decryptAES256(plainText, password, 65535, salt);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
     public static String encryptAES256(String plainText, String password, int pswdIterations, String salt) throws Exception {
 
         //get salt
         byte[] saltBytes = salt.getBytes("UTF-8");
 
         // Derive the key
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         PBEKeySpec spec = new PBEKeySpec(
                 password.toCharArray(),
                 saltBytes,
                 pswdIterations,
-                256);
+                128);
+
 
         SecretKey secretKey = factory.generateSecret(spec);
         SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
@@ -62,32 +99,42 @@ public class HashFunctions {
         //encrypt the message
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secret);
+        AlgorithmParameters params = cipher.getParameters();
+        byte[] ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
         byte[] encryptedTextBytes = cipher.doFinal(plainText.getBytes("UTF-8"));
-        return new Base64().encodeAsString(encryptedTextBytes);
+        String string = Base64.encodeBase64String(encryptedTextBytes) + ";;;" + Base64.encodeBase64String(ivBytes);
+        return Base64.encodeBase64String(string.getBytes("UTF-8"));
     }
 
     @SuppressWarnings("static-access")
     public static String decryptAES256(String encryptedText, String password, int pswdIterations, String salt) throws Exception {
+        encryptedText = new String(Base64.decodeBase64(encryptedText), "UTF-8");
 
         byte[] saltBytes = salt.getBytes("UTF-8");
-        byte[] encryptedTextBytes = new Base64().decodeBase64(encryptedText);
+        if (!encryptedText.contains(";;;")) {
+            return "";
+        }
+        String[] split = encryptedText.split(";;;");
+        encryptedText = split[0];
+        byte[] ivBytes = Base64.decodeBase64(split[1]);
+        byte[] encryptedTextBytes = Base64.decodeBase64(encryptedText);
 
         // Derive the key
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         PBEKeySpec spec = new PBEKeySpec(
                 password.toCharArray(),
                 saltBytes,
                 pswdIterations,
-                256);
+                128);
 
         SecretKey secretKey = factory.generateSecret(spec);
         SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secret);
-        AlgorithmParameters params = cipher.getParameters();
-        byte ivBytes[] = params.getParameterSpec(IvParameterSpec.class).getIV();
+        //Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        // cipher.init(Cipher.ENCRYPT_MODE, secret);
+        //AlgorithmParameters params = cipher.getParameters();
+        //byte ivBytes[] = params.getParameterSpec(IvParameterSpec.class).getIV();
         // Decrypt the message
-        cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes));
 
         byte[] decryptedTextBytes = null;
@@ -188,15 +235,14 @@ public class HashFunctions {
     }
 
     public static String encryptRSA(String encrypt, PublicKey publicKey) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-        Cipher rsa = Cipher.getInstance("RSA", "BC");
+        Cipher rsa = Cipher.getInstance("RSA");
         rsa.init(Cipher.ENCRYPT_MODE, publicKey);
         String encodeBase64 = Base64.encodeBase64String(rsa.doFinal(encrypt.getBytes("UTF-8")));
         return encodeBase64;
     }
-    
-    public static String decryptRSA(String decrypt, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException
-    {
-        Cipher cipher = Cipher.getInstance("RSA", "BC");
+
+    public static String decryptRSA(String decrypt, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException {
+        Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return new String(cipher.doFinal(Base64.decodeBase64(decrypt)), "UTF-8");
     }
@@ -217,7 +263,7 @@ public class HashFunctions {
     public static PublicKey stringToPubKey(String key) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
         byte[] decodeBuffer = Base64.decodeBase64(key);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodeBuffer);
-        KeyFactory keyFact = KeyFactory.getInstance("RSA", "BC");
+        KeyFactory keyFact = KeyFactory.getInstance("RSA");
         PublicKey generatePublic = keyFact.generatePublic(x509KeySpec);
         return generatePublic;
     }
@@ -230,8 +276,8 @@ public class HashFunctions {
 
     public static PrivateKey stringToPrivKey(String key) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
         byte[] decodeBuffer = Base64.decodeBase64(key);
-        X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodeBuffer);
-        KeyFactory keyFact = KeyFactory.getInstance("RSA", "BC");
+        PKCS8EncodedKeySpec x509KeySpec = new PKCS8EncodedKeySpec(decodeBuffer);
+        KeyFactory keyFact = KeyFactory.getInstance("RSA");
         PrivateKey generatePrivate = keyFact.generatePrivate(x509KeySpec);
         return generatePrivate;
     }
@@ -244,7 +290,7 @@ public class HashFunctions {
         if (size <= 0) {
             size = 1024;
         }
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA", "BC");
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(size);
         return keyGen;
     }
