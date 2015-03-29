@@ -4,6 +4,7 @@
  */
 package de.bitcrystal.decentralizedexchange;
 
+import com.google.gson.JsonObject;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import java.util.List;
 import java.util.Map;
@@ -648,8 +649,8 @@ public class ServerConnection implements Runnable {
                     String tradeWithAccountSend = "btc2btcry;;" + values2[0] + ";;" + values2[1] + ";;" + values2[2] + ";;" + createrawtransaction_multisig1;
                     startedtrades.put(tradeAccount, tradeAccountSend);
                     startedtrades.put(tradeWithAccount, tradeWithAccountSend);
-                    startedtradesaccount.put(tradeAccount,tradeWithAccount);
-                    startedtradesaccount.put(tradeWithAccount,tradeAccount);
+                    startedtradesaccount.put(tradeAccount, tradeWithAccount);
+                    startedtradesaccount.put(tradeWithAccount, tradeAccount);
                     client.send("ALL_OK");
                     client.recv();
                     client.close();
@@ -706,8 +707,7 @@ public class ServerConnection implements Runnable {
 
             this.client.send(startedtrades.get(split[1]));
             String recv1 = this.client.recv();
-            if(recv1.equals("E_ERROR"))
-            {
+            if (recv1.equals("E_ERROR")) {
                 try {
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
@@ -721,19 +721,34 @@ public class ServerConnection implements Runnable {
                 }
             }
             endtradesme.put(split[1], recv1);
+            this.client.send("ALL_OK");
+            this.client.close();
+            return;
+        }
+
+        if (recv.startsWith("endtradeother;")) {
+            String[] split = recv.split(";");
+            if (split.length != 2) {
+                this.client.send("E_ERROR");
+                this.client.close();
+                return;
+            }
+            if (!startedtradesaccount.containsKey(split[1])) {
+                this.client.send("E_ERROR");
+                this.client.close();
+                return;
+            }
             String get = startedtradesaccount.get(split[1]);
-            if(!endtradesme.containsKey(get))
-            {
-                this.client.send("ALL_OK");
+            if (!endtradesme.containsKey(get) || !endtradesme.containsKey(split[1])) {
+                this.client.send("E_ERROR");
                 this.client.close();
                 return;
             }
             String get1 = endtradesme.get(get);
             this.client.send(get1);
             String recv2 = this.client.recv();
-            if(recv2.equals("E_ERROR"))
-            {
-                 try {
+            if (recv2.equals("E_ERROR")) {
+                try {
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
@@ -748,6 +763,115 @@ public class ServerConnection implements Runnable {
             endtradesother.put(get, recv2);
             this.client.send("ALL_OK");
             this.client.close();
+        }
+
+        if (recv.startsWith("endtrade")) {
+            try {
+                String hostAddress = this.client.getHostAddress();
+                if (!ips.containsKey(hostAddress)) {
+                }
+                String otherip = ips.get(hostAddress);
+                String tradeAccount = "";
+                String tradeWithAccount = "";
+                if (tradeAccountsIp.containsKey(hostAddress)) {
+                    tradeAccount = tradeAccountsIp.get(hostAddress);
+                } else if (tradeAccountsIp2.containsKey(hostAddress)) {
+                    tradeAccount = tradeAccountsIp.get(hostAddress);
+                }
+
+                if (tradeAccountsIp.containsKey(otherip)) {
+                    tradeWithAccount = tradeAccountsIp.get(otherip);
+                } else if (tradeAccountsIp2.containsKey(otherip)) {
+                    tradeWithAccount = tradeAccountsIp.get(otherip);
+                }
+
+                if (tradeAccount.isEmpty() || tradeWithAccount.isEmpty()) {
+                    try {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                        this.client.send("E_ERROR");
+                        this.client.close();
+                        return;
+                    }
+                }
+                if (!endtradesother.containsKey(tradeAccount) || !endtradesother.containsKey(tradeWithAccount)) {
+                    try {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                        this.client.send("E_ERROR");
+                        this.client.close();
+                        return;
+                    }
+                }
+                String get = endtradesother.get(tradeAccount);
+                String get1 = endtradesother.get(tradeWithAccount);
+                RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+                RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+                String get2 = startedtrades.get(tradeAccount);
+                String get3 = startedtrades.get(tradeWithAccount);
+                if(get2.startsWith("btc2btcry")&&get3.startsWith("btc2btcry")||get2.startsWith("btcry2btc")&&get3.startsWith("btcry2btc"))
+                {
+                     try {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                        this.client.send("E_ERROR");
+                        this.client.close();
+                        return;
+                    }
+                }
+                if(get2.startsWith("btc2btcry")&&get3.startsWith("btcry2btc")) {
+                    String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get);
+                    String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get1);
+                    JsonObject decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(signrawtransaction_multisig);
+                    JsonObject decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
+                    Object[] values = {signrawtransaction_multisig};
+                    Object[] values2 = {signrawtransaction_multisig1};
+                    if(decodeRawTransactionMultisig.get("complete").getAsBoolean()==true&&decodeRawTransactionMultisig1.get("complete").getAsBoolean()==true) {
+                        bitcoinrpc.sendrawtransaction_multisig(values);
+                        bitcrystalrpc.sendrawtransaction_multisig(values2);
+                    }
+                } else if (get2.startsWith("btcry2btc")&&get3.startsWith("btc2btcry")) {
+                    String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get1);
+                    String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get);
+                    JsonObject decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(signrawtransaction_multisig);
+                    JsonObject decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
+                    Object[] values = {signrawtransaction_multisig};
+                    Object[] values2 = {signrawtransaction_multisig1};
+                    if(decodeRawTransactionMultisig.get("complete").getAsBoolean()==true&&decodeRawTransactionMultisig1.get("complete").getAsBoolean()==true) {
+                        bitcoinrpc.sendrawtransaction_multisig(values);
+                        bitcrystalrpc.sendrawtransaction_multisig(values2);
+                    }
+                } else {
+                    try {
+                        this.client.send("E_ERROR");
+                        Thread.sleep(3000L);
+                        this.client.close();
+                        return;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                        this.client.send("E_ERROR");
+                        this.client.close();
+                        return;
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                this.client.send("E_ERROR");
+                this.client.close();
+                return;
+            }
         }
     }
 }

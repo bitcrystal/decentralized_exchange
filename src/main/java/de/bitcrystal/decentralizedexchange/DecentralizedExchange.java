@@ -1,8 +1,14 @@
 package de.bitcrystal.decentralizedexchange;
 
+import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
+import de.bitcrystal.decentralizedexchange.security.BitCrystalKeyGenerator;
+import de.bitcrystal.decentralizedexchange.security.HashFunctions;
 import de.demonbindestrichcraft.lib.bukkit.wbukkitlib.common.files.ConcurrentConfig;
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +35,16 @@ public class DecentralizedExchange {
     private static String salt;
     private static String publickey;
     private static String privatekey;
+    private static boolean isStarted=false;
+    private static KeyPairGenerator keygen;
     
     public static void start()
     {
         connection();
         tcpServer = new TCPServer(nodeClientPort);
         tcpServer.start();
+        isStarted=true;
+        
     }
 
     public static String getStringOutCommand(String[] args) {
@@ -183,6 +193,30 @@ public class DecentralizedExchange {
     
     public static TCPClientSecurity getSecurityClient(TCPClient tcpClient)
     {
+        if(!isStarted)
+        {
+            start();
+        }
         return new TCPClientSecurity(tcpClient, publickey, privatekey, password, salt);
+    }
+    
+    public static RPCApp getBitcoinRPC()
+    {
+        try {
+            RPCApp rpcApp = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            return rpcApp;
+        } catch (Exception ex) {
+           return null;
+        }
+    }
+    
+    public static RPCApp getBitcrystalRPC()
+    {
+        try {
+            RPCApp rpcApp = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            return rpcApp;
+        } catch (Exception ex) {
+           return null;
+        }
     }
 }
