@@ -8,6 +8,7 @@ package de.bitcrystal.decentralizedexchange.security;
  *
  * @author ABC
  */
+import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -62,7 +63,7 @@ public class HashFunctions {
             return "";
         }
     }
-
+    
     public static String encryptAES256(String plainText, String password, String salt) {
         try {
             return encryptAES256(plainText, password, 65535, salt);

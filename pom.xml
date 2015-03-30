@@ -55,7 +55,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
+                            <classpathPrefix>./lib/</classpathPrefix>
                             <mainClass>de.bitcrystal.decentralizedexchange.DecentralizedExchange</mainClass>
                         </manifest>
                     </archive>
@@ -102,6 +102,12 @@
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
       <version>1.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20090211</version>
+      <type>jar</type>
     </dependency>
   </dependencies>
 </project>

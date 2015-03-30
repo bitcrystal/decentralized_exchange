@@ -45,6 +45,8 @@ public enum APICalls {
     WALLET_PASS_PHRASE("walletpassphrase"),
     ENCODE_DATA_SECURITY_EMAIL("encodedatasecurityemail"),
     DECODE_DATA_SECURITY_EMAIL("decodedatasecurityemail"),
+    ENCODE_DATA_SECURITY_EMAIL_NEUTRAL("encodedatasecurityemailneutral"),
+    DECODE_DATA_SECURITY_EMAIL_NEUTRAL("decodedatasecurityemailneutral"),
     ENCODE_DATA_SECURITY_EMAIL_HASH("encodedatasecurityemailhash"),
     DECODE_DATA_SECURITY_EMAIL_HASH("decodedatasecurityemailhash"),
     ACCOUNT_EXISTS("accountexists"),

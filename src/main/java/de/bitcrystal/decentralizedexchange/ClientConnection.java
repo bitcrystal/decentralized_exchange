@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import de.bitcrystal.decentralizedexchange.security.BitCrystalKeyGenerator;
 import de.bitcrystal.decentralizedexchange.security.HashFunctions;
+import java.io.File;
 import java.net.Socket;
 import java.security.PublicKey;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -39,13 +42,20 @@ public class ClientConnection implements Runnable {
     private static boolean isEnded = false;
     private TCPClientSecurity server;
     private String command;
+    private JSONObject clientJSON = null;
 
     public ClientConnection(TCPClient server, String command) {
         this.server = DecentralizedExchange.getSecurityClient(server);
         this.command = command;
+        //this.initClient();
     }
 
     public void run() {
+        System.out.println(command);
+        this.server.send("E_ERROR");
+        this.server.close();
+        return;
+        /*
         try {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
@@ -65,26 +75,24 @@ public class ClientConnection implements Runnable {
             }
             switch (split.length) {
                 case 1: {
-                    if (split[0].equalsIgnoreCase("getrsakeys")) {
-                        this.server.send("E_ERROR");
-                        this.server.close();
-                        Map<String, String> keyPair = TCPClientSecurity.getKeyPair();
-                        System.out.println("PublicKey: " + keyPair.get("publickey"));
-                        System.out.println("PrivateKey: " + keyPair.get("privatekey"));
-                        return;
-                    }
-
                     if (split[0].equalsIgnoreCase("ADD")) {
                         if (!currentTradeAddress.isEmpty()) {
+                            this.server.send("E_ERROR");
+                            this.server.close();
                             return;
                         }
                         String newAddress = bitcoinrpc.getNewAddress();
                         currentTradeAddress = newAddress;
+                        this.saveClient();
                         String pubKey = bitcoinrpc.getPubKey(newAddress);
                         String privKey = bitcoinrpc.getPrivKey(newAddress);
                         bitcrystalrpc.importPrivKey(privKey);
+                        System.out.println(privKey);
+                        System.out.println(newAddress);
                         this.server.send("add," + pubKey);
-                        this.server.recv();
+                        String recv = this.server.recv();
+                        System.out.println(recv);
+                        System.out.println("cool");
                         this.server.close();
                     }
 
@@ -611,5 +619,96 @@ public class ClientConnection implements Runnable {
         String tradeAccountX = split[2];
         String tradeAccount2X = split[3];
         return price + ",," + amount + ",," + tradeAccount2X + ",," + tradeAccountX;
+    }
+
+    private synchronized void initClient() {
+        System.out.println("test");
+        clientJSON = this.server.loadJSONObject("client", "", "client.properties");
+        if (clientJSON == null) {
+            try {
+                JSONObject json = new JSONObject();
+                json.put("currentTradeAddress", "");
+                json.put("isEnded", "");
+                json.put("isStarted", "");
+                json.put("isSynced", "");
+                json.put("tradeAccount", "");
+                json.put("tradeAccount2", "");
+                json.put("tradeWithAddress", "");
+                json.put("tradebtc2btcry", "");
+                json.put("tradebtcry2ntc", "");
+                this.server.saveJSONObject(json, "client", "", "client.properties");
+                clientJSON = json;
+            } catch (JSONException ex) {
+                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                currentTradeAddress = clientJSON.getString("currentTradeAddress");
+            } catch (JSONException ex) {
+                currentTradeAddress = "";
+            }
+            try {
+                tradeWithAddress = clientJSON.getString("tradeWithAddress");
+            } catch (JSONException ex) {
+                tradeWithAddress = "";
+            }
+            try {
+                tradeAccount = clientJSON.getString("tradeAccount");
+            } catch (JSONException ex) {
+                tradeAccount = "";
+            }
+            try {
+                tradeAccount2 = clientJSON.getString("tradeAccount2");
+            } catch (JSONException ex) {
+                tradeAccount2 = "";
+            }
+            try {
+                tradebtc2btcry = clientJSON.getString("tradebtc2btcry");
+            } catch (JSONException ex) {
+                tradebtc2btcry = "";
+            }
+            try {
+                tradebtcry2btc = clientJSON.getString("tradebtcry2btc");
+            } catch (JSONException ex) {
+                tradebtcry2btc = "";
+            }
+            try {
+                isEnded = clientJSON.getBoolean("isEnded");
+            } catch (JSONException ex) {
+                isEnded = false;
+            }
+            try {
+                isSynced = clientJSON.getBoolean("isSynced");
+            } catch (JSONException ex) {
+                isSynced = false;
+            }
+            try {
+                isStarted = clientJSON.getBoolean("isStarted");
+            } catch (JSONException ex) {
+                isStarted = false;
+            }
+        }
+    }
+
+    private synchronized void saveClient() {
+        JSONObject json = this.server.loadJSONObject("client", "", "client.properties");
+        if (json == null) {
+            return;
+        }
+        try {
+            json.put("currentTradeAddress", currentTradeAddress);
+            json.put("isEnded", isEnded);
+            json.put("isStarted", isStarted);
+            json.put("isSynced", isSynced);
+            json.put("tradeAccount", tradeAccount);
+            json.put("tradeAccount2", tradeAccount2);
+            json.put("tradeWithAddress", tradeWithAddress);
+            json.put("tradebtc2btcry", tradebtc2btcry);
+            json.put("tradebtcry2ntc", tradebtcry2btc);
+            this.server.saveJSONObject(json, "client", "", "client.properties");
+            clientJSON = json;
+        } catch (JSONException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
 }

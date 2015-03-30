@@ -132,8 +132,29 @@ public class RPCApp {
             String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
             throw new RpcInvalidResponseException(message);
         }
-        if (isBooleanValue(jsonObj.get("result"))) {
-            return "false";
+        return jsonObj.get("result").getAsString();
+    }
+
+    public String encodeDataSecurityEmailNeutral(String hex) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.ENCODE_DATA_SECURITY_EMAIL_NEUTRAL, hex);
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsString();
+    }
+    
+        public String decodeDataSecurityEmailNeutral(String hex) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.DECODE_DATA_SECURITY_EMAIL_NEUTRAL, hex);
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
         }
         return jsonObj.get("result").getAsString();
     }
@@ -146,9 +167,6 @@ public class RPCApp {
         if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
             String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
             throw new RpcInvalidResponseException(message);
-        }
-        if (isBooleanValue(jsonObj.get("result"))) {
-            return "false";
         }
         return jsonObj.get("result").getAsString();
     }
@@ -873,14 +891,5 @@ public class RPCApp {
     public String signrawtransaction_multisig(String createrawtransaction_multisig) throws Exception {
         Object[] values = {createrawtransaction_multisig};
         return signandsendrawtransaction_multisig(values);
-    }
-
-    private boolean isBooleanValue(JsonElement jsonElement) {
-        try {
-            jsonElement.getAsBoolean();
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
     }
 }

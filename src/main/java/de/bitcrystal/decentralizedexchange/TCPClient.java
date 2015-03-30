@@ -14,24 +14,30 @@ import java.net.*;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 final class TCPClient {
 
     private String host;
     private int port;
     private Socket clientSocket;
-    private DataOutputStream out;
-    private BufferedReader in;
+    private InputStream in;
+    private OutputStream out;
+    private BufferedReader din;
+    private DataOutputStream dout;
 
     public TCPClient(Socket socket) {
-        this.in = null;
-        this.out = null;
         this.clientSocket = null;
+         this.clientSocket = null;
         try {
-            this.port = socket.getPort();
-            this.host = socket.getInetAddress().getHostAddress();
-            out = new DataOutputStream(socket.getOutputStream());
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.clientSocket=socket;
+            this.port = clientSocket.getPort();
+            this.host = clientSocket.getInetAddress().getHostAddress();
+            in = this.clientSocket.getInputStream();
+            out = this.clientSocket.getOutputStream();
+            din = new BufferedReader(new InputStreamReader(in));
+            dout = new DataOutputStream(out);
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -55,12 +61,15 @@ final class TCPClient {
         this.clientSocket = null;
         this.host = host;
         this.port = port;
+         this.clientSocket = null;
         try {
-            this.clientSocket = new Socket(host, port);
-            out = new DataOutputStream(clientSocket.getOutputStream());
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            this.clientSocket=new Socket(host, port);
+            this.port = port;
+            this.host = host;
+            in = this.clientSocket.getInputStream();
+            out = this.clientSocket.getOutputStream();
+            din = new BufferedReader(new InputStreamReader(in));
+            dout = new DataOutputStream(out);
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -71,7 +80,7 @@ final class TCPClient {
     }
 
     public boolean isValidConnection() {
-        return this.in != null && this.out != null && this.clientSocket != null;
+        return this.din!= null && this.dout != null && this.in != null && this.out != null && this.clientSocket != null;
     }
 
     public void send(String message) {
@@ -79,7 +88,7 @@ final class TCPClient {
             return;
         }
         try {
-            out.writeBytes(message);
+            dout.writeBytes(message);
         } catch (UnknownHostException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -92,26 +101,102 @@ final class TCPClient {
             return "NO_SOCKET";
         }
         try {
-            return in.readLine();
+            return din.readLine();
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "E_READ_ERROR";
+    }
+    
+    public void sendJSONObject(JSONObject object)
+    {
+        if (!isValidConnection()) {
+            return;
+        }
+        this.send(object.toString());
+        return;
+    }
+    
+    public JSONObject recvJSONObject() {
+        if (!isValidConnection()) {
+            return null;
+        }
+        String recv = this.recv();
+        try {
+            return new JSONObject(recv);
+        } catch (JSONException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public void sendRaw(byte[] bytes, int off, int len)
+    {
+         if (!isValidConnection()) {
+            return;
+        }
+        try {
+            this.out.write(bytes, off, len);
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return;
+    }
+    
+    public byte[] recvRaw(int off, int len)
+    {
+        if (!isValidConnection()) {
+            return new byte[]{};
+        }
+        byte[] bytes = new byte[len];
+        byte[] readBytes = new byte[]{};
+        try {
+            int read = this.in.read(bytes, off, len);
+            if(read<=0)
+            {
+                return readBytes;
+            }
+            readBytes = new byte[read];
+            for(int i = 0; i < read; i++)
+            {
+                readBytes[i]=bytes[i];
+            }
+            return readBytes;
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            return new byte[]{};
+        }
     }
 
     public Socket getSocket() {
         return clientSocket;
     }
 
-    public DataOutputStream getOutputStream() {
+    public OutputStream getOutputStream() {
         return out;
     }
 
-    public BufferedReader getInputStream() {
+    public InputStream getInputStream() {
         return in;
     }
 
     public void close() {
+         if (this.din != null) {
+            try {
+                this.din.close();
+                this.din = null;
+            } catch (IOException ex) {
+                Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (this.dout != null) {
+            try {
+                this.dout.close();
+                this.dout = null;
+            } catch (IOException ex) {
+                Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (this.in != null) {
             try {
                 this.in.close();
@@ -131,7 +216,7 @@ final class TCPClient {
         if (this.clientSocket != null) {
             try {
                 this.clientSocket.close();
-                this.out = null;
+                this.clientSocket = null;
             } catch (IOException ex) {
                 Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -139,7 +224,11 @@ final class TCPClient {
     }
     
     public String getHostAddress() {
-        return getSocket().getInetAddress().getHostAddress();
+        return host;
+    }
+    
+    public int getHostPort() {
+        return port;
     }
     
     public TCPClientSecurity getSecurityClient()

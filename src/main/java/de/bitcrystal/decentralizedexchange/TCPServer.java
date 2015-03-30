@@ -29,6 +29,9 @@ final class TCPServer {
     private boolean canstopped;
 
     public TCPServer(int port) {
+        if (!canBind(port)) {
+            return;
+        }
         isrunning = false;
         canrunned = false;
         canstopped = false;
@@ -57,14 +60,14 @@ final class TCPServer {
         new Thread(new Runnable() {
 
             public void run() {
-                try {
-                    while (isrunning) {
+                while (isrunning) {
+                    try {
                         Socket connectionSocket = serverSocket.accept();
                         clientConnection(connectionSocket);
+                        canstopped = true;
+                    } catch (IOException ex) {
+                        Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    canstopped = true;
-                } catch (IOException ex) {
-                    Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }).start();
@@ -104,5 +107,24 @@ final class TCPServer {
                 new Thread(new ServerConnection(tcpClient)).start();
             }
         }).start();
+    }
+
+    public static boolean canBind(int port) {
+        ServerSocket serverSocket1 = null;
+        try {
+            serverSocket1 = new ServerSocket(port);
+            serverSocket1.close();
+            serverSocket1 = null;
+            return true;
+        } catch (Exception ex) {
+            if (serverSocket1 != null) {
+                try {
+                    serverSocket1.close();
+                    serverSocket1 = null;
+                } catch (Exception ex2) {
+                }
+            }
+            return false;
+        }
     }
 }
