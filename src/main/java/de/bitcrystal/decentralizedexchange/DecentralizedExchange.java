@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  */
 public class DecentralizedExchange {
-    
+
     private static ConcurrentConfig config;
     private static File configuration;
     private static List<String> nodeservers;
@@ -38,7 +38,7 @@ public class DecentralizedExchange {
     private static String privatekey;
     private static boolean isStarted = false;
     private static KeyPairGenerator keygen;
-    
+
     public static void start() {
         if (isStarted) {
             return;
@@ -48,12 +48,12 @@ public class DecentralizedExchange {
         tcpServer = new TCPServer(nodeClientPort);
         tcpServer.start();
     }
-    
+
     public static String getStringOutCommand(String[] args) {
         if (args == null || args.length == 0) {
             return "";
         }
-        
+
         String argsd = args[0];
         int argslength = args.length;
         for (int i = 1; i < argslength; i++) {
@@ -61,37 +61,37 @@ public class DecentralizedExchange {
         }
         return argsd;
     }
-    
+
     public static void main(String[] args) {
         DecentralizedExchange.start();
-        command("synctrade");
+        command(args);
     }
-    
+
     public static void command(final String command) {
         if (command == null || command.isEmpty()) {
             return;
         }
-        //new Thread(new Runnable() {
-//
-        //    public void run() {
-        List<String> nodeServers = getNodeServers();
-        int length = nodeServers.size();
-        int port = nodeServerPort;
-        for (int i = 0; i < length; i++) {
-            boolean serverConnection = serverConnection(nodeServers.get(i), port, command);
-            if (serverConnection) {
-                break;
+        new Thread(new Runnable() {
+
+            public void run() {
+                List<String> nodeServers = getNodeServers();
+                int length = nodeServers.size();
+                int port = nodeServerPort;
+                for (int i = 0; i < length; i++) {
+                    boolean serverConnection = serverConnection(nodeServers.get(i), port, command);
+                    if (serverConnection) {
+                        break;
+                    }
+                }
             }
-        }
-        //}
-        //  }).start();
+        }).start();
     }
-    
+
     public static void command(String[] args) {
         String command = getStringOutCommand(args);
         command(command);
     }
-    
+
     public static void connection() {
         configuration = new File("node.properties");
         if (!configuration.exists()) {
@@ -159,33 +159,31 @@ public class DecentralizedExchange {
             nodeservers.add(t);
         }
     }
-    
+
     public static List<String> getNodeServers() {
         return nodeservers;
     }
-    
+
     public static int getNodeServerPort() {
         return nodeServerPort;
     }
-    
+
     public static int getNodeClientPort() {
         return nodeClientPort;
     }
-    
+
     public static int getCommandExecutorPort() {
         return commandExecutorPort;
     }
-    
+
     private static void serverConnection(final TCPClient tcpClient, final String command) {
-        //new Thread(new Runnable() {
-        //    public void run() {
-        //        new Thread(new ClientConnection(tcpClient, command)).start();
-        //    }
-        // }).start();
-        ClientConnection clientConnection = new ClientConnection(tcpClient, command);
-        clientConnection.run();
+        new Thread(new Runnable() {
+            public void run() {
+                new Thread(new ClientConnection(tcpClient, command)).start();
+            }
+         }).start();
     }
-    
+
     private static boolean serverConnection(final String host, final int port, String command) {
         TCPClient tcpClient = new TCPClient(host, port);
         if (!tcpClient.isValidConnection()) {
@@ -194,14 +192,14 @@ public class DecentralizedExchange {
         serverConnection(tcpClient, command);
         return true;
     }
-    
+
     public static TCPClientSecurity getSecurityClient(TCPClient tcpClient) {
         if (!isStarted) {
             start();
         }
         return new TCPClientSecurity(tcpClient, password, salt);
     }
-    
+
     public static RPCApp getBitcoinRPC() {
         try {
             RPCApp rpcApp = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
@@ -210,7 +208,7 @@ public class DecentralizedExchange {
             return null;
         }
     }
-    
+
     public static RPCApp getBitcrystalRPC() {
         try {
             RPCApp rpcApp = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");

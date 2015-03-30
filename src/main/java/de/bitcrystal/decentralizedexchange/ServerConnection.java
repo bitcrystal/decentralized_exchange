@@ -47,15 +47,11 @@ public class ServerConnection implements Runnable {
 
     public void run() {
         String recv = client.recv();
-        System.out.println(recv);
         if (recv == null || recv.isEmpty() || recv.equals("E_ERROR")) {
-            this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        System.out.println(recv);
         if (recv.startsWith("add,")) {
-            System.out.println("here");
             String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
             try {
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");

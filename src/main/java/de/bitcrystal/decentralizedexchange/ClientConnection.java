@@ -47,15 +47,10 @@ public class ClientConnection implements Runnable {
     public ClientConnection(TCPClient server, String command) {
         this.server = DecentralizedExchange.getSecurityClient(server);
         this.command = command;
-        //this.initClient();
+        this.initClient();
     }
 
     public void run() {
-        System.out.println(command);
-        this.server.send("E_ERROR");
-        this.server.close();
-        return;
-        /*
         try {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
@@ -566,64 +561,11 @@ public class ClientConnection implements Runnable {
             return;
         }
     }
-
-    private String getReverseTradeBTC2BTCRY() {
-        if (tradebtc2btcry == null || tradebtc2btcry.isEmpty()) {
-            return "";
-        }
-        if (!tradebtc2btcry.contains(";;")) {
-            return "";
-        }
-        String[] split = tradebtc2btcry.split(";;");
-        if (split.length != 4) {
-            return "";
-        }
-        double amount = 0;
-        double price = 0;
-        try {
-            amount = Double.parseDouble(split[0]);
-            price = Double.parseDouble(split[1]);
-            if (amount <= 0 || price <= 0) {
-                throw new Exception();
-            }
-        } catch (Exception ex) {
-            return "";
-        }
-        String tradeAccountX = split[2];
-        String tradeAccount2X = split[3];
-        return price + ",," + amount + ",," + tradeAccount2X + ",," + tradeAccountX;
-    }
-
-    private String getReverseTradeBTCRY2BTC() {
-        if (tradebtcry2btc == null || tradebtcry2btc.isEmpty()) {
-            return "";
-        }
-        if (!tradebtcry2btc.contains(";;")) {
-            return "";
-        }
-        String[] split = tradebtcry2btc.split(";;");
-        if (split.length != 4) {
-            return "";
-        }
-        double amount = 0;
-        double price = 0;
-        try {
-            amount = Double.parseDouble(split[0]);
-            price = Double.parseDouble(split[1]);
-            if (amount <= 0 || price <= 0) {
-                throw new Exception();
-            }
-        } catch (Exception ex) {
-            return "";
-        }
-        String tradeAccountX = split[2];
-        String tradeAccount2X = split[3];
-        return price + ",," + amount + ",," + tradeAccount2X + ",," + tradeAccountX;
-    }
-
+    
     private synchronized void initClient() {
         System.out.println("test");
         clientJSON = this.server.loadJSONObject("client", "", "client.properties");
+        System.out.println("cool");
         if (clientJSON == null) {
             try {
                 JSONObject json = new JSONObject();
@@ -636,7 +578,9 @@ public class ClientConnection implements Runnable {
                 json.put("tradeWithAddress", "");
                 json.put("tradebtc2btcry", "");
                 json.put("tradebtcry2ntc", "");
+                System.out.println("nein");
                 this.server.saveJSONObject(json, "client", "", "client.properties");
+                System.out.println("hier");
                 clientJSON = json;
             } catch (JSONException ex) {
                 Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -709,6 +653,6 @@ public class ClientConnection implements Runnable {
             clientJSON = json;
         } catch (JSONException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 }

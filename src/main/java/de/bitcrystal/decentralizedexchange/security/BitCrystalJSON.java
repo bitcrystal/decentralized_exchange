@@ -8,9 +8,11 @@ import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import de.demonbindestrichcraft.lib.bukkit.wbukkitlib.common.files.ConcurrentConfig;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,25 +37,46 @@ public class BitCrystalJSON {
 
     public static String encodeString(String obj) {
         String toJSONString = obj;
-        toJSONString = HashFunctions.encryptRSA(toJSONString, firstPubKey);
         toJSONString = HashFunctions.encryptAES256(toJSONString, firstPassword, firstSalt);
         toJSONString = HashFunctions.encryptAES256(toJSONString, secondPassword, secondSalt);
         toJSONString = HashFunctions.encryptAES256(toJSONString, thirdPassword, thirdSalt);
         toJSONString = HashFunctions.encryptAES256(toJSONString, fourthPassword, fourthSalt);
         toJSONString = HashFunctions.encryptAES256(toJSONString, fivePassword, fiveSalt);
+        String substring = toJSONString.substring(0, 117);
+        substring = HashFunctions.encryptRSA(substring, firstPubKey);
+        String substring1 = toJSONString.substring(117,toJSONString.length());
+        toJSONString=substring+"||||||||"+substring1;
+        toJSONString = HashFunctions.encryptAES256(toJSONString, firstPassword, firstSalt);
         return toJSONString;
     }
 
     public static String decodeString(String encode) {
         String toJSONString = encode;
+        toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
+        if(toJSONString.contains("||||||||"))
+        {
+            String[] split = toJSONString.split("||||||||");
+            split[0]=HashFunctions.decryptRSA(split[0], firstPrivKey);
+            toJSONString=split[0]+split[1];
+        }
         toJSONString = HashFunctions.decryptAES256(toJSONString, fivePassword, fiveSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, fourthPassword, fourthSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, thirdPassword, thirdSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, secondPassword, secondSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
-        toJSONString = HashFunctions.decryptRSA(toJSONString, firstPrivKey);
         return toJSONString;
-
+    }
+    
+    private static String  encodeStringEx(String encode)
+    {
+        String x = encodeString(encode);
+        return x;
+    }
+    
+    private static String  decodeStringEx(String decode)
+    {
+       String x = decodeString(decode);
+       return x;
     }
 
     public static String encodeWalletString(String obj) {
@@ -113,12 +136,13 @@ public class BitCrystalJSON {
             return null;
         }
     }
+
     public static boolean saveString(String string, String key, String path) {
         return saveString(string, key, path, "");
     }
 
     public static boolean saveString(String string, String key, String path, String filename) {
-         String fullpath = "";
+        String fullpath = "";
         if (!path.isEmpty()) {
             if (!filename.isEmpty()) {
                 fullpath = path + File.separator + filename;
@@ -151,8 +175,8 @@ public class BitCrystalJSON {
         concurrentConfig.save("=");
         return true;
     }
-    
-     public static String loadString(String key, String path) {
+
+    public static String loadString(String key, String path) {
         return loadString(key, path, "");
     }
 
@@ -183,7 +207,7 @@ public class BitCrystalJSON {
         }
         return copyOfProperties.get(key);
     }
-    
+
     public static boolean saveJSONObject(JSONObject jsonObject, String key, String path) {
         return saveJSONObject(jsonObject, key, path, "");
     }
@@ -216,7 +240,7 @@ public class BitCrystalJSON {
     }
 
     public static JSONObject loadJSONObjectWallet(String key, String path, String filename) {
-        String loadString = loadString(key,path,filename);
+        String loadString = loadString(key, path, filename);
         JSONObject decode = BitCrystalJSON.decodeWallet(loadString);
         return decode;
     }
