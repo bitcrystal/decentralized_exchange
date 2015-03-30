@@ -66,18 +66,6 @@ public class BitCrystalJSON {
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
         return toJSONString;
     }
-    
-    private static String  encodeStringEx(String encode)
-    {
-        String x = encodeString(encode);
-        return x;
-    }
-    
-    private static String  decodeStringEx(String decode)
-    {
-       String x = decodeString(decode);
-       return x;
-    }
 
     public static String encodeWalletString(String obj) {
         try {
