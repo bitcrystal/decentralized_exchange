@@ -100,7 +100,6 @@ public class DecentralizedExchange {
             con.put("nodeserver1", "176.57.142.30");
             con.put("nodeserverport", "6789");
             con.put("nodeclientport", "6789");
-            con.put("commandexecutorport", "3323");
             con.put("password", "standard");
             con.put("salt", "cool");
             config.update(con);

@@ -1622,3 +1622,20 @@ Caused by: java.net.ConnectException: Connection refused: connect
 	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
 	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
 	... 14 more
+2015-03-31 18:20:48,012 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:20:48,961 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://bitcoinrpc:fickdiehenneextended@127.0.0.1:8332/
+2015-03-31 18:21:24,004 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:21:24,811 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://bitcoinrpc:fickdiehenneextended@127.0.0.1:8332/
+2015-03-31 18:34:12,619 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:34:13,579 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:34:14,526 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"16ouduzdxcbKr6ETgPzNywRTYni1k9aZDQ","error":null,"id":null}
+2015-03-31 18:34:15,423 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"0362cd18c3747a7db921a52364e6237f5a161b77a1322321b7965e5eb377059e18","error":null,"id":null}
+2015-03-31 18:34:15,539 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L3ybkBu4Lwu9kKt29f7nWUyr5VRKhu41vkmHyTph7WKL9Q3wAfSx","error":null,"id":null}
+2015-03-31 18:34:15,798 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":null,"error":{"code":-4,"message":"Error adding key to wallet"},"id":null}
+2015-03-31 18:48:23,265 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:48:31,811 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:48:32,189 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-03-31 18:48:32,827 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"17ndfjY8CvVgUq36oRU215N7fr1UwoZVE1","error":null,"id":null}
+2015-03-31 18:48:33,265 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02d83ab07ae687d2d2b32401887de611801e8e1b5868987eeab55584bb75a51516","error":null,"id":null}
+2015-03-31 18:48:33,289 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L46ZX4YCuNNEqH7R9mLJQw2xTvCgA3UiujaZ7Cc2KVZQ4kZ47vDe","error":null,"id":null}
+2015-03-31 18:48:33,449 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":null,"error":{"code":-4,"message":"Error adding key to wallet"},"id":null}
