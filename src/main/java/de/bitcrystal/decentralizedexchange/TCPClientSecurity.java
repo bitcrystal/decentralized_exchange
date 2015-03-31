@@ -12,6 +12,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -97,12 +98,27 @@ public class TCPClientSecurity {
     }
 
     public void send(String string) {
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256);
+        this.sendSecurity(string);
     }
 
     public String recv() {
-        String recv = this.tcpClient.recv();
+        String recv = this.recvSecurity();
+        return recv;
+    }
+    
+    public void send(String data, int buffer)
+    {
+        String encryptAES256 = HashFunctions.encryptAES256(data, password, salt);
+        this.tcpClient.send(encryptAES256, buffer);
+    }
+    
+    public String recv(int buffer)
+    {
+        String recv = this.tcpClient.recv(buffer);
+        if(recv==null)
+        {
+            return "";
+        }
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         return decryptAES256;
     }
@@ -110,11 +126,13 @@ public class TCPClientSecurity {
     public void sendSecurity(String string) {
         String encodeString = BitCrystalJSON.encodeString(string);
         String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256);
+        this.tcpClient.send(encryptAES256, 100);
     }
 
     public String recvSecurity() {
-        String recv = this.tcpClient.recv();
+        String recv = this.tcpClient.recv(100);
+        if(recv==null)
+            return "";
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         decryptAES256 = BitCrystalJSON.decodeString(decryptAES256);
         return decryptAES256;
@@ -123,25 +141,32 @@ public class TCPClientSecurity {
     public void sendSecurityWallet(String string) {
         String encodeString = BitCrystalJSON.encodeWalletString(string);
         String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256);
+        this.tcpClient.send(encryptAES256,100);
     }
 
     public String recvSecurityWallet() {
-        String recv = this.tcpClient.recv();
+        String recv = this.tcpClient.recv(100);
+        if(recv==null)
+            return "";
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         decryptAES256 = BitCrystalJSON.decodeWalletString(decryptAES256);
         return decryptAES256;
     }
 
     public void sendJSONObject(JSONObject jsonObject) {
+
         String string = BitCrystalJSON.encode(jsonObject);
         String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256);
+        this.tcpClient.send(encryptAES256, 100);
     }
 
     public JSONObject recvJSONObject() {
-        String recv = this.tcpClient.recv();
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
+
+        String string = this.tcpClient.recv(100);
+        if (string == null) {
+            return null;
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
         JSONObject jsonObject = BitCrystalJSON.decode(decryptAES256);
         return jsonObject;
     }
@@ -149,11 +174,14 @@ public class TCPClientSecurity {
     public void sendJSONObjectWallet(JSONObject jsonObject) {
         String string = BitCrystalJSON.encodeWallet(jsonObject);
         String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256);
+        this.tcpClient.send(encryptAES256, 100);
     }
 
     public JSONObject recvJSONObjectWallet() {
-        String recv = this.tcpClient.recv();
+        String recv = this.tcpClient.recv(100);
+        if (recv == null) {
+            return null;
+        }
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         JSONObject jsonObject = BitCrystalJSON.decodeWallet(decryptAES256);
         return jsonObject;
@@ -229,7 +257,7 @@ public class TCPClientSecurity {
         String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
         return BitCrystalJSON.decodeString(decryptAES256);
     }
-    
+
     public boolean saveStringWallet(String string, String key, String path) {
         return saveStringWallet(string, key, path, "");
     }
@@ -291,7 +319,7 @@ public class TCPClientSecurity {
     }
 
     public JSONObject loadJSONObjectWallet(String key, String path) {
-       return loadJSONObjectWallet(key, path, "");
+        return loadJSONObjectWallet(key, path, "");
     }
 
     public JSONObject loadJSONObjectWallet(String key, String path, String filename) {

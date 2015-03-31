@@ -29,9 +29,9 @@ final class TCPClient {
 
     public TCPClient(Socket socket) {
         this.clientSocket = null;
-         this.clientSocket = null;
+        this.clientSocket = null;
         try {
-            this.clientSocket=socket;
+            this.clientSocket = socket;
             this.port = clientSocket.getPort();
             this.host = clientSocket.getInetAddress().getHostAddress();
             in = this.clientSocket.getInputStream();
@@ -61,9 +61,9 @@ final class TCPClient {
         this.clientSocket = null;
         this.host = host;
         this.port = port;
-         this.clientSocket = null;
+        this.clientSocket = null;
         try {
-            this.clientSocket=new Socket(host, port);
+            this.clientSocket = new Socket(host, port);
             this.port = port;
             this.host = host;
             in = this.clientSocket.getInputStream();
@@ -80,7 +80,7 @@ final class TCPClient {
     }
 
     public boolean isValidConnection() {
-        return this.din!= null && this.dout != null && this.in != null && this.out != null && this.clientSocket != null;
+        return this.din != null && this.dout != null && this.in != null && this.out != null && this.clientSocket != null;
     }
 
     public void send(String message) {
@@ -107,21 +107,22 @@ final class TCPClient {
         }
         return "E_READ_ERROR";
     }
-    
-    public void sendJSONObject(JSONObject object)
-    {
+
+    public void sendJSONObject(JSONObject object) {
         if (!isValidConnection()) {
             return;
         }
-        this.send(object.toString());
+        this.send(object.toString(), 100);
         return;
     }
-    
+
     public JSONObject recvJSONObject() {
         if (!isValidConnection()) {
             return null;
         }
-        String recv = this.recv();
+        String recv = this.recv(100);
+        if(recv==null)
+            return null;
         try {
             return new JSONObject(recv);
         } catch (JSONException ex) {
@@ -129,10 +130,9 @@ final class TCPClient {
             return null;
         }
     }
-    
-    public void sendRaw(byte[] bytes, int off, int len)
-    {
-         if (!isValidConnection()) {
+
+    public void sendRaw(byte[] bytes, int off, int len) {
+        if (!isValidConnection()) {
             return;
         }
         try {
@@ -142,9 +142,8 @@ final class TCPClient {
         }
         return;
     }
-    
-    public byte[] recvRaw(int off, int len)
-    {
+
+    public byte[] recvRaw(int off, int len) {
         if (!isValidConnection()) {
             return new byte[]{};
         }
@@ -152,19 +151,83 @@ final class TCPClient {
         byte[] readBytes = new byte[]{};
         try {
             int read = this.in.read(bytes, off, len);
-            if(read<=0)
-            {
+            if (read <= 0) {
                 return readBytes;
             }
             readBytes = new byte[read];
-            for(int i = 0; i < read; i++)
-            {
-                readBytes[i]=bytes[i];
+            for (int i = 0; i < read; i++) {
+                readBytes[i] = bytes[i];
             }
             return readBytes;
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
             return new byte[]{};
+        }
+    }
+
+    public void send(String data, int buffer) {
+        if (buffer <= 0) {
+            buffer = 100;
+        }
+        if(buffer%2!=0)
+        {
+            buffer=100;
+        }
+        try {
+
+            OutputStream outputStream = this.getOutputStream();
+            byte[] b = data.getBytes("UTF-8");
+            int length = b.length;
+            int maxi = length / buffer;
+            int off = 0;
+            for (int i = 0; i < maxi; i++) {
+                outputStream.write(b, off, buffer);
+                outputStream.flush();
+                off += buffer;
+            }
+            maxi = length % buffer;
+            if (maxi != 0) {
+                outputStream.write(b, off, maxi);
+                outputStream.flush();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TCPClientSecurity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String recv(int buffer) {
+        if (buffer <= 0) {
+            buffer = 50;
+        }
+        if (buffer / 2 <= 0 || buffer % 2 != 0) {
+            buffer = 50;
+        } else {
+            buffer = buffer / 2;
+        }
+
+        try {
+            InputStream in = this.getInputStream();
+            int len = buffer;
+            byte[] b = new byte[buffer];
+            int off = 0;
+            int read = 0;
+            String string = "";
+            do {
+                read = in.read(b, off, len);
+                if (read == buffer) {
+                    string += new String(b, "UTF-8");
+                } else if (read > 0) {
+                    byte[] bytes = new byte[read];
+                    for (int i = 0; i < read; i++) {
+                        bytes[i] = b[i];
+                    }
+                    string += new String(bytes, "UTF-8");
+                }
+            } while (read == buffer);
+            return string;
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClientSecurity.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
@@ -181,7 +244,7 @@ final class TCPClient {
     }
 
     public void close() {
-         if (this.din != null) {
+        if (this.din != null) {
             try {
                 this.din.close();
                 this.din = null;
@@ -222,17 +285,16 @@ final class TCPClient {
             }
         }
     }
-    
+
     public String getHostAddress() {
         return host;
     }
-    
+
     public int getHostPort() {
         return port;
     }
-    
-    public TCPClientSecurity getSecurityClient()
-    {
+
+    public TCPClientSecurity getSecurityClient() {
         return new TCPClientSecurity(this);
     }
 }

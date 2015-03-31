@@ -35,9 +35,9 @@ public class Test {
                         ServerSocket serverSocket = new ServerSocket(5674);
                         Socket accept = serverSocket.accept();
                         TCPClientSecurity tCPClientSecurity = new TCPClientSecurity(accept);
-                        JSONObject recvJSONObject = tCPClientSecurity.recvJSONObject();
+                        String string = tCPClientSecurity.recv();
                         System.out.println("cool");
-                        System.out.println(recvJSONObject.toString());
+                        System.out.println(string);
                     } catch (IOException ex) {
                         Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -45,7 +45,7 @@ public class Test {
             }).start();
            Socket socket = new Socket("127.0.0.1", 5674);
             TCPClientSecurity tCPClientSecurity = new TCPClientSecurity(socket);
-            tCPClientSecurity.sendJSONObject(json);
+            tCPClientSecurity.send(json.toString());
         } catch (Exception ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }
