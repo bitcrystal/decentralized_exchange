@@ -71,9 +71,9 @@ public class DecentralizedExchange {
         if (command == null || command.isEmpty()) {
             return;
         }
-        new Thread(new Runnable() {
+        //new Thread(new Runnable() {
 
-            public void run() {
+         //   public void run() {
                 List<String> nodeServers = getNodeServers();
                 int length = nodeServers.size();
                 int port = nodeServerPort;
@@ -83,8 +83,8 @@ public class DecentralizedExchange {
                         break;
                     }
                 }
-            }
-        }).start();
+           // }
+     //   }).start();
     }
 
     public static void command(String[] args) {
@@ -176,11 +176,12 @@ public class DecentralizedExchange {
     }
 
     private static void serverConnection(final TCPClient tcpClient, final String command) {
-        new Thread(new Runnable() {
-            public void run() {
-                new Thread(new ClientConnection(tcpClient, command)).start();
-            }
-         }).start();
+       // new Thread(new Runnable() {
+           // public void run() {
+                //new Thread(new ClientConnection(tcpClient, command)).start();  
+            //}
+        //}).start();
+        new ClientConnection(tcpClient, command).run();
     }
 
     private static boolean serverConnection(final String host, final int port, String command) {
