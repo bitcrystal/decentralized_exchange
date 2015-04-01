@@ -2437,3 +2437,221 @@ Caused by: java.net.ConnectException: Connection refused: connect
 2015-04-01 03:09:58,463 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
 2015-04-01 03:14:10,452 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
 2015-04-01 03:14:11,345 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:21:02,215 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:21:03,197 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:21:38,164 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FzUhD2zqmqkTjGHvcZutoPhvLf5N2NG1S","error":null,"id":null}
+2015-04-01 03:21:43,444 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"038fe398c9eff1a86618ca133c9bc905a55bd40e7c38cdc4e46336c0687cb5d5d4","error":null,"id":null}
+2015-04-01 03:21:43,501 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KxxsD3tTiXb6CyRduMhTyo1VX8w4oPxzb7WS3MPNrWp66gjHZRqa","error":null,"id":null}
+2015-04-01 03:21:43,663 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:21:53,273 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:21:54,142 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:21:54,517 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:21:54,582 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FzUhD2zqmqkTjGHvcZutoPhvLf5N2NG1S","error":null,"id":null}
+2015-04-01 03:21:55,016 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"12k7sqZsDbqfJtDE4zkhiK171pzQZGZ6mP","error":null,"id":null}
+2015-04-01 03:21:55,175 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"026617541d9100491c4539c0853c2537cf73c23984f508b2247673261d0b85a908","error":null,"id":null}
+2015-04-01 03:21:55,229 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KxUfVMNaziUiJpkr2GA1KXQN696mkyyjWAi9qR8X5zYrVDtGRS35","error":null,"id":null}
+2015-04-01 03:21:55,302 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:22:26,318 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:22:27,343 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:22:32,672 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:22:32,736 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:22:32,839 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FzUhD2zqmqkTjGHvcZutoPhvLf5N2NG1S","error":null,"id":null}
+2015-04-01 03:22:32,871 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FzUhD2zqmqkTjGHvcZutoPhvLf5N2NG1S","error":null,"id":null}
+2015-04-01 03:22:32,915 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU34+c2QbcXg8Lm9SWVUjPFQdaV5ESGoxcw9AbEc4QjwfcDcBHRMrKX51ckY1PTNQciUzG25YIhRZDXsneVYAH10rPHY6KglkKEt6eR1DdCFUAA1ld0gCXBApGiZLcy4FKX8bUXIjERgrNndrBAwhbV5wVBZsGQxuMDMqYy4tHBdPRDN1Nid4E3MTYXscID5FEnRLax1oHQ9oIldyPChbGlQyMCBff0oKd2FlRQwNXW1bBkRweXEfWUJkcWZ8T0YNYG8xR3NCaikeNyUlSUEedmsoCwg3V3xyZTwqFTYyDCtoWA4+c28/KF5cXww4bmt9dzsHZ1AOdF57Hzl5SX48ZUdPRyNoeltQQWAHJwxwbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:22:32,960 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU34+c2QbcXg8Lm9SWVUjPFQdaV5ESGoxcw9AbEc4QjwfcDcBHRMrKX51ckY1PTNQciUzG25YIhRZDXsneVYAH10rPHY6KglkKEt6eR1DdCFUAA1ld0gCXBApGiZLcy4FKX8bUXIjERgrNndrBAwhbV5wVBZsGQxuMDMqYy4tHBdPRDN1Nid4E3MTYXscID5FEnRLax1oHQ9oIldyPChbGlQyMCBff0oKd2FlRQwNXW1bBkRweXEfWUJkcWZ8T0YNYG8xR3NCaikeNyUlSUEedmsoCwg3V3xyZTwqFTYyDCtoWA4+c28/KF5cXww4bmt9dzsHZ1AOdF57Hzl5SX48ZUdPRyNoeltQQWAHJwxwbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:22:35,861 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"51MkgaSkygK8qMXuFGtyC4ViGPmgfo5LJC","error":null,"id":null}
+2015-04-01 03:22:35,986 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"51MkgaSkygK8qMXuFGtyC4ViGPmgfo5LJC","error":null,"id":null}
+2015-04-01 03:23:36,342 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:24:48,631 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:11,785 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:12,696 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:13,439 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"19cUoeaUgLgbxBtPCJWHkPf3iE3DunXhra","error":null,"id":null}
+2015-04-01 03:25:18,617 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"032e6bcc28ae6c54e9d0e0d815ddf8b929d0845f671c3633a1e8ad1466a47fd6a4","error":null,"id":null}
+2015-04-01 03:25:18,677 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L4uVujio3jPKZWpDRHKuuA4cHXrrHMmkSBhjFdCZSC7FivMHKbxt","error":null,"id":null}
+2015-04-01 03:25:18,835 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:25:28,365 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:29,242 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:29,678 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:25:29,743 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"19cUoeaUgLgbxBtPCJWHkPf3iE3DunXhra","error":null,"id":null}
+2015-04-01 03:25:30,153 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"171kzgYmpm4dvG57nAzWijEzjeWCb1itZJ","error":null,"id":null}
+2015-04-01 03:25:30,333 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"03db90f86c06ab5f867345a4c43baad5e5d2a6a8c49e0522883739ac118c4d9df6","error":null,"id":null}
+2015-04-01 03:25:30,388 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KyfPr8eY8Mnsz7mCVMFAywYEqYeXRYuWshw8FdxV4aq3WrZZEnXg","error":null,"id":null}
+2015-04-01 03:25:30,504 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:25:57,454 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:25:58,333 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:26:03,542 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:26:03,688 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:26:03,790 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"19cUoeaUgLgbxBtPCJWHkPf3iE3DunXhra","error":null,"id":null}
+2015-04-01 03:26:03,822 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"19cUoeaUgLgbxBtPCJWHkPf3iE3DunXhra","error":null,"id":null}
+2015-04-01 03:26:03,927 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU1w/Z10cLm4BKm5RWVp8KHkNbUp6fXkzcxRfe1cSQCsyTjUCDRA1KH15dlImNmxQcjEyGzZ2IAJkDiIzeUoEHE4ncmIXIRtnKEt8bntcLjVuAA5mZ0gCXBApGiZLUS8REHhER08nEBsrOSh/KRwleWBFRxRsAhN5IBkodAMTHhRfRy10NSt8B2AYPnscND9FSlpJfSBrRBtoPlNxLyQVDnk5IiNff0wdEX4/UTYNXm5LBkRweXEfWRpvKmR8bhoMYHMwRWNddT0wMH0nWlUddUU0DwgZRCJydTwpAQshHSsNQ1IqTWs9K1lUXhoGbTNpdzsCc1AOOV97MTh6SV8tcldMVCFofl9EUklZMCJObxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:26:04,034 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU1w/Z10cLm4BKm5RWVp8KHkNbUp6fXkzcxRfe1cSQCsyTjUCDRA1KH15dlImNmxQcjEyGzZ2IAJkDiIzeUoEHE4ncmIXIRtnKEt8bntcLjVuAA5mZ0gCXBApGiZLUS8REHhER08nEBsrOSh/KRwleWBFRxRsAhN5IBkodAMTHhRfRy10NSt8B2AYPnscND9FSlpJfSBrRBtoPlNxLyQVDnk5IiNff0wdEX4/UTYNXm5LBkRweXEfWRpvKmR8bhoMYHMwRWNddT0wMH0nWlUddUU0DwgZRCJydTwpAQshHSsNQ1IqTWs9K1lUXhoGbTNpdzsCc1AOOV97MTh6SV8tcldMVCFofl9EUklZMCJObxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:26:07,074 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4s5u6UcR4rSfnk84iA8u5XdNnJFx3HrRiu","error":null,"id":null}
+2015-04-01 03:26:07,258 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4s5u6UcR4rSfnk84iA8u5XdNnJFx3HrRiu","error":null,"id":null}
+2015-04-01 03:31:26,222 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:26,952 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:37,817 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:38,597 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:39,147 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1KaSayenE5DXvFrzuTV8ZPbEAMyn6sctLS","error":null,"id":null}
+2015-04-01 03:31:43,995 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02dd44203ad6b64f97d7bac9359713ff79b36fcde465b63d4061cd0ff91893bfdf","error":null,"id":null}
+2015-04-01 03:31:44,055 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Kz1VwYiBFJMayR2VuXCK9SJDnxTUh2VWeQbj4WyWGzebWfJsv2oM","error":null,"id":null}
+2015-04-01 03:31:44,195 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:31:51,493 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:52,253 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:31:52,563 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:31:52,613 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1KaSayenE5DXvFrzuTV8ZPbEAMyn6sctLS","error":null,"id":null}
+2015-04-01 03:31:52,903 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1MPiPKau7yXgKHRvDm8jRhKzZrqQSDwv6A","error":null,"id":null}
+2015-04-01 03:31:53,043 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"0261d057460ec0dc2c041989c361cb6b7e840cca51fefad46a23b17932f12bf4bf","error":null,"id":null}
+2015-04-01 03:31:53,093 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L2Q98CHMUmpGsPD6duxQ5nHxbvmAa9xLuxLU56z5i3cyCaot9qKB","error":null,"id":null}
+2015-04-01 03:31:53,153 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:32:16,171 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:32:16,909 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:32:21,690 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:32:21,740 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:32:21,830 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1KaSayenE5DXvFrzuTV8ZPbEAMyn6sctLS","error":null,"id":null}
+2015-04-01 03:32:21,860 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1KaSayenE5DXvFrzuTV8ZPbEAMyn6sctLS","error":null,"id":null}
+2015-04-01 03:32:21,900 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgREQ4Z3QHPXo/LTJSSlUnP2kKMF96dXkwBgtAeGkeQisxd20VMzYxPUNTdlEIOmpEWyk0DwhEahVJCiIzMVVcHF0rPmJyIRRzAUt7entqKCIxG1FldEACXBApGiZcSSgROWNXU3EgTBg4NnNoORt4bGBNRxcZHQx6HhUqdAAqRgNhYSlhCwF8BE4UOG81LDlRdGgDag1vRBsgIQtxPChZDhw5LTd2f0sJEUg5RmkWAW1YDkRweXEfWUJkO3FsbUYNXnhoRWBRdykdNHolc0FZdnsgCx4JeiJxSys4AW4uRDwwcg8/TXAiPAZfAg0oemtpdCBbZH4WP0lrNXFuWXZ2ZHlEVTRFdhZHe3wCMyVObxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:32:21,940 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgREQ4Z3QHPXo/LTJSSlUnP2kKMF96dXkwBgtAeGkeQisxd20VMzYxPUNTdlEIOmpEWyk0DwhEahVJCiIzMVVcHF0rPmJyIRRzAUt7entqKCIxG1FldEACXBApGiZcSSgROWNXU3EgTBg4NnNoORt4bGBNRxcZHQx6HhUqdAAqRgNhYSlhCwF8BE4UOG81LDlRdGgDag1vRBsgIQtxPChZDhw5LTd2f0sJEUg5RmkWAW1YDkRweXEfWUJkO3FsbUYNXnhoRWBRdykdNHolc0FZdnsgCx4JeiJxSys4AW4uRDwwcg8/TXAiPAZfAg0oemtpdCBbZH4WP0lrNXFuWXZ2ZHlEVTRFdhZHe3wCMyVObxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:32:24,660 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4hFfyq3tFtWxGM9HAriPYw2E1ZXLN7B56N","error":null,"id":null}
+2015-04-01 03:32:24,872 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4hFfyq3tFtWxGM9HAriPYw2E1ZXLN7B56N","error":null,"id":null}
+2015-04-01 03:32:27,231 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:32:27,291 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:33:09,801 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:33:10,551 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:33:13,269 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":0.00000000,"error":null,"id":null}
+2015-04-01 03:34:13,862 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:34:14,632 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:40:33,721 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:40:34,501 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:40:35,071 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1MEksppHJmRSB95PpSPgGCQT72u1wzDki1","error":null,"id":null}
+2015-04-01 03:40:39,952 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"0396c2ab8fbadf680f710c8ca993cdccc0a40ec56f6e72cba40b4961daa2a790b4","error":null,"id":null}
+2015-04-01 03:40:40,002 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L4KnHLBkPXc89SvYY9CoHBUdGawmpZCPeawRsP6hFYhgHto8jxtu","error":null,"id":null}
+2015-04-01 03:40:40,132 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:40:48,453 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:40:49,173 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:40:49,473 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:40:49,533 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1MEksppHJmRSB95PpSPgGCQT72u1wzDki1","error":null,"id":null}
+2015-04-01 03:40:49,963 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"15nu4PfaUrFtSugfLNgPhm8V7uR1gtbB23","error":null,"id":null}
+2015-04-01 03:40:50,113 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"0291a40b46f814d69d3c869091290b2fff94efa64bba7da199f6e0a7875b128994","error":null,"id":null}
+2015-04-01 03:40:50,163 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KxxekE2bMYSyCQa91QZdsiuizGjn1f7jWFk8n28CjSChn2eJksjq","error":null,"id":null}
+2015-04-01 03:40:50,233 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:41:13,318 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:41:14,060 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:41:18,808 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:41:18,888 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:41:18,968 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1MEksppHJmRSB95PpSPgGCQT72u1wzDki1","error":null,"id":null}
+2015-04-01 03:41:18,998 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1MEksppHJmRSB95PpSPgGCQT72u1wzDki1","error":null,"id":null}
+2015-04-01 03:41:19,038 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU31hcEocLG4RCzdRY0klK2kBaV1pSCEzYANCblQ7UCoxdyQBVSo2Pht9NFE2Ji9EYSpuGzFMagFKIGknMU4EH10wL3UEG1FkO0AmbntHdSF5OktmWUgCXBApGiZLcHEGB3hGR18GSRsRKnF8ORAhbnNwHxR/FQ5sIzA4dQAqDxcHfS5iUy8+BHAIfW8PL2NFTWADfg5FDw8gOlNyPDNIGWoDaCBMdBYdEWVkRSE3G251BkRweXEfWUJWO3J8fQAaTnhoUk1gZSodNyInSV1UYUUCDB4ZV31xZTt1FRsuDz83TA4/XXM5P1lUWA07dm9qdx5YZ24COF9oJTltZ3EtZVduHyB4ehdTfEIHJRxGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:41:19,078 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgU31hcEocLG4RCzdRY0klK2kBaV1pSCEzYANCblQ7UCoxdyQBVSo2Pht9NFE2Ji9EYSpuGzFMagFKIGknMU4EH10wL3UEG1FkO0AmbntHdSF5OktmWUgCXBApGiZLcHEGB3hGR18GSRsRKnF8ORAhbnNwHxR/FQ5sIzA4dQAqDxcHfS5iUy8+BHAIfW8PL2NFTWADfg5FDw8gOlNyPDNIGWoDaCBMdBYdEWVkRSE3G251BkRweXEfWUJWO3J8fQAaTnhoUk1gZSodNyInSV1UYUUCDB4ZV31xZTt1FRsuDz83TA4/XXM5P1lUWA07dm9qdx5YZ24COF9oJTltZ3EtZVduHyB4ehdTfEIHJRxGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:41:21,818 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4f1eXrPHi7GrSFUV8mNk27q4tmiAHXFAZ3","error":null,"id":null}
+2015-04-01 03:41:21,960 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4f1eXrPHi7GrSFUV8mNk27q4tmiAHXFAZ3","error":null,"id":null}
+2015-04-01 03:43:18,296 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:43:31,514 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:43:48,978 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:43:49,731 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:43:50,421 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"17iWfJkALkrZYqPr5HaXgxaoPQbhmPT3VW","error":null,"id":null}
+2015-04-01 03:43:55,264 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02427b9b48f197c9d72a1fcaef40351940b127ac6c4512c07c7aae86daf5c6a788","error":null,"id":null}
+2015-04-01 03:43:55,324 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L2Wy7SaczS5rt7p6QzcAtCi91h7oSf5vfsWA7dto21rAk81uAai3","error":null,"id":null}
+2015-04-01 03:43:55,454 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:44:03,786 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:04,526 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:04,839 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:44:04,894 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"17iWfJkALkrZYqPr5HaXgxaoPQbhmPT3VW","error":null,"id":null}
+2015-04-01 03:44:05,344 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1CjyGY2Nq4DppuGgc8yVe4TdyuuqDdRtEv","error":null,"id":null}
+2015-04-01 03:44:05,484 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02c581d5072826e943419fa69d562a0be1a14d430afbd6d48d00ab42965a5acd53","error":null,"id":null}
+2015-04-01 03:44:05,534 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L16ptMcrpFWhvfRgTA8RibfXQsih9Yt6gwajjmcfhkEpiZveMpJ5","error":null,"id":null}
+2015-04-01 03:44:05,594 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:44:34,885 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:35,647 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:40,408 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:40,478 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:44:40,558 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"17iWfJkALkrZYqPr5HaXgxaoPQbhmPT3VW","error":null,"id":null}
+2015-04-01 03:44:40,588 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"17iWfJkALkrZYqPr5HaXgxaoPQbhmPT3VW","error":null,"id":null}
+2015-04-01 03:44:40,628 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgQ0cqZwIfcW4RMm5SZEp7PzEVaEpqcmsnYAdFeCEzVD8PTSkVHS0kKH1hNFEIMiFQBCE1GzFYaBVKBmkneUVfCGMWLmIXJVdnAUAmbUVbdyFuFA9wd34CXBApGiZbSjoRT3sbR18/EBgWKS9oYQQgeXBKVQB/EQl6Vjg8YD4QAgNPejx0NTM+BE4cc3tqJDhFTXQBag5jDw9oMQhlAhVJDnk9biN2dBYeL3lmRTYZX3hbMERweXEfWUVwcmRsahwNcGhpRU1gZCo3MyUmWkEedWsJUwgZT31mdSdyFTEiATw3QxspXWRlP3BAEA47emtqTisBZH4WOUp7PXxuZHp1ZkdiHiB4dl5HQWtZJBxabxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:44:40,668 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgQ0cqZwIfcW4RMm5SZEp7PzEVaEpqcmsnYAdFeCEzVD8PTSkVHS0kKH1hNFEIMiFQBCE1GzFYaBVKBmkneUVfCGMWLmIXJVdnAUAmbUVbdyFuFA9wd34CXBApGiZbSjoRT3sbR18/EBgWKS9oYQQgeXBKVQB/EQl6Vjg8YD4QAgNPejx0NTM+BE4cc3tqJDhFTXQBag5jDw9oMQhlAhVJDnk9biN2dBYeL3lmRTYZX3hbMERweXEfWUVwcmRsahwNcGhpRU1gZCo3MyUmWkEedWsJUwgZT31mdSdyFTEiATw3QxspXWRlP3BAEA47emtqTisBZH4WOUp7PXxuZHp1ZkdiHiB4dl5HQWtZJBxabxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:44:43,358 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4wUB3VWB3KyC6EVHk3uESmF6mnDXqZMzJt","error":null,"id":null}
+2015-04-01 03:44:43,478 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4wUB3VWB3KyC6EVHk3uESmF6mnDXqZMzJt","error":null,"id":null}
+2015-04-01 03:47:41,446 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:47:42,186 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:47:56,847 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:47:57,607 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:01,230 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FFQXaPxidsQy1Qw9GFaGPrpDAa2CZmdr6","error":null,"id":null}
+2015-04-01 03:48:06,076 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02b2c5b8ad7a786b3f99109acb268042f7d5211b1981ffa5bbfc9f3fe1b8be34da","error":null,"id":null}
+2015-04-01 03:48:06,126 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzBn21ekY3wkpFpgHuCBdqhXLFcSPdwokD4E8XC6NKPHEgu7y7Bk","error":null,"id":null}
+2015-04-01 03:48:06,256 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:48:13,549 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:14,289 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:14,589 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:48:14,649 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FFQXaPxidsQy1Qw9GFaGPrpDAa2CZmdr6","error":null,"id":null}
+2015-04-01 03:48:15,119 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"148gwE28d4N3cXMkfpKAkEhbtjt7Nz2bFz","error":null,"id":null}
+2015-04-01 03:48:15,269 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"0250eb2ff02766bf8d8300fb5180e9033223ee13e0af6fbf0d8a1b60b5854abefd","error":null,"id":null}
+2015-04-01 03:48:15,319 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzVYDYiRxA8FUiqx2wbUnFfjkzt3K7YCKnM2XUMV3Hit8aWyX34h","error":null,"id":null}
+2015-04-01 03:48:15,379 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:48:43,366 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:44,096 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:48,885 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:48,935 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:48:49,025 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FFQXaPxidsQy1Qw9GFaGPrpDAa2CZmdr6","error":null,"id":null}
+2015-04-01 03:48:49,055 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FFQXaPxidsQy1Qw9GFaGPrpDAa2CZmdr6","error":null,"id":null}
+2015-04-01 03:48:49,095 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgRF8qcEoALXg8JTFGPEp9PkcCNF0cSCcxYARfbkQzUjwPVWwXIzlsKkRpcFImIiFTYiE2GAh+bBZJGX0nV1IFCHQoLHQXKRlzAUc2bkVldDVXHAxldFwCXBApGiZcUjoGB2RHUXIoTwxOKSlpFxN8bgZwGRZ/EhNsMzg6Yz4IRwFxbnR2DDt6B2AMc3gMJDtGdFIFaQ18Gw9GJlJlFStLGHkxIDd2cwYdL0dlUQ8RXG1YEkRweXEfWUJoNHF/ZQ4ZSXAtRU1kLyo3LH0nWV0adUUkSQsgX3lxZRU3AggMASggWxo9Y285P2BUEBkofm5pSSBeZ1ceekp7FGN6ZHp3ZmpAHSFrZl9HQW9eMCVGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:48:49,135 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgRF8qcEoALXg8JTFGPEp9PkcCNF0cSCcxYARfbkQzUjwPVWwXIzlsKkRpcFImIiFTYiE2GAh+bBZJGX0nV1IFCHQoLHQXKRlzAUc2bkVldDVXHAxldFwCXBApGiZcUjoGB2RHUXIoTwxOKSlpFxN8bgZwGRZ/EhNsMzg6Yz4IRwFxbnR2DDt6B2AMc3gMJDtGdFIFaQ18Gw9GJlJlFStLGHkxIDd2cwYdL0dlUQ8RXG1YEkRweXEfWUJoNHF/ZQ4ZSXAtRU1kLyo3LH0nWV0adUUkSQsgX3lxZRU3AggMASggWxo9Y285P2BUEBkofm5pSSBeZ1ceekp7FGN6ZHp3ZmpAHSFrZl9HQW9eMCVGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:48:51,805 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4rHBzbvXRiHjHQ4y3L4Epz5gwXKgGCRvpW","error":null,"id":null}
+2015-04-01 03:48:51,947 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4rHBzbvXRiHjHQ4y3L4Epz5gwXKgGCRvpW","error":null,"id":null}
+2015-04-01 03:53:59,285 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:00,065 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:00,785 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1GKD2fhaCkwsq3Stde9NBCf65gHw9VpiRK","error":null,"id":null}
+2015-04-01 03:54:05,618 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02d905c7352d422c59956570951b5b32724b3bb0b04bd6aff114a9114e747a632a","error":null,"id":null}
+2015-04-01 03:54:05,668 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L47dENRQwE7jLa2oJkib77NSDFcj1T2V1ozxLYwMp826foFEENC9","error":null,"id":null}
+2015-04-01 03:54:05,808 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:54:14,160 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:14,910 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:15,210 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:54:15,260 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1GKD2fhaCkwsq3Stde9NBCf65gHw9VpiRK","error":null,"id":null}
+2015-04-01 03:54:15,930 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1HJMFB3qeFTTc8ZUrRc8VoXb9E3xgxroFQ","error":null,"id":null}
+2015-04-01 03:54:16,080 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"03a5d6f6dedfdadc67a90636e617beab7073c96a70577c24f1845379b5274c7774","error":null,"id":null}
+2015-04-01 03:54:16,130 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzULqEqqZLk8CNqrzzbrEKiYkQnhs31pJF8hyUapgztu422AzgH9","error":null,"id":null}
+2015-04-01 03:54:16,190 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 03:54:44,473 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:45,223 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:49,986 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:50,056 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 03:54:50,136 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1GKD2fhaCkwsq3Stde9NBCf65gHw9VpiRK","error":null,"id":null}
+2015-04-01 03:54:50,176 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1GKD2fhaCkwsq3Stde9NBCf65gHw9VpiRK","error":null,"id":null}
+2015-04-01 03:54:50,216 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgREdmZHQALnkBLmtFY15+PGkSN156eicwYBgZb2k0DSsxWjcWMDEmKkNTOkYlPiJHWy4oDDZUaAJzEiInVF4BHE03dmIUGxtkOEAieVVcLjZXCEZyXlwCXBApGiZcSnYSOWREUE8jFQ8RPSprOQN/bWBCGRd/DlVtHj9ldAAHHABiZj52CwEwE2MQcGw1KyVSSngBfTd3RA9FKlZxLDQRDnoDIiBPdBIKP34/Ug8FFnpyEkRweXEfWRp4cnFsdhoNSXs2UmBddj0NNHomdGhGd2skDBw3TCRyWzdzATExHjwwdRQ+c28/KmBLAg0GfTd9WR5Zc1AVYF1rGzt5Z352ZHpAHSNFUF9HbEYBJDJGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:54:50,256 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgREdmZHQALnkBLmtFY15+PGkSN156eicwYBgZb2k0DSsxWjcWMDEmKkNTOkYlPiJHWy4oDDZUaAJzEiInVF4BHE03dmIUGxtkOEAieVVcLjZXCEZyXlwCXBApGiZcSnYSOWREUE8jFQ8RPSprOQN/bWBCGRd/DlVtHj9ldAAHHABiZj52CwEwE2MQcGw1KyVSSngBfTd3RA9FKlZxLDQRDnoDIiBPdBIKP34/Ug8FFnpyEkRweXEfWRp4cnFsdhoNSXs2UmBddj0NNHomdGhGd2skDBw3TCRyWzdzATExHjwwdRQ+c28/KmBLAg0GfTd9WR5Zc1AVYF1rGzt5Z352ZHpAHSNFUF9HbEYBJDJGbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 03:54:55,259 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4pAPebTUCVm1adZjtS8W8Ybd8uamCsULpj","error":null,"id":null}
+2015-04-01 03:54:55,409 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4pAPebTUCVm1adZjtS8W8Ybd8uamCsULpj","error":null,"id":null}
+2015-04-01 04:02:07,030 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:07,783 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:24,539 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:25,299 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:26,159 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FTZFaRWBtmtq2j9SdsuU1t1y21Ki3vzrd","error":null,"id":null}
+2015-04-01 04:02:31,048 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"03f552e76a2bfb923de539c2973ce66895e4a303013d4c3e9e59adf38eafc644a8","error":null,"id":null}
+2015-04-01 04:02:31,098 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L5AZ7TW3RuSiB4fFYEvrm8c3ejo7wncmKaEd8FecDSRgbFKitmqX","error":null,"id":null}
+2015-04-01 04:02:31,238 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 04:02:38,600 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:39,370 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:02:39,700 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 04:02:39,760 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FTZFaRWBtmtq2j9SdsuU1t1y21Ki3vzrd","error":null,"id":null}
+2015-04-01 04:02:40,190 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1NUaMfKvyV6aTMBKXQ5arjrbvyHsFUzKHC","error":null,"id":null}
+2015-04-01 04:02:40,320 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"031643409cf5f93edd726c130466166bb4c15b860cc550a657f3d7051161c0b4b9","error":null,"id":null}
+2015-04-01 04:02:40,380 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"L39VLny7An91NpLv19Fy2Binmss7oU5Wwi16eJHWyY389TP4brBs","error":null,"id":null}
+2015-04-01 04:02:40,440 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 04:03:05,877 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:03:06,637 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:03:11,409 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:03:11,469 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:03:11,549 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FTZFaRWBtmtq2j9SdsuU1t1y21Ki3vzrd","error":null,"id":null}
+2015-04-01 04:03:11,579 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FTZFaRWBtmtq2j9SdsuU1t1y21Ki3vzrd","error":null,"id":null}
+2015-04-01 04:03:11,619 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgG09iZ2QcKHkBOTJFY0UjKGkzJF0cQ34wYAwdeGk8DSsfUjQCMyFuKG1bclI2JTBTTCYlGBhQIgFaEXozMVFZC00nc2IXIg5kFnoibnhXdyFpAAxmZ34CXBApGiYDQnIRKXhCUE80TA8RJnd/OSJsbgZ7QBd/GlF6HjdldC4PHxRhdnZ0JQl4B3ALYngiIyhGZHxLfh50HBsgJQ5mLCQUDnk6NyBhThIdEnVmRTENXG5LMERweXEfWVJ4cWVsYUcOYEUwUk1RcCsOKHwyWV0ddVU/VBwZWz9ydStyFQg+RDw3X1Mpc2RkPF52WA47cmx9dy9EZ24ePF4NJXFtd1AyZXlMVCBFdQVTUWwCMyJ8bxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 04:03:11,659 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgG09iZ2QcKHkBOTJFY0UjKGkzJF0cQ34wYAwdeGk8DSsfUjQCMyFuKG1bclI2JTBTTCYlGBhQIgFaEXozMVFZC00nc2IXIg5kFnoibnhXdyFpAAxmZ34CXBApGiYDQnIRKXhCUE80TA8RJnd/OSJsbgZ7QBd/GlF6HjdldC4PHxRhdnZ0JQl4B3ALYngiIyhGZHxLfh50HBsgJQ5mLCQUDnk6NyBhThIdEnVmRTENXG5LMERweXEfWVJ4cWVsYUcOYEUwUk1RcCsOKHwyWV0ddVU/VBwZWz9ydStyFQg+RDw3X1Mpc2RkPF52WA47cmx9dy9EZ24ePF4NJXFtd1AyZXlMVCBFdQVTUWwCMyJ8bxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 04:03:14,319 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4kMmgtj6mTc4C4wrsHE2FXT9vcZjfXRxeG","error":null,"id":null}
+2015-04-01 04:03:14,451 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4kMmgtj6mTc4C4wrsHE2FXT9vcZjfXRxeG","error":null,"id":null}
+2015-04-01 04:03:16,901 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 04:03:16,951 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 04:04:10,379 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:04:11,119 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:04:13,859 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":0.00000000,"error":null,"id":null}
+2015-04-01 04:04:34,878 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:04:35,638 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:05:08,913 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 04:05:09,683 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/

@@ -570,6 +570,7 @@ public class ClientConnection implements Runnable {
                         System.out.println("asljkfjcyklnjkcbgzbdsyxjbvcbcb");
                         this.server.send("tradewith," + split[1]);
                         String recv = this.server.recv();
+                        this.server.close();
                         System.out.println(recv);
                         System.out.println("ddddff");
                         if (recv.equals("E_ERROR")) {
@@ -819,7 +820,7 @@ public class ClientConnection implements Runnable {
             json.put("tradeAccount2", tradeAccount2);
             json.put("tradeWithAddress", tradeWithAddress);
             json.put("tradebtc2btcry", tradebtc2btcry);
-            json.put("tradebtcry2ntc", tradebtcry2btc);
+            json.put("tradebtcry2btc", tradebtcry2btc);
             this.server.saveJSONObject(json, "client", "", "client.properties");
             clientJSON = json;
             System.out.println("clientconnection@745");
