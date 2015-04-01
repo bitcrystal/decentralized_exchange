@@ -106,6 +106,8 @@ public class ClientConnection implements Runnable {
                         System.out.println(recv);
                         System.out.println("cool");
                         this.server.close();
+                        this.saveClient();
+                        return;
                     }
 
                     if (split[0].equalsIgnoreCase("TRADEABORT")) {
@@ -115,6 +117,7 @@ public class ClientConnection implements Runnable {
                         this.server.send("CANCEL_ALL");
                         this.server.recv();
                         this.server.close();
+                        this.saveClient();
                         return;
                     }
 
@@ -150,6 +153,7 @@ public class ClientConnection implements Runnable {
                             this.server.send("AWESOME!");
                             this.server.close();
                             isSynced = true;
+                            this.saveClient();
                             return;
                         }
 
@@ -167,6 +171,7 @@ public class ClientConnection implements Runnable {
                             this.server.send("AWESOME!");
                             this.server.close();
                             isSynced = true;
+                            this.saveClient();
                             return;
                         }
                     }
@@ -195,6 +200,8 @@ public class ClientConnection implements Runnable {
                         this.server.send(":)");
                         this.server.close();
                         isStarted = true;
+                        this.saveClient();
+                        return;
                     }
 
                     if (split[0].equalsIgnoreCase("ENDTRADEME")) {
@@ -415,6 +422,7 @@ public class ClientConnection implements Runnable {
                             if (recv1.equals("ALL_OK")) {
                                 System.out.println("clientconnection@416");
                                 this.server.close();
+                                this.saveClient();
                                 return;
                             }
                         }
@@ -543,6 +551,8 @@ public class ClientConnection implements Runnable {
                             this.server.recv();
                             System.out.println("clientconnection@480");
                             this.server.close();
+                            this.saveClient();
+                            return;
                         }
                     }
                 }
@@ -600,6 +610,8 @@ public class ClientConnection implements Runnable {
                         }
                         System.out.println("djdnvncncnnccc");
                         this.server.close();
+                        this.saveClient();
+                        return;
                     }
                 }
                 break;
@@ -643,7 +655,9 @@ public class ClientConnection implements Runnable {
 
                         tradebtcry2btc = amount + ",," + price + ",," + tradeAccount + ",," + tradeAccount2;
                         tradebtc2btcry = "";
+                        this.saveClient();
                         System.out.println("clientconnection@582");
+                        return;
                     }
 
                     if (split[0].equalsIgnoreCase("CREATETRADEBTC2BTCRY")) {
@@ -683,6 +697,8 @@ public class ClientConnection implements Runnable {
                         }
                         tradebtc2btcry = amount + ",," + price + ",," + tradeAccount + ",," + tradeAccount2;
                         tradebtcry2btc = "";
+                        this.saveClient();
+                        return;
                     }
                 }
                 break;

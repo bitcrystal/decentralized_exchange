@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.176" errors="0" skipped="0" tests="1" name="de.bitcrystal.decentralizedexchange.AppTest">
+<testsuite failures="0" time="0.12" errors="0" skipped="0" tests="1" name="de.bitcrystal.decentralizedexchange.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre\bin"/>
@@ -20,7 +20,7 @@
     <property name="basedir" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange"/>
     <property name="java.endorsed.dirs" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre\lib\endorsed"/>
     <property name="os.arch" value="x86"/>
-    <property name="surefire.real.class.path" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter8583539934933907324.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter2294506035449104317.jar"/>
     <property name="java.io.tmpdir" value="C:\Users\ABC\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre"/>
-    <property name="sun.java.command" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter8583539934933907324.jar C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire329574333142242445tmp C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire7083463382855767554tmp"/>
+    <property name="sun.java.command" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter2294506035449104317.jar C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire6199417431570984248tmp C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire3277871800620776610tmp"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="de"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
