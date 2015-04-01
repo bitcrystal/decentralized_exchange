@@ -70,7 +70,8 @@ public class ClientConnection implements Runnable {
             if (split.length < 1) {
                 this.server.send("E_ERROR");
                 this.server.close();
-                System.out.println("mausge");System.out.println("mauasdadaaddasge");
+                System.out.println("mausge");
+                System.out.println("mauasdadaaddasge");
                 return;
             }
             switch (split.length) {
@@ -93,8 +94,7 @@ public class ClientConnection implements Runnable {
                         System.out.println("madaadadadaadaadadadusge");
                         String pubKey = bitcoinrpc.getPubKey(newAddress);
                         String privKey = bitcoinrpc.getPrivKey(newAddress);
-                        if(!bitcrystalrpc.addressexists(newAddress))
-                        {
+                        if (!bitcrystalrpc.addressexists(newAddress)) {
                             bitcrystalrpc.importPrivKey(privKey);
                         }
                         System.out.println(privKey);
@@ -380,13 +380,14 @@ public class ClientConnection implements Runnable {
                             double thisprice = 0;
                             try {
                                 System.out.println("clientconnection@375");
+                                System.out.println(split1[1]);
                                 thisprice = Double.parseDouble(split1[1]);
                                 if (thisprice <= 0 || price != thisprice) {
                                     System.out.println("clientconnection@378");
                                     throw new Exception();
                                 }
                             } catch (Exception ex) {
-                               System.out.println("clientconnection@381"); 
+                                System.out.println("clientconnection@381");
                                 this.server.send("E_ERROR");
                                 this.server.close();
                                 return;
@@ -598,17 +599,34 @@ public class ClientConnection implements Runnable {
                         Object[] values2 = {split1[1], tradeAccount};
                         Object[] values3 = {split1[0], tradeAccount2};
                         Object[] values4 = {split1[1], tradeAccount2};
-                        if (!bitcoinrpc.accountexists(tradeAccount)) {
-                            System.out.println("skfjkdjkldjkldnx,mvnc");
+                        try {
+                            System.out.println("dddddd");
                             bitcoinrpc.addmultisigaddressex(values1);
                             bitcrystalrpc.addmultisigaddressex(values2);
-                        }
-
-                        if (!bitcoinrpc.accountexists(tradeAccount2)) {
-                            System.out.println("skjflkxadnklmxcvnbgds");
                             bitcoinrpc.addmultisigaddressex(values3);
                             bitcrystalrpc.addmultisigaddressex(values4);
+                        } catch (Exception ex2) {
                         }
+                        /*
+                        try {
+                        if (!bitcoinrpc.accountexists(tradeAccount)) {
+                        System.out.println("skfjkdjkldjkldnx,mvnc");
+                        bitcoinrpc.addmultisigaddressex(values1);
+                        bitcrystalrpc.addmultisigaddressex(values2);
+                        }
+                        
+                        if (!bitcoinrpc.accountexists(tradeAccount2)) {
+                        System.out.println("skjflkxadnklmxcvnbgds");
+                        bitcoinrpc.addmultisigaddressex(values3);
+                        bitcrystalrpc.addmultisigaddressex(values4);
+                        }
+                        } catch (Exception ex) {
+                        try {
+                        bitcoinrpc.addmultisigaddressex(values1);
+                        bitcrystalrpc.addmultisigaddressex(values2);
+                        } catch (Exception ex2) {
+                        }
+                        }*/
                         System.out.println("djdnvncncnnccc");
                         this.server.close();
                         this.saveClient();

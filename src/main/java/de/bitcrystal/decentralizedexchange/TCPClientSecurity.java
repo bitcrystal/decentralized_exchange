@@ -126,13 +126,14 @@ public class TCPClientSecurity {
     public void sendSecurity(String string) {
         String encodeString = BitCrystalJSON.encodeString(string);
         String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256, 100);
+        this.tcpClient.send(encryptAES256, 40000);
     }
 
     public String recvSecurity() {
-        String recv = this.tcpClient.recv(100);
+        String recv = this.tcpClient.recv(40000);
         if(recv==null)
             return "";
+        
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         decryptAES256 = BitCrystalJSON.decodeString(decryptAES256);
         return decryptAES256;
@@ -141,11 +142,11 @@ public class TCPClientSecurity {
     public void sendSecurityWallet(String string) {
         String encodeString = BitCrystalJSON.encodeWalletString(string);
         String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256,100);
+        this.tcpClient.send(encryptAES256,40000);
     }
 
     public String recvSecurityWallet() {
-        String recv = this.tcpClient.recv(100);
+        String recv = this.tcpClient.recv(40000);
         if(recv==null)
             return "";
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
@@ -157,12 +158,12 @@ public class TCPClientSecurity {
 
         String string = BitCrystalJSON.encode(jsonObject);
         String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 100);
+        this.tcpClient.send(encryptAES256, 40000);
     }
 
     public JSONObject recvJSONObject() {
 
-        String string = this.tcpClient.recv(100);
+        String string = this.tcpClient.recv(40000);
         if (string == null) {
             return null;
         }
@@ -174,11 +175,11 @@ public class TCPClientSecurity {
     public void sendJSONObjectWallet(JSONObject jsonObject) {
         String string = BitCrystalJSON.encodeWallet(jsonObject);
         String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 100);
+        this.tcpClient.send(encryptAES256, 40000);
     }
 
     public JSONObject recvJSONObjectWallet() {
-        String recv = this.tcpClient.recv(100);
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return null;
         }

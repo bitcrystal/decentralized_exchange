@@ -49,6 +49,7 @@ public class RPCApp {
         client.getOptions().setPrintContentOnFailingStatusCode(false);
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setCssEnabled(false);
+        client.getOptions().setTimeout(60000);
 
         baseUrl = new String("http://" + rpcUser + ":" + rpcPassword + "@" + rpcHost + ":" + rpcPort + "/");
         LOG.info("Base RPC URL : " + baseUrl);

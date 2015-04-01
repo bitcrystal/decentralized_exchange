@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -40,9 +42,15 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> endtradesme = new ConcurrentHashMap<String, String>();
     private static Map<String, String> endtradesother = new ConcurrentHashMap<String, String>();
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
+    private static JSONObject serverJSON = null;
+    private boolean isInit = false;
 
     public ServerConnection(TCPClient client) {
         this.client = DecentralizedExchange.getSecurityClient(client);
+        if(!isInit)
+            initServer();
+        else
+            saveServer();
     }
 
     public void run() {
@@ -126,7 +134,7 @@ public class ServerConnection implements Runnable {
                     this.client.close();
                     return;
                 }
-                
+
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
                 String[] split = recv.split(",");
@@ -273,6 +281,7 @@ public class ServerConnection implements Runnable {
                     this.client.close();
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
                 }
+                return;
             }
         }
 
@@ -292,6 +301,7 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             System.out.println("serverconnection@273");
             if (!tradeAccountsIp.containsKey(hostAddress) && !tradeAccountsIp2.containsKey(hostAddress)) {
@@ -305,6 +315,7 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             System.out.println("serverconnection@286");
             String[] split = recv.split(";");
@@ -332,6 +343,7 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             String get = ips.get(hostAddress);
             System.out.println("serverconnection@314");
@@ -346,6 +358,7 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             String get1 = ips.get(get);
             System.out.println(get1);
@@ -361,6 +374,7 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             if (!addresses.containsKey(hostAddress) || !addresses.containsKey(get)) {
                 System.out.println("serverconnection@343");
@@ -373,11 +387,12 @@ public class ServerConnection implements Runnable {
                     this.client.send("E_ERROR");
                     this.client.close();
                 }
+                return;
             }
             this.syncedtrades.put(hostAddress, split[1]);
             this.client.send("TRADE IS SYNCED");
             System.out.println("TRADE IS SYNCED");
-            this.client.recv();
+            //this.client.recv();
             this.client.close();
             return;
         }
@@ -509,21 +524,25 @@ public class ServerConnection implements Runnable {
                     return;
                 }
             }
-
-            if (split[0].equals(split2[0])) {
-                System.out.println("serverconnection@488");
-                try {
-                    this.client.send("E_ERROR");
-                    Thread.sleep(3000L);
-                    this.client.close();
-                    return;
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
-                    this.client.close();
-                    return;
-                }
+            System.out.println(split[0]);
+            System.out.println(split[2]);
+            System.out.println("split[0] == split[2] ?");
+            /*if (split[0].equals(split2[0])) {
+            System.out.println("serverconnection@488");
+            try {
+            this.client.send("E_ERROR");
+            Thread.sleep(3000L);
+            this.client.close();
+            return;
+            } catch (InterruptedException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
             }
+            }*/
+            System.out.println(split[1]);
+            System.out.println(split2[2]);
             if (!(split[1].equals(split2[2]) && split2[1].equals(split[2]))) {
                 System.out.println("serverconnection@502");
                 try {
@@ -573,7 +592,7 @@ public class ServerConnection implements Runnable {
                 }
             }
             if (startedtrades.containsKey(tradeAccount) || startedtrades.containsKey(tradeAccount2) || startedtrades.containsKey(tradeWithAccount) || startedtrades.containsKey(tradeWithAccount2)) {
-               System.out.println("serverconnection@550");
+                System.out.println("serverconnection@550");
                 try {
                     this.client.send("E_ERROR");
                     Thread.sleep(3000L);
@@ -589,20 +608,20 @@ public class ServerConnection implements Runnable {
 
             String get3 = ipsTradeAccounts.get(tradeAccount);
             String get4 = ipsTradeAccounts2.get(tradeAccount2);
-            if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
-                System.out.println("serverconnection@568");
-                try {
-                    this.client.send("E_ERROR");
-                    Thread.sleep(3000L);
-                    this.client.close();
-                    return;
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
-                    this.client.close();
-                    return;
-                }
+            /* if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
+            System.out.println("serverconnection@568");
+            try {
+            this.client.send("E_ERROR");
+            Thread.sleep(3000L);
+            this.client.close();
+            return;
+            } catch (InterruptedException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
             }
+            }*/
             String[] tradeAccountAddresses = split[3].split(",");
             String[] tradeWithAccountAddresses = split[4].split(",");
             String[] tradeAccount2Addresses = split2[3].split(",");
@@ -655,18 +674,18 @@ public class ServerConnection implements Runnable {
             }
 
 
-            if (split[0].equals("btc2btcry") && split2[0].equals("btcry2btc")) {
+            if (split[0].equals("btc2btcry") || split2[0].equals("btcry2btc")) {
                 System.out.println("serverconnection@634");
                 try {
                     System.out.println("serverconnection@636");
                     RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                     RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                    Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price};
-                    Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount};
+                    Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00, 0};
+                    Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00, 0};
                     System.out.println(split_price);
                     System.out.println(split_amount);
                     System.out.println("serverconnection@643");
-                    if (bitcoinrpc.getBalance(tradeAccount) < split_price) {
+                    if (bitcoinrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
                         System.out.println("serverconnection@642");
                         try {
                             this.client.send("E_ERROR");
@@ -680,7 +699,7 @@ public class ServerConnection implements Runnable {
                             return;
                         }
                     }
-                    if (bitcrystalrpc.getBalance(tradeWithAccount) < split_amount) {
+                    if (bitcrystalrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
                         System.out.println("serverconnection@659");
                         try {
                             this.client.send("E_ERROR");
@@ -926,7 +945,7 @@ public class ServerConnection implements Runnable {
                     System.out.println("serverconnection@898");
                     tradeWithAccount = tradeAccountsIp.get(otherip);
                 }
-               
+
                 if (tradeAccount.isEmpty() || tradeWithAccount.isEmpty()) {
                     System.out.println("serverconnection@904");
                     try {
@@ -1024,6 +1043,174 @@ public class ServerConnection implements Runnable {
             }
             System.out.println("ENDTRADE WORKED YEAH! MOTHERFUCKER");
             return;
+        }
+    }
+
+    private synchronized void initServer() {
+        isInit=true;
+        serverJSON = this.client.loadJSONObject("server", "", "server.properties");
+        if (serverJSON == null) {
+            try {
+                JSONObject json = new JSONObject();
+                json.put("pubKeys", pubKeys);
+                json.put("addressesPubkeys", addressesPubkeys);
+                json.put("pubkeysAddresses", pubkeysAddresses);
+                json.put("pubKeysMap", pubKeysMap);
+                json.put("pubKeysMap2", pubKeysMap2);
+                json.put("serverAddressesPubkeys", serverAddressesPubkeys);
+                json.put("serverPubkeysAddresses", serverPubkeysAddresses);
+                json.put("serverPubKeys", serverPubKeys);
+                json.put("ipsTradeAccounts", ipsTradeAccounts);
+                json.put("ipsTradeAccounts2", ipsTradeAccounts2);
+                json.put("tradeAccountsIp", tradeAccountsIp);
+                json.put("tradeAccountsIp2", tradeAccountsIp2);
+                json.put("ips", ips);
+                json.put("addresses", addresses);
+                json.put("syncedtrades", startedtrades);
+                json.put("startedtrades", startedtrades);
+                json.put("endtradesme", endtradesme);
+                json.put("endtradesother", endtradesother);
+                json.put("startedtradesaccount", startedtradesaccount);
+                this.client.saveJSONObject(json, "server", "", "server.properties");
+                serverJSON = json;
+            } catch (JSONException ex) {
+                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+
+                pubKeys = (List<String>) serverJSON.get("pubKeys");
+            } catch (JSONException ex) {
+                pubKeys = new CopyOnWriteArrayList<String>();
+            }
+            try {
+                addressesPubkeys = (Map<String, String>) serverJSON.get("addressesPubkeys");
+            } catch (JSONException ex) {
+                addressesPubkeys = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                pubkeysAddresses = (Map<String, String>) serverJSON.get("pubkeysAddresses");
+            } catch (JSONException ex) {
+                pubkeysAddresses = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                pubKeysMap = (Map<String, String>) serverJSON.get("pubKeysMap");
+            } catch (JSONException ex) {
+                pubKeysMap = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                pubKeysMap2 = (Map<String, String>) serverJSON.get("pubKeysMap2");
+            } catch (JSONException ex) {
+                pubKeysMap2 = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                serverAddressesPubkeys = (Map<String, String>) serverJSON.get("serverAddressesPubkeys");
+            } catch (JSONException ex) {
+                serverAddressesPubkeys = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                serverPubkeysAddresses = (Map<String, String>) serverJSON.get("serverPubkeysAddresses");
+            } catch (JSONException ex) {
+                serverPubkeysAddresses = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                serverPubKeys = (List<String>) serverJSON.get("serverPubKeys");
+            } catch (JSONException ex) {
+                serverPubKeys = new CopyOnWriteArrayList<String>();
+            }
+            try {
+                tradeAccounts = (List<String>) serverJSON.get("tradeAccounts");
+            } catch (JSONException ex) {
+                tradeAccounts = new CopyOnWriteArrayList<String>();
+            }
+            try {
+                ipsTradeAccounts = (Map<String, String>) serverJSON.get("ipsTradeAccounts");
+            } catch (JSONException ex) {
+                ipsTradeAccounts = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                ipsTradeAccounts2 = (Map<String, String>) serverJSON.get("ipsTradeAccounts2");
+            } catch (JSONException ex) {
+                ipsTradeAccounts2 = new ConcurrentHashMap<String, String>();
+            }
+
+            try {
+                tradeAccountsIp = (Map<String, String>) serverJSON.get("tradeAccountsIp");
+            } catch (JSONException ex) {
+                tradeAccountsIp = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                tradeAccountsIp2 = (Map<String, String>) serverJSON.get("tradeAccountsIp2");
+            } catch (JSONException ex) {
+                tradeAccountsIp2 = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                ips = (Map<String, String>) serverJSON.get("ips");
+            } catch (JSONException ex) {
+                ips = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                addresses = (Map<String, String>) serverJSON.get("addresses");
+            } catch (JSONException ex) {
+                addresses = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                syncedtrades = (Map<String, String>) serverJSON.get("syncedtrades");
+            } catch (JSONException ex) {
+                syncedtrades = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                startedtrades = (Map<String, String>) serverJSON.get("startedtrades");
+            } catch (JSONException ex) {
+                startedtrades = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                endtradesme = (Map<String, String>) serverJSON.get("endtradesme");
+            } catch (JSONException ex) {
+                endtradesme = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                endtradesother = (Map<String, String>) serverJSON.get("endtradesother");
+            } catch (JSONException ex) {
+                endtradesother = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                startedtradesaccount = (Map<String, String>) serverJSON.get("startedtradesaccount");
+            } catch (JSONException ex) {
+                startedtradesaccount = new ConcurrentHashMap<String, String>();
+            }
+        }
+    }
+
+    private synchronized void saveServer() {
+        JSONObject json = this.client.loadJSONObject("server", "", "server.properties");
+        if (json == null) {
+            return;
+        }
+        try {
+            json.put("pubKeys", pubKeys);
+            json.put("addressesPubkeys", addressesPubkeys);
+            json.put("pubkeysAddresses", pubkeysAddresses);
+            json.put("pubKeysMap", pubKeysMap);
+            json.put("pubKeysMap2", pubKeysMap2);
+            json.put("serverAddressesPubkeys", serverAddressesPubkeys);
+            json.put("serverPubkeysAddresses", serverPubkeysAddresses);
+            json.put("serverPubKeys", serverPubKeys);
+            json.put("ipsTradeAccounts", ipsTradeAccounts);
+            json.put("ipsTradeAccounts2", ipsTradeAccounts2);
+            json.put("tradeAccountsIp", tradeAccountsIp);
+            json.put("tradeAccountsIp2", tradeAccountsIp2);
+            json.put("ips", ips);
+            json.put("addresses", addresses);
+            json.put("syncedtrades", startedtrades);
+            json.put("startedtrades", startedtrades);
+            json.put("endtradesme", endtradesme);
+            json.put("endtradesother", endtradesother);
+            json.put("startedtradesaccount", startedtradesaccount);
+            this.client.saveJSONObject(json, "server", "", "server.properties");
+            serverJSON = json;
+        } catch (JSONException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

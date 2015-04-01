@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -115,7 +116,7 @@ public class HashFunctions {
         if (!encryptedText.contains(";;;")) {
             return "";
         }
-        String[] split = encryptedText.split(";;;");
+        String[] split = encryptedText.split(Pattern.quote(";;;"));
         encryptedText = split[0];
         byte[] ivBytes = Base64.decodeBase64(split[1]);
         byte[] encryptedTextBytes = Base64.decodeBase64(encryptedText);
