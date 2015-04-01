@@ -260,6 +260,7 @@ public class ServerConnection implements Runnable {
                 }
                 System.out.println("serverconnection@241");
                 ips.put(hostAddress, get);
+                return;
             } catch (Exception ex) {
                 System.out.println("serverconnection@244");
                 try {
@@ -378,6 +379,7 @@ public class ServerConnection implements Runnable {
             System.out.println("TRADE IS SYNCED");
             this.client.recv();
             this.client.close();
+            return;
         }
 
         if (recv.startsWith("starttrade")) {
@@ -706,6 +708,7 @@ public class ServerConnection implements Runnable {
                     client.send("ALL_OK");
                     client.recv();
                     client.close();
+                    return;
                 } catch (Exception ex) {
                     System.out.println("serverconnection@687");
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -771,6 +774,7 @@ public class ServerConnection implements Runnable {
                     return;
                 }
             }
+            return;
         }
 
         if (recv.startsWith("endtrademe;")) {
@@ -894,6 +898,7 @@ public class ServerConnection implements Runnable {
             System.out.println("ENDTRADEOTHER GREAT!");
             this.client.send("ALL_OK");
             this.client.close();
+            return;
         }
 
         if (recv.startsWith("endtrade")) {
@@ -1018,6 +1023,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
             System.out.println("ENDTRADE WORKED YEAH! MOTHERFUCKER");
+            return;
         }
     }
 }

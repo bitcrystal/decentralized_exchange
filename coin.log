@@ -2239,3 +2239,163 @@ java.net.SocketTimeoutException: Read timed out
 2015-04-01 02:32:29,819 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4yjLyK1UR2ANz4yHuyTWSu1SYhyzngjJpG","error":null,"id":null}
 2015-04-01 02:32:29,978 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4yjLyK1UR2ANz4yHuyTWSu1SYhyzngjJpG","error":null,"id":null}
 2015-04-01 02:34:04,322 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:56:15,474 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:56:16,905 ERROR com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Connection to http://127.0.0.1:19332 refused
+org.apache.http.conn.HttpHostConnectException: Connection to http://127.0.0.1:19332 refused
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:190)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:294)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:645)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:480)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:906)
+	at com.gargoylesoftware.htmlunit.HttpWebConnection.getResponse(HttpWebConnection.java:172)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponseFromWebConnection(WebClient.java:1486)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponse(WebClient.java:1403)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:305)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:374)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:359)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.<init>(RPCApp.java:57)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.getAppOutRPCconf(RPCApp.java:848)
+	at de.bitcrystal.decentralizedexchange.ClientConnection.run(ClientConnection.java:56)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:184)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:192)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:81)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:92)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.main(DecentralizedExchange.java:67)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	... 18 more
+2015-04-01 02:56:16,932 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:56:17,959 ERROR com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Connection to http://127.0.0.1:19332 refused
+org.apache.http.conn.HttpHostConnectException: Connection to http://127.0.0.1:19332 refused
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:190)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:294)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:645)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:480)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:906)
+	at com.gargoylesoftware.htmlunit.HttpWebConnection.getResponse(HttpWebConnection.java:172)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponseFromWebConnection(WebClient.java:1486)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponse(WebClient.java:1403)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:305)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:374)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:359)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.<init>(RPCApp.java:57)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.getAppOutRPCconf(RPCApp.java:848)
+	at de.bitcrystal.decentralizedexchange.ClientConnection.run(ClientConnection.java:57)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:184)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:192)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:81)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:92)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.main(DecentralizedExchange.java:67)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	... 18 more
+2015-04-01 02:56:33,460 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:56:34,905 ERROR com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Connection to http://127.0.0.1:19332 refused
+org.apache.http.conn.HttpHostConnectException: Connection to http://127.0.0.1:19332 refused
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:190)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:294)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:645)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:480)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:906)
+	at com.gargoylesoftware.htmlunit.HttpWebConnection.getResponse(HttpWebConnection.java:172)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponseFromWebConnection(WebClient.java:1486)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponse(WebClient.java:1403)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:305)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:374)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:359)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.<init>(RPCApp.java:57)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.getAppOutRPCconf(RPCApp.java:848)
+	at de.bitcrystal.decentralizedexchange.ClientConnection.run(ClientConnection.java:56)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:184)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:192)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:81)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:92)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.main(DecentralizedExchange.java:67)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	... 18 more
+2015-04-01 02:56:34,911 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:56:35,931 ERROR com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Connection to http://127.0.0.1:19332 refused
+org.apache.http.conn.HttpHostConnectException: Connection to http://127.0.0.1:19332 refused
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:190)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:294)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:645)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:480)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:906)
+	at com.gargoylesoftware.htmlunit.HttpWebConnection.getResponse(HttpWebConnection.java:172)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponseFromWebConnection(WebClient.java:1486)
+	at com.gargoylesoftware.htmlunit.WebClient.loadWebResponse(WebClient.java:1403)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:305)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:374)
+	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:359)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.<init>(RPCApp.java:57)
+	at com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp.getAppOutRPCconf(RPCApp.java:848)
+	at de.bitcrystal.decentralizedexchange.ClientConnection.run(ClientConnection.java:57)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:184)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:192)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:81)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:92)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.main(DecentralizedExchange.java:67)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	... 18 more
+2015-04-01 02:57:37,947 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:57:38,963 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:57:39,712 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"12MSLwDqzVxpxZEp22Z5t841aWm99G9qNv","error":null,"id":null}
+2015-04-01 02:57:44,933 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"025844cc4c295f908888a38f87425a92e470ab162bbe4dc4c88b56f44a07429f37","error":null,"id":null}
+2015-04-01 02:57:44,992 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KyMKyaqm2VwJxVkadUbh8dxRLEe1VfnxY8hLEcq7GAwb5bsqLYnb","error":null,"id":null}
+2015-04-01 02:57:45,148 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 02:57:54,791 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:57:55,933 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:57:56,391 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 02:57:56,484 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"12MSLwDqzVxpxZEp22Z5t841aWm99G9qNv","error":null,"id":null}
+2015-04-01 02:57:56,990 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1BV7GXPu6sU5mSdWJ1c6up3nqka487hN5g","error":null,"id":null}
+2015-04-01 02:57:57,250 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"02866b941781905f389c2e718d96c7b78630b8dee949da6ed0052878fd4f93f3e5","error":null,"id":null}
+2015-04-01 02:57:57,396 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzvMijmMoHqHW41DgZZtJu1QKGs749GQ7xgxrbLmJpNCLDXQHcKU","error":null,"id":null}
+2015-04-01 02:57:57,510 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":true,"error":null,"id":null}
+2015-04-01 02:58:21,987 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:58:22,870 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:58:27,964 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:58:28,030 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-01 02:58:28,154 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"12MSLwDqzVxpxZEp22Z5t841aWm99G9qNv","error":null,"id":null}
+2015-04-01 02:58:28,191 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"12MSLwDqzVxpxZEp22Z5t841aWm99G9qNv","error":null,"id":null}
+2015-04-01 02:58:28,243 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgQ0NnZ3QELm4BMTBFZGR/K2kzKl9qdiYxcwRSblQsDCsfTScWMD1pKkRlc0YYNTBHXCJtGDFfMQFKEXsneVYGHl0aL3UUKg5nKEAmemtuLSJpPVFySXoCXBApGiZbTncROWBER088Tg8WByt8OSJibHBOGBZsEh5sIydkdC4QDABianF2DDd5E14bYmwyJ2BGTXNYfg50HQ9oIlFzPBlIGXoyNyNfdBYJAUw8RjEwAXplNERweXEfWUJacWVFZUINYGxpR2NCKCkeMH0lZGsbYUUvUh83U3xmdRlyASYDHysgcVE9c2M8KnNDBhkoVzZ8dChbcFcRZl17PTp6WVR2ZGpTRyBoalpTJHxIMBxCbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 02:58:28,287 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"Xj9zM1oda0BgQ0NnZ3QELm4BMTBFZGR/K2kzKl9qdiYxcwRSblQsDCsfTScWMD1pKkRlc0YYNTBHXCJtGDFfMQFKEXsneVYGHl0aL3UUKg5nKEAmemtuLSJpPVFySXoCXBApGiZbTncROWBER088Tg8WByt8OSJibHBOGBZsEh5sIydkdC4QDABianF2DDd5E14bYmwyJ2BGTXNYfg50HQ9oIlFzPBlIGXoyNyNfdBYJAUw8RjEwAXplNERweXEfWUJacWVFZUINYGxpR2NCKCkeMH0lZGsbYUUvUh83U3xmdRlyASYDHysgcVE9c2M8KnNDBhkoVzZ8dChbcFcRZl17PTp6WVR2ZGpTRyBoalpTJHxIMBxCbxkEGhd2ZhYBXzAKFQ==","error":null,"id":null}
+2015-04-01 02:58:31,190 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4xcYwm1xX2ZKVridM6ag11wjWNrqpMhMAX","error":null,"id":null}
+2015-04-01 02:58:31,309 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"4xcYwm1xX2ZKVridM6ag11wjWNrqpMhMAX","error":null,"id":null}
