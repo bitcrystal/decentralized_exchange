@@ -448,7 +448,9 @@ public class ServerConnection implements Runnable {
                 startedtrades.put(tradeAccount, tradeAccountSend);
                 startedtrades.put(tradeWithAccount, tradeWithAccountSend);
                 client.send("ALL_OK");
+                System.out.println("TRADE IS STARTED");
                 client.recv();
+                System.out.println("WORKED AWESOME!");
                 client.close();
                 return;
             } catch (Exception ex) {
@@ -468,7 +470,7 @@ public class ServerConnection implements Runnable {
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
                 Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price};
                 Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount};
-                if (bitcrystalrpc.getBalance(tradeAccount) < split_price) {
+                if (bitcrystalrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
                     System.out.println("serverconnection@704");
                     try {
                         this.client.send("E_ERROR");
@@ -482,7 +484,7 @@ public class ServerConnection implements Runnable {
                         return;
                     }
                 }
-                if (bitcoinrpc.getBalance(tradeWithAccount) < split_amount) {
+                if (bitcoinrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
                     System.out.println("serverconnection@718");
                     try {
                         this.client.send("E_ERROR");
@@ -508,6 +510,7 @@ public class ServerConnection implements Runnable {
                 client.send("ALL_OK");
                 System.out.println("TRADE IS STARTED");
                 client.recv();
+                System.out.println("WORKED AWESOME");
                 client.close();
             } catch (Exception ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -534,7 +537,7 @@ public class ServerConnection implements Runnable {
                 tradeAccount = tradeAccountsIp.get(hostAddress);
             } else if (tradeAccountsIp2.containsKey(hostAddress)) {
                 System.out.println("serverconnection@889");
-                tradeAccount = tradeAccountsIp.get(hostAddress);
+                tradeAccount = tradeAccountsIp2.get(hostAddress);
             }
 
             if (tradeAccountsIp.containsKey(otherip)) {
@@ -542,7 +545,7 @@ public class ServerConnection implements Runnable {
                 tradeWithAccount = tradeAccountsIp.get(otherip);
             } else if (tradeAccountsIp2.containsKey(otherip)) {
                 System.out.println("serverconnection@898");
-                tradeWithAccount = tradeAccountsIp.get(otherip);
+                tradeWithAccount = tradeAccountsIp2.get(otherip);
             }
 
             if (tradeAccount.isEmpty() || tradeWithAccount.isEmpty()) {
@@ -793,7 +796,7 @@ public class ServerConnection implements Runnable {
                 json.put("endtradesme", mapToJSONObject(endtradesme));
                 json.put("endtradesother", mapToJSONObject(endtradesother));
                 json.put("startedtradesaccount", mapToJSONObject(startedtradesaccount));
-                 System.out.println(json.toString());
+                System.out.println(json.toString());
                 this.client.saveJSONObject(json, "server", "", "server.properties");
                 serverJSON = json;
             } catch (JSONException ex) {
@@ -1332,8 +1335,7 @@ public class ServerConnection implements Runnable {
             jsonObject = (JSONObject) object;
         }
 
-        if(jsonObject==null)
-        {
+        if (jsonObject == null) {
             return new ConcurrentHashMap<String, String>();
         }
         JSONArray names = jsonObject.names();

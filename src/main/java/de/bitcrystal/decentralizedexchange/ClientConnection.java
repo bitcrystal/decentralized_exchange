@@ -115,6 +115,13 @@ public class ClientConnection implements Runnable {
                         System.out.println("endtradeother close");
                         return;
                     }
+                    
+                    if (split[0].equalsIgnoreCase("ENDTRADE")) {
+                        System.out.println("endtrade open");
+                        endtrade();
+                        System.out.println("endtrade close");
+                        return;
+                    }
                 }
                 break;
 
@@ -363,6 +370,22 @@ public class ClientConnection implements Runnable {
             this.server.close();
             isSynced = true;
             this.saveClient();
+            return;
+        }
+    }
+    
+    private void endtrade()
+    {
+        this.server.send("endtrade");
+        String recv = this.server.recv();
+        if(recv.equals("E_ERROR"))
+        {
+            this.server.close();
+            return;
+        }
+        if(recv.equals("ALL_OK")) {
+            System.out.println("YEAH I'VE WON!!!!!!!!!!!!!!!!!!!11");
+            this.server.close();
             return;
         }
     }
@@ -662,13 +685,11 @@ public class ClientConnection implements Runnable {
             }
             if (!tradebtc2btcry.isEmpty()) {
                 System.out.println("clientconnection@380");
-                String recv1 = this.server.recv();
-                System.out.println(recv1);
                 String[] split1 = tradebtc2btcry.split(";;");
                 JsonObject decodeRawTransactionMultisig1 = null;
                 try {
                     System.out.println("clientconnection@385");
-                    decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(recv1);
+                    decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(recv);
                     if (!decodeRawTransactionMultisig1.has("complete")) {
                         System.out.println("clientconnection@389");
                         this.server.send("E_ERROR");
@@ -678,7 +699,9 @@ public class ClientConnection implements Runnable {
                     String asString = decodeRawTransactionMultisig1.get("toaddress").getAsString();
                     double asDouble = decodeRawTransactionMultisig1.get("amount").getAsDouble();
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
-                    if (!(("" + asDouble).equals(split1[0])) || !currencyprefix.equals("BTCRY") || !asString.equals(currentTradeAddress)) {
+                    if (!(("" + asDouble).equals(split1[0]))
+                            || //!currencyprefix.equals("BTCRY") ||
+                            !asString.equals(currentTradeAddress)) {
                         System.out.println("clientconnection@398");
                         this.server.send("E_ERROR");
                         this.server.close();
@@ -690,7 +713,7 @@ public class ClientConnection implements Runnable {
                     this.server.close();
                     return;
                 }
-                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv1);
+                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv);
                 try {
                     System.out.println("clientconnection@411");
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
@@ -712,14 +735,13 @@ public class ClientConnection implements Runnable {
                 this.server.close();
             } else if (!tradebtcry2btc.isEmpty()) {
                 System.out.println("clientconnection@430");
-                String recv1 = this.server.recv();
-                System.out.println(recv1);
+                System.out.println(recv);
                 System.out.println("clientconnection@432");
                 String[] split1 = tradebtcry2btc.split(";;");
                 JsonObject decodeRawTransactionMultisig1 = null;
                 try {
                     System.out.println("clientconnection@437");
-                    decodeRawTransactionMultisig1 = bitcoinrpc.decodeRawTransactionMultisig(recv1);
+                    decodeRawTransactionMultisig1 = bitcoinrpc.decodeRawTransactionMultisig(recv);
                     if (!decodeRawTransactionMultisig1.has("complete")) {
                         System.out.println("clientconnection@440");
                         this.server.send("E_ERROR");
@@ -729,7 +751,9 @@ public class ClientConnection implements Runnable {
                     String asString = decodeRawTransactionMultisig1.get("toaddress").getAsString();
                     double asDouble = decodeRawTransactionMultisig1.get("amount").getAsDouble();
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
-                    if (!(("" + asDouble).equals(split1[0])) || !currencyprefix.equals("BTC") || !asString.equals(currentTradeAddress)) {
+                    if (!(("" + asDouble).equals(split1[0]))
+                            //|| !currencyprefix.equals("BTC") 
+                            || !asString.equals(currentTradeAddress)) {
                         System.out.println("clientconnection@449");
                         this.server.send("E_ERROR");
                         this.server.close();
@@ -742,7 +766,7 @@ public class ClientConnection implements Runnable {
                     return;
                 }
                 System.out.println("clientconnection@460");
-                String signrawtransaction_multisig1 = bitcoinrpc.signrawtransaction_multisig(recv1);
+                String signrawtransaction_multisig1 = bitcoinrpc.signrawtransaction_multisig(recv);
                 try {
                     System.out.println("clientconnection@462");
                     decodeRawTransactionMultisig1 = bitcoinrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
