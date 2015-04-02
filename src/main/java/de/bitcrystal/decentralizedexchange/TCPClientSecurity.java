@@ -98,11 +98,11 @@ public class TCPClientSecurity {
     }
 
     public void send(String string) {
-        this.sendSecurity(string);
+        this.tcpClient.send(string,100);
     }
 
     public String recv() {
-        String recv = this.recvSecurity();
+        String recv = this.tcpClient.recv(100);
         return recv;
     }
     

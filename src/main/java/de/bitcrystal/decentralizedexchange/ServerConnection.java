@@ -174,7 +174,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        if (!get1.startsWith("btc2btry") && !get1.startsWith("btcry2btc")) {
+        if (!get1.startsWith("btc2btcry") && !get1.startsWith("btcry2btc")) {
             System.out.println("serverconnection@416");
             try {
                 this.client.send("E_ERROR");
@@ -188,7 +188,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        if (!get2.startsWith("btc2btry") && !get2.startsWith("btcry2btc")) {
+        if (!get2.startsWith("btc2btcry") && !get2.startsWith("btcry2btc")) {
             System.out.println("serverconnection@430");
             try {
                 this.client.send("E_ERROR");
@@ -446,7 +446,9 @@ public class ServerConnection implements Runnable {
                 System.out.println(createrawtransaction_multisig1);
                 System.out.println("serverconnection@680");
                 startedtrades.put(tradeAccount, tradeAccountSend);
-                startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                //startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                startedtradesaccount.put(tradeAccount, tradeWithAccount);
+                //startedtradesaccount.put(tradeWithAccount, tradeAccount);
                 client.send("ALL_OK");
                 System.out.println("TRADE IS STARTED");
                 client.recv();
@@ -503,9 +505,9 @@ public class ServerConnection implements Runnable {
                 String tradeAccountSend = "btcry2btc;;" + values[0] + ";;" + values[1] + ";;" + values[2] + ";;" + createrawtransaction_multisig;
                 String tradeWithAccountSend = "btc2btcry;;" + values2[0] + ";;" + values2[1] + ";;" + values2[2] + ";;" + createrawtransaction_multisig1;
                 startedtrades.put(tradeAccount, tradeAccountSend);
-                startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                //startedtrades.put(tradeWithAccount, tradeWithAccountSend);
                 startedtradesaccount.put(tradeAccount, tradeWithAccount);
-                startedtradesaccount.put(tradeWithAccount, tradeAccount);
+                //startedtradesaccount.put(tradeWithAccount, tradeAccount);
                 System.out.println("serverconnection@739");
                 client.send("ALL_OK");
                 System.out.println("TRADE IS STARTED");
@@ -582,21 +584,21 @@ public class ServerConnection implements Runnable {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             String get2 = startedtrades.get(tradeAccount);
             String get3 = startedtrades.get(tradeWithAccount);
-            if (get2.startsWith("btc2btcry") && get3.startsWith("btc2btcry") || get2.startsWith("btcry2btc") && get3.startsWith("btcry2btc")) {
-                System.out.println("serverconnection@937");
-                try {
-                    this.client.send("E_ERROR");
-                    Thread.sleep(3000L);
-                    this.client.close();
-                    return;
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
-                    this.client.close();
-                    return;
-                }
+            /*if (get2.startsWith("btc2btcry") && get3.startsWith("btc2btcry") || get2.startsWith("btcry2btc") && get3.startsWith("btcry2btc")) {
+            System.out.println("serverconnection@937");
+            try {
+            this.client.send("E_ERROR");
+            Thread.sleep(3000L);
+            this.client.close();
+            return;
+            } catch (InterruptedException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
             }
-            if (get2.startsWith("btc2btcry") && get3.startsWith("btcry2btc")) {
+            }*/
+            if (get2.startsWith("btc2btcry") || get3.startsWith("btcry2btc")) {
                 System.out.println("serverconnection@951");
                 String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get);
                 String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get1);
