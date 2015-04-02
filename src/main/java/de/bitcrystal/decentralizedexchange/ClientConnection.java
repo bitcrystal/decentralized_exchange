@@ -81,6 +81,31 @@ public class ClientConnection implements Runnable {
                         return;
                     }
 
+                    if (split[0].equalsIgnoreCase("GETCURRENTTRADERADDRESS")) {
+                        System.out.println(currentTradeAddress);
+                        return;
+                    }
+                    
+                    if (split[0].equalsIgnoreCase("GETCURRENTTRADEWITHADDRESS")) {
+                        System.out.println(tradeWithAddress);
+                        return;
+                    }
+                    
+                     if (split[0].equalsIgnoreCase("GETCURRENTTRADERADDRESS")) {
+                        System.out.println(currentTradeAddress);
+                        return;
+                    }
+                    
+                    if (split[0].equalsIgnoreCase("GETCURRENTTRADE")) {
+                        if(!tradebtc2btcry.isEmpty())
+                            System.out.println(tradebtc2btcry);
+                        else if(!tradebtc2btcry.isEmpty())
+                            System.out.println(tradebtcry2btc);
+                        else
+                            System.out.println("No Trade available!");
+                        return;
+                    }
+
                     if (split[0].equalsIgnoreCase("TRADEABORT")) {
                         System.out.println("tradeabort open");
                         tradeabort();
@@ -115,7 +140,7 @@ public class ClientConnection implements Runnable {
                         System.out.println("endtradeother close");
                         return;
                     }
-                    
+
                     if (split[0].equalsIgnoreCase("ENDTRADE")) {
                         System.out.println("endtrade open");
                         endtrade();
@@ -373,17 +398,15 @@ public class ClientConnection implements Runnable {
             return;
         }
     }
-    
-    private void endtrade()
-    {
+
+    private void endtrade() {
         this.server.send("endtrade");
         String recv = this.server.recv();
-        if(recv.equals("E_ERROR"))
-        {
+        if (recv.equals("E_ERROR")) {
             this.server.close();
             return;
         }
-        if(recv.equals("ALL_OK")) {
+        if (recv.equals("ALL_OK")) {
             System.out.println("YEAH I'VE WON!!!!!!!!!!!!!!!!!!!11");
             this.server.close();
             return;
