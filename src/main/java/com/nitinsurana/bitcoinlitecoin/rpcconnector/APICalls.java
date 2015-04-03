@@ -91,7 +91,8 @@ public enum APICalls {
     ENCODE_TRADE("encodetrade"),
     DECODE_TRADE("decodetrade"),
     ENCODE_TRADE_WITH("encodetradewith"),
-    DECODE_TRADE_WITH("decodetradewith");
+    DECODE_TRADE_WITH("decodetradewith"), 
+    TEST_TRANSACTION_MULTISIG_EQUALS("testtransactionequals_multisig");
     private String value;
 
     private APICalls(String value) {

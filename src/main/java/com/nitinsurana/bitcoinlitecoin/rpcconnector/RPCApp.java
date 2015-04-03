@@ -893,4 +893,21 @@ public class RPCApp {
         Object[] values = {createrawtransaction_multisig};
         return signandsendrawtransaction_multisig(values);
     }
+
+    public boolean testtransactionequals_multisig(String createrawtransaction_multisig, String myTransaction) throws Exception {
+        Object[] values = {createrawtransaction_multisig, myTransaction};
+        return testtransactionequals_multisig(values);
+    }
+
+    public boolean testtransactionequals_multisig(Object[] values) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.TEST_TRANSACTION_MULTISIG_EQUALS, values);
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsBoolean();
+    }
 }

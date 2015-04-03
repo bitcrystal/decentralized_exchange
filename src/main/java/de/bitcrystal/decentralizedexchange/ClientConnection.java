@@ -549,7 +549,7 @@ public class ClientConnection implements Runnable {
                 String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                 System.out.println(myTransaction);
                 System.out.println(createrawtransaction_multisig);
-                if (!createrawtransaction_multisig.equals(myTransaction)) {
+                if (!bitcoinrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     System.out.println("clientconnection@290");
                     this.server.send("E_ERROR");
                     this.server.close();
@@ -650,7 +650,7 @@ public class ClientConnection implements Runnable {
                 }
                 Object[] values = {tradeAccount, tradeWithAddress, price, 0.00, 0};
                 String createrawtransaction_multisig = bitcrystalrpc.createrawtransaction_multisig(values);
-                if (!createrawtransaction_multisig.equals(myTransaction)) {
+               if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     System.out.println("clientconnection@390");
                     this.server.send("E_ERROR");
                     this.server.close();
