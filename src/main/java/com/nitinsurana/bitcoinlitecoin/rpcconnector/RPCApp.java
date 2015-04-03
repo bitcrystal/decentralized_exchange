@@ -891,6 +891,16 @@ public class RPCApp {
 
     public String signrawtransaction_multisig(String createrawtransaction_multisig) throws Exception {
         Object[] values = {createrawtransaction_multisig};
+        return signrawtransaction_multisig(values);
+    }
+    
+    public String signrawtransaction_multisig(String createrawtransaction_multisig, int amount) throws Exception {
+        Object[] values = {createrawtransaction_multisig, amount};
+        return signrawtransaction_multisig(values);
+    }
+    
+    public String signandsendrawtransaction_multisig(String createrawtransaction_multisig) throws Exception {
+        Object[] values = {createrawtransaction_multisig};
         return signandsendrawtransaction_multisig(values);
     }
 

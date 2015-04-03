@@ -545,7 +545,7 @@ public class ClientConnection implements Runnable {
                     this.server.close();
                     return;
                 }
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00, 0};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
                 String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                 System.out.println(myTransaction);
                 System.out.println(createrawtransaction_multisig);
@@ -566,7 +566,7 @@ public class ClientConnection implements Runnable {
                     this.server.close();
                     return;
                 }
-                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig);
+                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig, 1);
                 this.server.send(signrawtransaction_multisig);
                 String recv1 = this.server.recv();
                 if (recv1.equals("E_ERROR")) {
@@ -648,7 +648,7 @@ public class ClientConnection implements Runnable {
                     this.server.close();
                     return;
                 }
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00, 0};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
                 String createrawtransaction_multisig = bitcrystalrpc.createrawtransaction_multisig(values);
                if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     System.out.println("clientconnection@390");
@@ -717,16 +717,21 @@ public class ClientConnection implements Runnable {
                 JsonObject decodeRawTransactionMultisig1 = null;
                 try {
                     System.out.println("clientconnection@385");
+                    System.out.println(recv);
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(recv);
+                    System.out.println("clientconnection@720");
+                    System.out.println("clientconnection@721");
                     if (!decodeRawTransactionMultisig1.has("complete")) {
                         System.out.println("clientconnection@389");
                         this.server.send("E_ERROR");
                         this.server.close();
                         return;
                     }
+                    System.out.println("clientconnection@728");
                     String asString = decodeRawTransactionMultisig1.get("toaddress").getAsString();
                     double asDouble = decodeRawTransactionMultisig1.get("amount").getAsDouble();
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
+                    System.out.println("clientconnection@732");
                     if (!(("" + asDouble).equals(split1[0]))
                             || //!currencyprefix.equals("BTCRY") ||
                             !asString.equals(currentTradeAddress)) {
@@ -741,15 +746,16 @@ public class ClientConnection implements Runnable {
                     this.server.close();
                     return;
                 }
-                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv);
+                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv, 1);
                 try {
                     System.out.println("clientconnection@411");
+                    System.out.println(signrawtransaction_multisig1);
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
-                    JsonElement get = decodeRawTransactionMultisig1.get("complete");
-                    if (get.getAsBoolean() == true) {
+                    //JsonElement get = decodeRawTransactionMultisig1.get("complete");
+                   /* if (get.getAsBoolean() == true) {
                         System.out.println("clientconnection@415");
                         throw new Exception();
-                    }
+                    }*/
                 } catch (Exception ex2) {
                     System.out.println("clientconnection@419");
                     this.server.send("E_ERROR");

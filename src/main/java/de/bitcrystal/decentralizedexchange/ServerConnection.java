@@ -120,7 +120,7 @@ public class ServerConnection implements Runnable {
         }
     }
 
-    private void starttrade() {
+     private void starttrade() {
         System.out.println("serverconnection@362");
         String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
         if (!syncedtrades.containsKey(hostAddress)) {
@@ -403,8 +403,8 @@ public class ServerConnection implements Runnable {
                 System.out.println("serverconnection@636");
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00, 0};
-                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00, 0};
+                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00};
+                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00};
                 System.out.println(split_price);
                 System.out.println(split_amount);
                 System.out.println("serverconnection@643");
@@ -600,8 +600,8 @@ public class ServerConnection implements Runnable {
             }*/
             if (get2.startsWith("btc2btcry") || get3.startsWith("btcry2btc")) {
                 System.out.println("serverconnection@951");
-                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get);
-                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get1);
+                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get, 1);
+                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get1, 1);
                 JsonObject decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(signrawtransaction_multisig);
                 JsonObject decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
                 Object[] values = {signrawtransaction_multisig};
@@ -613,8 +613,8 @@ public class ServerConnection implements Runnable {
                 }
             } else if (get2.startsWith("btcry2btc") && get3.startsWith("btc2btcry")) {
                 System.out.println("serverconnection@964");
-                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get1);
-                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get);
+                String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get1, 1);
+                String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get, 1);
                 JsonObject decodeRawTransactionMultisig = bitcoinrpc.decodeRawTransactionMultisig(signrawtransaction_multisig);
                 JsonObject decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
                 Object[] values = {signrawtransaction_multisig};
