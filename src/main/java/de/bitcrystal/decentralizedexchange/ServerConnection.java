@@ -1440,5 +1440,8 @@ public class ServerConnection implements Runnable {
         tradeAccountsIp2.remove(hostAddress);
         syncedtrades.remove(hostAddress);
         pubkeysAddresses.remove(split[1]);
+        this.client.sendLight("ALL_OK");
+        this.client.close();
+        return;
     }
 }
