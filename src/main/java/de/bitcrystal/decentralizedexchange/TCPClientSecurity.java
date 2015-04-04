@@ -98,25 +98,31 @@ public class TCPClientSecurity {
     }
 
     public void send(String string) {
-        this.tcpClient.send(string,100);
+        this.sendSecurity(string);
     }
 
     public String recv() {
-        String recv = this.tcpClient.recv(100);
+        String recv = this.recvSecurity();
         return recv;
     }
-    
-    public void send(String data, int buffer)
-    {
+
+    public void sendLight(String string) {
+        this.sendSecurityLight(string);
+    }
+
+    public String recvLight() {
+        String recv = this.recvSecurityLight();
+        return recv;
+    }
+
+    public void send(String data, int buffer) {
         String encryptAES256 = HashFunctions.encryptAES256(data, password, salt);
         this.tcpClient.send(encryptAES256, buffer);
     }
-    
-    public String recv(int buffer)
-    {
+
+    public String recv(int buffer) {
         String recv = this.tcpClient.recv(buffer);
-        if(recv==null)
-        {
+        if (recv == null) {
             return "";
         }
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
@@ -131,26 +137,61 @@ public class TCPClientSecurity {
 
     public String recvSecurity() {
         String recv = this.tcpClient.recv(40000);
-        if(recv==null)
+        if (recv == null) {
             return "";
-        
+        }
+
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         decryptAES256 = BitCrystalJSON.decodeString(decryptAES256);
+        return decryptAES256;
+    }
+
+    public void sendSecurityLight(String string) {
+        String encodeString = BitCrystalJSON.encodeStringLight(string);
+        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
+        this.tcpClient.send(encryptAES256, 40000);
+    }
+
+    public String recvSecurityLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+
+        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
+        decryptAES256 = BitCrystalJSON.decodeStringLight(decryptAES256);
         return decryptAES256;
     }
 
     public void sendSecurityWallet(String string) {
         String encodeString = BitCrystalJSON.encodeWalletString(string);
         String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256,40000);
+        this.tcpClient.send(encryptAES256, 40000);
     }
 
     public String recvSecurityWallet() {
         String recv = this.tcpClient.recv(40000);
-        if(recv==null)
+        if (recv == null) {
             return "";
+        }
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         decryptAES256 = BitCrystalJSON.decodeWalletString(decryptAES256);
+        return decryptAES256;
+    }
+
+    public void sendSecurityWalletLight(String string) {
+        String encodeString = BitCrystalJSON.encodeWalletStringLight(string);
+        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
+        this.tcpClient.send(encryptAES256, 40000);
+    }
+
+    public String recvSecurityWalletLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
+        decryptAES256 = BitCrystalJSON.decodeWalletStringLight(decryptAES256);
         return decryptAES256;
     }
 
@@ -185,6 +226,40 @@ public class TCPClientSecurity {
         }
         String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
         JSONObject jsonObject = BitCrystalJSON.decodeWallet(decryptAES256);
+        return jsonObject;
+    }
+
+    public void sendJSONObjectLight(JSONObject jsonObject) {
+
+        String string = BitCrystalJSON.encodeLight(jsonObject);
+        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
+        this.tcpClient.send(encryptAES256, 40000);
+    }
+
+    public JSONObject recvJSONObjectLight() {
+
+        String string = this.tcpClient.recv(40000);
+        if (string == null) {
+            return null;
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
+        JSONObject jsonObject = BitCrystalJSON.decodeLight(decryptAES256);
+        return jsonObject;
+    }
+
+    public void sendJSONObjectWalletLight(JSONObject jsonObject) {
+        String string = BitCrystalJSON.encodeWalletLight(jsonObject);
+        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
+        this.tcpClient.send(encryptAES256, 40000);
+    }
+
+    public JSONObject recvJSONObjectWalletLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return null;
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
+        JSONObject jsonObject = BitCrystalJSON.decodeWalletLight(decryptAES256);
         return jsonObject;
     }
 

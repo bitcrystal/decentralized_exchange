@@ -46,7 +46,7 @@ public class BitCrystalJSON {
     private static String fivePassword = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCG7UvfdG0EkOorlIfqVwx07ltsdqv8+ZcqG3/locOHvpB0QaelMfJP1whHSuQ9dIvHPNHeBukFKgiSQ8Oew+sVemDQXIU3wLzxdf8DDCzjf2WIm5WLpUEzg7kKmoU+C/8WKTC+Tr7QPEvGswVd7HnSP7Av7lLhOMvrAzBrTqz/6QIDAQAB";
     private static String fiveSalt = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAIbtS990bQSQ6iuUh+pXDHTuW2x2q/z5lyobf+Whw4e+kHRBp6Ux8k/XCEdK5D10i8c80d4G6QUqCJJDw57D6xV6YNBchTfAvPF1/wMMLON/ZYiblYulQTODuQqahT4L/xYpML5OvtA8S8azBV3sedI/sC/uUuE4y+sDMGtOrP/pAgMBAAECgYAwBOvnzuutoFV2xRnKEMjiJKJs658yHTHrTnYqJ3QLL4sBlQwxAqGWQJU1qjWomX3VnpOiTRtJNzhttag9LMTRDnyNartnyCjccwOmbeEcvJrKL/JYoCTXR8YsbfAkpMrG+d2Jx4UT13N42eBPTsOP7t+rNkSgNEmmeluhs9GXMQJBANVS6yAagmNlYSZUtjTo+x5TwfYSrwetQnUJqVQy/EsLG0ccXTxb3Ns70mUzdvNSnMbwi9kgOH3SPaw5cO4FGhcCQQCh62N3PPpA7fg7SwOjKDhO5g/CZMghGJRqKd4tpDIoZUDFJEasoZuRGZwWZriqW/N1VBlTwwejpG406qP7YPX/AkBbuEUkDoHVXreAlZep9CpUhcq1lJ7w/AvA6qCFdU6IrYPS9V0ZIJ47HON/Y7tXL0P9PVvDxVjEsGqX7DKkBEmNAkBKVQtWg/HGuPhKEAfdcOtYnRkC/s05FFWd3xaWEVjNXp47YonnWlFWbVFQn1uLKac8Z50w7MmnACdvt4AMONj1AkEA1EQ3lK7W9v6thMH9e4iKMxUVKL3o23CQC7Cai/ECvKd8jOz22umZ7so/0S4JiWhu7Z29NdX+N0TaEqaCGsXxDA==";
     private static KeyPairGenerator keyPairGenerator = null;
-    
+
     public static void setPasswordSaltPair(String password, String salt, int count) {
         switch (count) {
             case 0: {
@@ -207,6 +207,12 @@ public class BitCrystalJSON {
         return toJSONString;
     }
 
+    public static String encodeStringLight(String obj) {
+        String toJSONString = obj;
+        toJSONString = HashFunctions.encryptAES256(toJSONString, firstPassword, firstSalt);
+        return toJSONString;
+    }
+
     public static String decodeString(String encode) {
         String toJSONString = encode;
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
@@ -222,6 +228,12 @@ public class BitCrystalJSON {
         toJSONString = HashFunctions.decryptAES256(toJSONString, fourthPassword, fourthSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, thirdPassword, thirdSalt);
         toJSONString = HashFunctions.decryptAES256(toJSONString, secondPassword, secondSalt);
+        toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
+        return toJSONString;
+    }
+
+    public static String decodeStringLight(String encode) {
+        String toJSONString = encode;
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
         return toJSONString;
     }
@@ -255,6 +267,35 @@ public class BitCrystalJSON {
         }
     }
 
+    public static String encodeWalletStringLight(String obj) {
+        try {
+            String encode = encodeStringLight(obj);
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            String encodeDataSecurityEmail = bitcrystalrpc.encodeDataSecurityEmail(encode);
+            String encodeDataSecurityEmail1 = bitcoinrpc.encodeDataSecurityEmail(encodeDataSecurityEmail);
+            String encodeDataSecurityEmailNeutral = bitcoinrpc.encodeDataSecurityEmailNeutral(encodeDataSecurityEmail1);
+            return encodeDataSecurityEmailNeutral;
+        } catch (Exception ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public static String decodeWalletStringLight(String decode) {
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            decode = bitcoinrpc.decodeDataSecurityEmailNeutral(decode);
+            decode = bitcoinrpc.decodeDataSecurityEmail(decode);
+            decode = bitcrystalrpc.decodeDataSecurityEmail(decode);
+            return decodeStringLight(decode);
+        } catch (Exception ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     public static String encode(JSONObject obj) {
         String encode = obj.toString();
         return encodeString(encode);
@@ -271,6 +312,22 @@ public class BitCrystalJSON {
         }
     }
 
+    public static String encodeLight(JSONObject obj) {
+        String encode = obj.toString();
+        return encodeStringLight(encode);
+    }
+
+    public static JSONObject decodeLight(String encode) {
+        try {
+            String toJSONString = decodeStringLight(encode);
+            JSONObject jSONObject = new JSONObject(toJSONString);
+            return jSONObject;
+        } catch (JSONException ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     public static String encodeWallet(JSONObject obj) {
         return encodeWalletString(obj.toString());
     }
@@ -278,6 +335,19 @@ public class BitCrystalJSON {
     public static JSONObject decodeWallet(String decode) {
         try {
             return new JSONObject(decodeWalletString(decode));
+        } catch (JSONException ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public static String encodeWalletLight(JSONObject obj) {
+        return encodeWalletStringLight(obj.toString());
+    }
+
+    public static JSONObject decodeWalletLight(String decode) {
+        try {
+            return new JSONObject(decodeWalletStringLight(decode));
         } catch (JSONException ex) {
             Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
             return null;

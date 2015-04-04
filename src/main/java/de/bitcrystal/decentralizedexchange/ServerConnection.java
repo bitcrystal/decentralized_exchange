@@ -118,21 +118,28 @@ public class ServerConnection implements Runnable {
             System.out.println("endtrade close");
             return;
         }
+        
+        if (recv.startsWith("tradeabort;;")) {
+            System.out.println("tradeabort open");
+            tradeabort(recv);
+            System.out.println("tradeabort close");
+            return;
+        }
     }
 
-     private void starttrade() {
+    private void starttrade() {
         System.out.println("serverconnection@362");
         String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
         if (!syncedtrades.containsKey(hostAddress)) {
             System.out.println("serverconnection@364");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -144,13 +151,13 @@ public class ServerConnection implements Runnable {
         if (!syncedtrades.containsKey(get)) {
             System.out.println("serverconnection@383");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -163,13 +170,13 @@ public class ServerConnection implements Runnable {
         if (!get1.contains(",,") || !get2.contains(",,")) {
             System.out.println("serverconnection@402");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -177,13 +184,13 @@ public class ServerConnection implements Runnable {
         if (!get1.startsWith("btc2btcry") && !get1.startsWith("btcry2btc")) {
             System.out.println("serverconnection@416");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -191,13 +198,13 @@ public class ServerConnection implements Runnable {
         if (!get2.startsWith("btc2btcry") && !get2.startsWith("btcry2btc")) {
             System.out.println("serverconnection@430");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -207,13 +214,13 @@ public class ServerConnection implements Runnable {
         if (split.length != split2.length) {
             System.out.println("serverconnection@446");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -221,13 +228,13 @@ public class ServerConnection implements Runnable {
         if (split.length != 5) {
             System.out.println("serverconnection@459");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -236,13 +243,13 @@ public class ServerConnection implements Runnable {
         if (!tradeAccounts.contains(split[3]) || !tradeAccounts.contains(split[4]) || !tradeAccounts.contains(split2[3]) || !tradeAccounts.contains(split2[4])) {
             System.out.println("serverconnection@474");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -253,13 +260,13 @@ public class ServerConnection implements Runnable {
         /*if (split[0].equals(split2[0])) {
         System.out.println("serverconnection@488");
         try {
-        this.client.send("E_ERROR");
+        this.client.sendLight("E_ERROR");
         Thread.sleep(3000L);
         this.client.close();
         return;
         } catch (InterruptedException ex) {
         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        this.client.send("E_ERROR");
+        this.client.sendLight("E_ERROR");
         this.client.close();
         return;
         }
@@ -269,13 +276,13 @@ public class ServerConnection implements Runnable {
         if (!(split[1].equals(split2[2]) && split2[1].equals(split[2]))) {
             System.out.println("serverconnection@502");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -284,13 +291,13 @@ public class ServerConnection implements Runnable {
         if (!(split[3].equals(split2[4]) && split2[3].equals(split[4]))) {
             System.out.println("serverconnection@518");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -303,13 +310,13 @@ public class ServerConnection implements Runnable {
         if (!tradeAccount.contains(",") || !tradeWithAccount.contains(",") || !tradeAccount2.contains(",") || !tradeWithAccount2.contains(",")) {
             System.out.println("serverconnection@537");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -317,13 +324,13 @@ public class ServerConnection implements Runnable {
         if (startedtrades.containsKey(tradeAccount) || startedtrades.containsKey(tradeAccount2) || startedtrades.containsKey(tradeWithAccount) || startedtrades.containsKey(tradeWithAccount2)) {
             System.out.println("serverconnection@550");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -334,13 +341,13 @@ public class ServerConnection implements Runnable {
         /* if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
         System.out.println("serverconnection@568");
         try {
-        this.client.send("E_ERROR");
+        this.client.sendLight("E_ERROR");
         Thread.sleep(3000L);
         this.client.close();
         return;
         } catch (InterruptedException ex) {
         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        this.client.send("E_ERROR");
+        this.client.sendLight("E_ERROR");
         this.client.close();
         return;
         }
@@ -352,13 +359,13 @@ public class ServerConnection implements Runnable {
         if (tradeAccountAddresses.length != 2 || tradeWithAccountAddresses.length != 2 || tradeAccount2Addresses.length != 2 || tradeWithAccount2Addresses.length != 2) {
             System.out.println("serverconnection@585");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -384,13 +391,13 @@ public class ServerConnection implements Runnable {
         } catch (Exception ex2) {
             System.out.println("serverconnection@618");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -411,13 +418,13 @@ public class ServerConnection implements Runnable {
                 if (bitcoinrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
                     System.out.println("serverconnection@642");
                     try {
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         this.client.close();
                         return;
                     }
@@ -425,13 +432,13 @@ public class ServerConnection implements Runnable {
                 if (bitcrystalrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
                     System.out.println("serverconnection@659");
                     try {
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         this.client.close();
                         return;
                     }
@@ -458,7 +465,7 @@ public class ServerConnection implements Runnable {
             } catch (Exception ex) {
                 System.out.println("serverconnection@687");
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -475,13 +482,13 @@ public class ServerConnection implements Runnable {
                 if (bitcrystalrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
                     System.out.println("serverconnection@704");
                     try {
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         this.client.close();
                         return;
                     }
@@ -489,13 +496,13 @@ public class ServerConnection implements Runnable {
                 if (bitcoinrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
                     System.out.println("serverconnection@718");
                     try {
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         Thread.sleep(3000L);
                         this.client.close();
                         return;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                        this.client.send("E_ERROR");
+                        this.client.sendLight("E_ERROR");
                         this.client.close();
                         return;
                     }
@@ -516,7 +523,7 @@ public class ServerConnection implements Runnable {
                 client.close();
             } catch (Exception ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -526,14 +533,14 @@ public class ServerConnection implements Runnable {
 
     private void endtrade() {
         System.out.println("serverconnection@877");
+         String tradeAccount = "";
+            String tradeWithAccount = "";
         try {
             String hostAddress = this.client.getHostAddress();
             if (!ips.containsKey(hostAddress)) {
                 System.out.println("serverconnection@881");
             }
             String otherip = ips.get(hostAddress);
-            String tradeAccount = "";
-            String tradeWithAccount = "";
             if (tradeAccountsIp.containsKey(hostAddress)) {
                 System.out.println("serverconnection@887");
                 tradeAccount = tradeAccountsIp.get(hostAddress);
@@ -553,13 +560,13 @@ public class ServerConnection implements Runnable {
             if (tradeAccount.isEmpty() || tradeWithAccount.isEmpty()) {
                 System.out.println("serverconnection@904");
                 try {
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     this.client.close();
                     return;
                 }
@@ -567,13 +574,13 @@ public class ServerConnection implements Runnable {
             if (!endtradesother.containsKey(tradeAccount) || !endtradesother.containsKey(tradeWithAccount)) {
                 System.out.println("serverconnection@917");
                 try {
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     this.client.close();
                     return;
                 }
@@ -587,13 +594,13 @@ public class ServerConnection implements Runnable {
             /*if (get2.startsWith("btc2btcry") && get3.startsWith("btc2btcry") || get2.startsWith("btcry2btc") && get3.startsWith("btcry2btc")) {
             System.out.println("serverconnection@937");
             try {
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             Thread.sleep(3000L);
             this.client.close();
             return;
             } catch (InterruptedException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             this.client.close();
             return;
             }
@@ -627,13 +634,13 @@ public class ServerConnection implements Runnable {
             } else {
                 System.out.println("serverconnection@988");
                 try {
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     this.client.close();
                     return;
                 }
@@ -641,10 +648,19 @@ public class ServerConnection implements Runnable {
         } catch (Exception ex) {
             System.out.println("serverconnection@991");
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             this.client.close();
             return;
         }
+        endtradesme.remove(tradeAccount);
+        endtradesme.remove(tradeWithAccount);
+        endtradesother.remove(tradeAccount);
+        endtradesother.remove(tradeWithAccount);
+        startedtrades.remove(tradeAccount);
+        startedtrades.remove(tradeWithAccount);
+        startedtradesaccount.remove(tradeAccount);
+        startedtradesaccount.remove(tradeWithAccount);
+        this.client.sendLight("ALL_OK");
         System.out.println("ENDTRADE WORKED YEAH! MOTHERFUCKER");
         return;
     }
@@ -655,13 +671,13 @@ public class ServerConnection implements Runnable {
         if (split.length != 2) {
             System.out.println("serverconnection@757");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -669,13 +685,13 @@ public class ServerConnection implements Runnable {
         if (!startedtrades.containsKey(split[1])) {
             System.out.println("serverconnection@771");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -683,33 +699,33 @@ public class ServerConnection implements Runnable {
         if (endtradesme.containsKey(split[1])) {
             System.out.println("serverconnection@785");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
         }
 
-        this.client.send(startedtrades.get(split[1]));
+        this.client.sendLight(startedtrades.get(split[1]));
         System.out.println("serverconnection@800");
-        String recv1 = this.client.recv();
+        String recv1 = this.client.recvLight();
         System.out.println(recv1);
         System.out.println("serverconnection@802");
         if (recv1.equals("E_ERROR")) {
             System.out.println("serverconnection@805");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -717,7 +733,7 @@ public class ServerConnection implements Runnable {
         System.out.println("serverconnection@819");
         endtradesme.put(split[1], recv1);
         System.out.println("TRADE IS ENDED");
-        this.client.send("ALL_OK");
+        this.client.sendLight("ALL_OK");
         this.client.close();
         return;
     }
@@ -727,40 +743,40 @@ public class ServerConnection implements Runnable {
         String[] split = recv.split(";");
         if (split.length != 2) {
             System.out.println("serverconnection@830");
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             this.client.close();
             return;
         }
         if (!startedtradesaccount.containsKey(split[1])) {
             System.out.println("serverconnection@836");
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             this.client.close();
             return;
         }
         String get = startedtradesaccount.get(split[1]);
         if (!endtradesme.containsKey(get) || !endtradesme.containsKey(split[1])) {
             System.out.println("serverconnection@843");
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             this.client.close();
             return;
         }
         String get1 = endtradesme.get(get);
         System.out.println("serverconnection@848");
-        this.client.send(get1);
+        this.client.sendLight(get1);
         System.out.println("serverconnection@851");
-        String recv2 = this.client.recv();
+        String recv2 = this.client.recvLight();
         System.out.println(recv2);
         System.out.println("serverconnection@853");
         if (recv2.equals("E_ERROR")) {
             System.out.println("serverconnection@856");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
@@ -768,7 +784,7 @@ public class ServerConnection implements Runnable {
         System.out.println("serverconnection@870");
         endtradesother.put(get, recv2);
         System.out.println("ENDTRADEOTHER GREAT!");
-        this.client.send("ALL_OK");
+        this.client.sendLight("ALL_OK");
         this.client.close();
         return;
     }
@@ -948,13 +964,13 @@ public class ServerConnection implements Runnable {
         if (syncedtrades.containsKey(hostAddress)) {
             System.out.println("serverconnection@261");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 System.out.println("serverconnection@267");
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -963,12 +979,12 @@ public class ServerConnection implements Runnable {
         if (!tradeAccountsIp.containsKey(hostAddress) && !tradeAccountsIp2.containsKey(hostAddress)) {
             System.out.println("serverconnection@275");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -978,12 +994,12 @@ public class ServerConnection implements Runnable {
         if (split.length != 2) {
             System.out.println("serverconnection@289");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -991,12 +1007,12 @@ public class ServerConnection implements Runnable {
         if (!ips.containsKey(hostAddress)) {
             System.out.println("serverconnection@302");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -1006,12 +1022,12 @@ public class ServerConnection implements Runnable {
         if (!ips.containsKey(get)) {
             System.out.println("serverconnection@316");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -1022,12 +1038,12 @@ public class ServerConnection implements Runnable {
         if (!get1.equals(hostAddress)) {
             System.out.println("serverconnection@331");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
@@ -1035,18 +1051,18 @@ public class ServerConnection implements Runnable {
         if (!addresses.containsKey(hostAddress) || !addresses.containsKey(get)) {
             System.out.println("serverconnection@343");
             try {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
             }
             return;
         }
         this.syncedtrades.put(hostAddress, split[1]);
-        this.client.send("TRADE IS SYNCED");
+        this.client.sendLight("TRADE IS SYNCED");
         System.out.println("TRADE IS SYNCED");
         //this.client.recv();
         this.client.close();
@@ -1059,7 +1075,7 @@ public class ServerConnection implements Runnable {
         try {
             if (ips.containsKey(hostAddress)) {
                 System.out.println("serverconnection@117");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
@@ -1071,7 +1087,7 @@ public class ServerConnection implements Runnable {
             if (split[1].contains(".")) {
                 if (!pubKeysMap.containsKey(split[1]) || split[1].equalsIgnoreCase(hostAddress)) {
                     System.out.println("serverconnection@128");
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
@@ -1086,14 +1102,14 @@ public class ServerConnection implements Runnable {
 
             if (!pubKeys.contains(split[1])) {
                 System.out.println("serverconnection@140");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } else {
                 if (!pubKeysMap2.containsKey(split[1])) {
                     System.out.println("serverconnection@146");
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
@@ -1103,13 +1119,13 @@ public class ServerConnection implements Runnable {
                 System.out.println(get10);
                 if (!pubKeysMap.containsKey(get10)) {
                     System.out.println("serverconnection@155");
-                    this.client.send("E_ERROR");
+                    this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
                     return;
                 }
                 /*if (get10.equals(hostAddress)) {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
@@ -1123,21 +1139,21 @@ public class ServerConnection implements Runnable {
             }
             if (addresses.containsKey(hostAddress)) {
                 System.out.println("serverconnection@174");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             }
             if (!pubKeysMap.containsKey(hostAddress)) {
                 System.out.println("serverconnection@180");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             }
             if (!pubKeysMap2.containsKey(split[1])) {
                 System.out.println("serverconnection@186");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
@@ -1146,14 +1162,14 @@ public class ServerConnection implements Runnable {
             System.out.println("get");
             System.out.println(get);
             /*if (get.equals(hostAddress)) {
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             Thread.sleep(3000L);
             this.client.close();
             return;
             }*/
             if (pubKeys.size() <= 0) {
                 System.out.println("serverconnection@201");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
@@ -1170,7 +1186,7 @@ public class ServerConnection implements Runnable {
             String createmultisigaddressex = bitcoinrpc.createmultisigaddressex(values);
             String createmultisigaddressex2 = bitcrystalrpc.createmultisigaddressex(values);
             System.out.println("serverconnection@217");
-            this.client.send(createmultisigaddressex + ",," + createmultisigaddressex2 + ",," + ba2);
+            this.client.sendLight(createmultisigaddressex + ",," + createmultisigaddressex2 + ",," + ba2);
             this.client.close();
             Object[] values2 = {createmultisigaddressex, account};
             Object[] values3 = {createmultisigaddressex2, account};
@@ -1203,11 +1219,11 @@ public class ServerConnection implements Runnable {
             System.out.println("serverconnection@244");
             try {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             } catch (InterruptedException ex1) {
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -1224,7 +1240,7 @@ public class ServerConnection implements Runnable {
             boolean isPubKey = bitcoinrpc.isValidPubKey(split[1]);
             if (!isPubKey) {
                 System.out.println("serverconnection@67");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
             }
@@ -1246,12 +1262,12 @@ public class ServerConnection implements Runnable {
                 serverPubKeys.add(pubKey);
                 serverAddressesPubkeys.put(newAddress, pubKey);
                 serverPubkeysAddresses.put(pubKey, newAddress);
-                this.client.send("ALL_OK");
+                this.client.sendLight("ALL_OK");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             }
-            this.client.send("E_ERROR");
+            this.client.sendLight("E_ERROR");
             Thread.sleep(3000L);
             this.client.close();
             return;
@@ -1260,13 +1276,13 @@ public class ServerConnection implements Runnable {
             System.out.println("serverconnection@98");
             try {
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
                 return;
             } catch (InterruptedException ex1) {
                 System.out.println("serverconnection@105");
-                this.client.send("E_ERROR");
+                this.client.sendLight("E_ERROR");
                 this.client.close();
                 Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
                 return;
@@ -1355,5 +1371,74 @@ public class ServerConnection implements Runnable {
             }
         }
         return map;
+    }
+
+    private void tradeabort(String recv) {
+        if (recv.contains(";;")) {
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex1) {
+                System.out.println("serverconnection@105");
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                return;
+            }
+        }
+        String[] split = recv.split(";;");
+        if (split.length != 2) {
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex1) {
+                System.out.println("serverconnection@105");
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                return;
+            }
+        }
+        if (!pubKeys.contains(split[1])) {
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex1) {
+                System.out.println("serverconnection@105");
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                return;
+            }
+        }
+        String hostAddress = client.getHostAddress();
+        if (!pubKeysMap.containsKey(hostAddress)) {
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex1) {
+                System.out.println("serverconnection@105");
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex1);
+                return;
+            }
+        }
+        pubKeys.remove(split[1]);
+        pubKeysMap.remove(hostAddress);
+        pubKeysMap2.remove(split[1]);
+        ips.remove(hostAddress);
+        tradeAccountsIp.remove(hostAddress);
+        tradeAccountsIp2.remove(hostAddress);
+        syncedtrades.remove(hostAddress);
+        pubkeysAddresses.remove(split[1]);
     }
 }

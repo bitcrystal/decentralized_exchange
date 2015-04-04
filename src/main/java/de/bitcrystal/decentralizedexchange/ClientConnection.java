@@ -36,6 +36,7 @@ public class ClientConnection implements Runnable {
     private static String tradebtcry2btc = "";
     private static String tradebtc2btcry = "";
     private static String currentTradeAddress = "";
+    private static String currentTradePubKey = "";
     private static String tradeWithAddress = "";
     private static boolean isSynced = false;
     private static boolean isStarted = false;
@@ -194,6 +195,7 @@ public class ClientConnection implements Runnable {
                 System.out.println("coolvvv");
                 JSONObject json = new JSONObject();
                 json.put("currentTradeAddress", "");
+                json.put("currentTradePubKey", "");
                 json.put("isEnded", "");
                 json.put("isStarted", "");
                 json.put("isSynced", "");
@@ -216,6 +218,13 @@ public class ClientConnection implements Runnable {
             } catch (JSONException ex) {
                 System.out.println("coolddddd");
                 currentTradeAddress = "";
+            }
+            try {
+                System.out.println("coolfffddf");
+                currentTradePubKey = clientJSON.getString("currentTradePubKey");
+            } catch (JSONException ex) {
+                System.out.println("coolddssssddd");
+                currentTradePubKey = "";
             }
             try {
                 tradeWithAddress = clientJSON.getString("tradeWithAddress");
@@ -284,6 +293,7 @@ public class ClientConnection implements Runnable {
         }
         try {
             System.out.println("clientconnection@733");
+            json.put("currentTradePubKey", currentTradePubKey);
             json.put("currentTradeAddress", currentTradeAddress);
             json.put("isEnded", isEnded);
             json.put("isStarted", isStarted);
@@ -323,6 +333,7 @@ public class ClientConnection implements Runnable {
             this.saveClient();
             System.out.println("madaadadadaadaadadadusge");
             String pubKey = bitcoinrpc.getPubKey(newAddress);
+            currentTradePubKey = pubKey;
             String privKey = bitcoinrpc.getPrivKey(newAddress);
             if (!bitcrystalrpc.addressexists(newAddress)) {
                 bitcrystalrpc.importPrivKey(privKey);
@@ -331,7 +342,7 @@ public class ClientConnection implements Runnable {
             System.out.println(newAddress);
             this.server.send("add," + pubKey);
             System.out.println("mausssdadsasdasdasdge");
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             System.out.println("mausasadsasdssge");
             System.out.println(recv);
             System.out.println("cool");
@@ -365,7 +376,7 @@ public class ClientConnection implements Runnable {
         if (!tradebtc2btcry.isEmpty()) {
             System.out.println("clientconnection@141");
             this.server.send("synctrade;btc2btcry,," + tradebtc2btcry);
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             if (recv.equals("E_ERROR")) {
                 System.out.println("clientconnection@145");
                 this.server.send("E_ERROR");
@@ -382,7 +393,7 @@ public class ClientConnection implements Runnable {
         if (!tradebtcry2btc.isEmpty()) {
             System.out.println("clientconnection@157");
             this.server.send("synctrade;btcry2btc,," + tradebtcry2btc);
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             System.out.println(recv);
             if (recv.equals("E_ERROR")) {
                 System.out.println("clientconnection@162");
@@ -400,7 +411,7 @@ public class ClientConnection implements Runnable {
 
     private void endtrade() {
         this.server.send("endtrade");
-        String recv = this.server.recv();
+        String recv = this.server.recvLight();
         if (recv.equals("E_ERROR")) {
             this.server.close();
             return;
@@ -416,8 +427,8 @@ public class ClientConnection implements Runnable {
         tradeAccount = "";
         tradebtc2btcry = "";
         tradebtcry2btc = "";
-        this.server.send("CANCEL_ALL");
-        this.server.recv();
+        this.server.send("tradeabort;;"+currentTradePubKey);
+        this.server.recvLight();
         this.server.close();
         this.saveClient();
         return;
@@ -434,7 +445,7 @@ public class ClientConnection implements Runnable {
         System.out.println("clientconnection@182");
         this.server.send("starttrade");
         System.out.println("clientconnection@184");
-        String recv = this.server.recv();
+        String recv = this.server.recvLight();
         System.out.println(recv);
         System.out.println("clientconnection@187");
         if (recv.equals("E_ERROR")) {
@@ -465,7 +476,7 @@ public class ClientConnection implements Runnable {
             System.out.println("clientconnection@208");
             this.server.send("endtrademe;" + tradeAccount);
             System.out.println("clientconnection@210");
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             System.out.println(recv);
             System.out.println("clientconnection@213");
             if (recv.equals("E_ERROR")) {
@@ -567,8 +578,8 @@ public class ClientConnection implements Runnable {
                     return;
                 }
                 String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig, 1);
-                this.server.send(signrawtransaction_multisig);
-                String recv1 = this.server.recv();
+                this.server.sendLight(signrawtransaction_multisig);
+                String recv1 = this.server.recvLight();
                 if (recv1.equals("E_ERROR")) {
                     System.out.println("clientconnection@310");
                     this.server.send("E_ERROR");
@@ -650,7 +661,7 @@ public class ClientConnection implements Runnable {
                 }
                 Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
                 String createrawtransaction_multisig = bitcrystalrpc.createrawtransaction_multisig(values);
-               if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
+                if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     System.out.println("clientconnection@390");
                     this.server.send("E_ERROR");
                     this.server.close();
@@ -667,8 +678,8 @@ public class ClientConnection implements Runnable {
                     return;
                 }
                 String signrawtransaction_multisig = bitcrystalrpc.signrawtransaction_multisig(createrawtransaction_multisig);
-                this.server.send(signrawtransaction_multisig);
-                String recv1 = this.server.recv();
+                this.server.sendLight(signrawtransaction_multisig);
+                String recv1 = this.server.recvLight();
                 System.out.println("clientconnection@408");
                 if (recv1.equals("E_ERROR")) {
                     System.out.println("clientconnection@410");
@@ -702,7 +713,7 @@ public class ClientConnection implements Runnable {
             System.out.println("clientconnection@367");
             this.server.send("endtradeother;" + tradeAccount);
             System.out.println("clientconnection@369");
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             System.out.println(recv);
             System.out.println("clientconnection@370");
             if (recv.equals("E_ERROR")) {
@@ -753,8 +764,8 @@ public class ClientConnection implements Runnable {
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
                     //JsonElement get = decodeRawTransactionMultisig1.get("complete");
                    /* if (get.getAsBoolean() == true) {
-                        System.out.println("clientconnection@415");
-                        throw new Exception();
+                    System.out.println("clientconnection@415");
+                    throw new Exception();
                     }*/
                 } catch (Exception ex2) {
                     System.out.println("clientconnection@419");
@@ -816,9 +827,9 @@ public class ClientConnection implements Runnable {
                     return;
                 }
                 System.out.println("clientconnection@476");
-                this.server.send(signrawtransaction_multisig1);
+                this.server.sendLight(signrawtransaction_multisig1);
                 System.out.println("clientconnection@478");
-                this.server.recv();
+                this.server.recvLight();
                 System.out.println("clientconnection@480");
                 this.server.close();
                 this.saveClient();
@@ -842,7 +853,7 @@ public class ClientConnection implements Runnable {
             }
             System.out.println("asljkfjcyklnjkcbgzbdsyxjbvcbcb");
             this.server.send("tradewith," + split[1]);
-            String recv = this.server.recv();
+            String recv = this.server.recvLight();
             this.server.close();
             System.out.println(recv);
             System.out.println("ddddff");

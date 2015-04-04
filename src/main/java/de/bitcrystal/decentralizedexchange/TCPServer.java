@@ -10,6 +10,7 @@ package de.bitcrystal.decentralizedexchange;
  */
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import de.bitcrystal.decentralizedexchange.security.HashFunctions;
+import de.bitcrystal.decentralizedexchange.upnp.UPnPServerSocketFactory;
 import java.io.*;
 import java.net.*;
 import java.security.KeyPairGenerator;
@@ -37,8 +38,12 @@ final class TCPServer {
         canstopped = false;
         serverSocket = null;
         this.port = port;
+        boolean upnp = UPnPServerSocketFactory.hasUPnPSupport();
         try {
-            serverSocket = new ServerSocket(port);
+            if(upnp)
+                serverSocket = UPnPServerSocketFactory.getServerSocket(port);
+            else
+                serverSocket = new ServerSocket(port);
         } catch (IOException ex) {
             Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
