@@ -679,11 +679,19 @@ public class ServerConnection implements Runnable {
                     this.client.sendLight("E_ERROR");
                     Thread.sleep(3000L);
                     this.client.close();
+                    bitcoinrpc.close();
+                    bitcrystalrpc.close();
+                    bitcoinrpc = null;
+                    bitcrystalrpc = null;
                     return;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
                     this.client.sendLight("E_ERROR");
                     this.client.close();
+                    bitcoinrpc.close();
+                    bitcrystalrpc.close();
+                    bitcoinrpc = null;
+                    bitcrystalrpc = null;
                     return;
                 }
             }
@@ -1113,7 +1121,7 @@ public class ServerConnection implements Runnable {
         return;
     }
 
-    private void tradewith(String recv) {
+   private void tradewith(String recv) {
         DebugServer.println("serverconnection@114");
         String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
         try {
@@ -1289,6 +1297,7 @@ public class ServerConnection implements Runnable {
                 this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
+
             }
             if (!pubKeys.contains(split[1])) {
                 DebugServer.println("serverconnection@72");

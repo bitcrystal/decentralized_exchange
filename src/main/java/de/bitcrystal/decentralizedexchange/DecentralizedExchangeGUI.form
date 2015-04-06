@@ -29,15 +29,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -48,28 +48,24 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
-                          <Component id="jToolBar1" min="-2" pref="100" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTabbedPane1" pref="589" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                  <Component id="jToolBar1" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jTabbedPane1" pref="589" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="jTabbedPane1" min="-2" pref="310" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jTabbedPane1" min="-2" pref="310" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="33" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -100,16 +96,28 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="currentTradeAddress" max="32767" attributes="1"/>
-                              <Component id="jLabel2" alignment="0" max="32767" attributes="1"/>
-                              <Component id="getNewCurrentTradeAddressButton" alignment="0" pref="281" max="32767" attributes="1"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="currentTradeWithAddress" alignment="0" pref="273" max="32767" attributes="1"/>
-                              <Component id="jLabel3" alignment="0" pref="273" max="32767" attributes="1"/>
-                              <Component id="currentTradeWithAddressButton" alignment="0" pref="273" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jLabel4" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="currentTradeAddress" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jLabel2" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="getNewCurrentTradeAddressButton" alignment="0" pref="281" max="32767" attributes="1"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jLabel6" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="depositAddressBitcoins" alignment="0" pref="273" max="32767" attributes="1"/>
+                              </Group>
+                              <Component id="bitcoinBalance" pref="293" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="currentTradeWithAddress" alignment="0" pref="265" max="32767" attributes="1"/>
+                              <Component id="jLabel3" alignment="0" pref="265" max="32767" attributes="1"/>
+                              <Component id="currentTradeWithAddressButton" alignment="0" pref="265" max="32767" attributes="0"/>
+                              <Component id="jLabel5" alignment="0" pref="265" max="32767" attributes="0"/>
+                              <Component id="depositAddressBitcrystal" alignment="0" pref="265" max="32767" attributes="0"/>
+                              <Component id="jLabel7" alignment="0" pref="265" max="32767" attributes="0"/>
+                              <Component id="bitcrystalBalance" alignment="0" min="-2" pref="256" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -133,7 +141,27 @@
                               <Component id="getNewCurrentTradeAddressButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="currentTradeWithAddressButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="136" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="depositAddressBitcrystal" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="depositAddressBitcoins" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="bitcoinBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="bitcrystalBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="101" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -178,6 +206,54 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="currentTradeWithAddressButtonActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Deposit Address For Bitcoins"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Deposit Address For Bitcrystal"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="depositAddressBitcoins">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" value="jTextField1"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="depositAddressBitcrystal">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" value="jTextField1"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bitcoin Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel7">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bjtcrystal Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="bitcoinBalance">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jLabel8"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcoinBalanceFocusGained"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="bitcrystalBalance">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jLabel9"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcrystalBalanceFocusGained"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel3">
@@ -197,7 +273,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="282" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="447" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -219,7 +295,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="282" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="447" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -241,7 +317,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="282" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="447" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>

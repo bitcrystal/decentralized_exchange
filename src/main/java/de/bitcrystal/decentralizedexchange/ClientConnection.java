@@ -41,6 +41,10 @@ public class ClientConnection implements Runnable {
     private static boolean allok = false;
     private static boolean isEndedMe = false;
     private static boolean isEndedOther = false;
+    private static String tradeAccountMultisigAddressBitcoin = "";
+    private static String tradeAccountMultisigAddressBitcrystal = "";
+    private static String tradeAccount2MultisigAddressBitcoin = "";
+    private static String tradeAccount2MultisigAddressBitcrystal = "";
     private TCPClientSecurity server;
     private String command;
     private JSONObject clientJSON = null;
@@ -1121,6 +1125,134 @@ public class ClientConnection implements Runnable {
 
     public static String getTradeAccount2() {
         return tradeAccount2;
+    }
+
+    public static String getTradeAccountMultisigAddressForBitcoin() {
+        if (!tradeAccountMultisigAddressBitcoin.isEmpty()) {
+            return tradeAccountMultisigAddressBitcoin;
+        }
+        try {
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+                return "";
+            }
+            String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            if (string == null || string.isEmpty()) {
+                return "";
+            }
+            tradeAccountMultisigAddressBitcoin = string;
+            return string;
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public static String getTradeAccountMultisigAddressForBitcrystal() {
+        if (!tradeAccountMultisigAddressBitcrystal.isEmpty()) {
+            return tradeAccountMultisigAddressBitcrystal;
+        }
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+                return "";
+            }
+            String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            if (string == null || string.isEmpty()) {
+                return "";
+            }
+            tradeAccountMultisigAddressBitcrystal = string;
+            return string;
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public static String getTradeAccount2MultisigAddressForBitcoin() {
+        if (!tradeAccount2MultisigAddressBitcoin.isEmpty()) {
+            return tradeAccount2MultisigAddressBitcoin;
+        }
+        try {
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+                return "";
+            }
+            String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            if (string == null || string.isEmpty()) {
+                return "";
+            }
+            tradeAccount2MultisigAddressBitcoin = string;
+            return string;
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public static String getTradeAccount2MultisigAddressForBitcrystal() {
+        if (!tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
+            return tradeAccount2MultisigAddressBitcrystal;
+        }
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+                return "";
+            }
+            String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            if (string == null || string.isEmpty()) {
+                return "";
+            }
+            tradeAccount2MultisigAddressBitcrystal = string;
+            return string;
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public static double getBitcoinBalanceTradeAccount() {
+        if (tradeAccountMultisigAddressBitcoin.isEmpty()) {
+            return -1;
+        }
+        try {
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            return bitcoinrpc.getBalance(tradeAccountMultisigAddressBitcoin);
+        } catch (Exception ex) {
+            return -1;
+        }
+    }
+
+    public static double getBitcrystalBalanceTradeAccount() {
+        if (tradeAccountMultisigAddressBitcrystal.isEmpty()) {
+            return -1;
+        }
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            return bitcrystalrpc.getBalance(tradeAccountMultisigAddressBitcrystal);
+        } catch (Exception ex) {
+            return -1;
+        }
+    }
+
+    public static double getBitcoinBalanceTradeAccount2() {
+        if (tradeAccount2MultisigAddressBitcoin.isEmpty()) {
+            return -1;
+        }
+        try {
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            return bitcoinrpc.getBalance(tradeAccount2MultisigAddressBitcoin);
+        } catch (Exception ex) {
+            return -1;
+        }
+    }
+
+    public static double getBitcrystalBalanceTradeAccount2() {
+        if (tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
+            return -1;
+        }
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            return bitcrystalrpc.getBalance(tradeAccount2MultisigAddressBitcrystal);
+        } catch (Exception ex) {
+            return -1;
+        }
     }
 
     public static String getTradeBtc2btcry() {

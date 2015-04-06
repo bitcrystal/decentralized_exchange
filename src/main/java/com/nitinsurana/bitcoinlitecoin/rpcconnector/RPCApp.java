@@ -49,7 +49,7 @@ public class RPCApp {
         client.getOptions().setPrintContentOnFailingStatusCode(false);
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setCssEnabled(false);
-        client.getOptions().setTimeout(60000);
+        client.getOptions().setTimeout(0);
 
         baseUrl = new String("http://" + rpcUser + ":" + rpcPassword + "@" + rpcHost + ":" + rpcPort + "/");
         LOG.info("Base RPC URL : " + baseUrl);
@@ -147,8 +147,8 @@ public class RPCApp {
         }
         return jsonObj.get("result").getAsString();
     }
-    
-        public String decodeDataSecurityEmailNeutral(String hex) throws Exception {
+
+    public String decodeDataSecurityEmailNeutral(String hex) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.DECODE_DATA_SECURITY_EMAIL_NEUTRAL, hex);
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
@@ -876,6 +876,7 @@ public class RPCApp {
         LOG.info("RPC Response : " + jsonObj);
 //        return jsonResponse.getResult();
 //        return jsonResponse;
+        this.client.closeAllWindows();
         return jsonObj;
     }
 
@@ -893,12 +894,12 @@ public class RPCApp {
         Object[] values = {createrawtransaction_multisig};
         return signrawtransaction_multisig(values);
     }
-    
+
     public String signrawtransaction_multisig(String createrawtransaction_multisig, int amount) throws Exception {
         Object[] values = {createrawtransaction_multisig, amount};
         return signrawtransaction_multisig(values);
     }
-    
+
     public String signandsendrawtransaction_multisig(String createrawtransaction_multisig) throws Exception {
         Object[] values = {createrawtransaction_multisig};
         return signandsendrawtransaction_multisig(values);
@@ -919,5 +920,21 @@ public class RPCApp {
             throw new RpcInvalidResponseException(message);
         }
         return jsonObj.get("result").getAsBoolean();
+    }
+
+    public void close() {
+        this.client.closeAllWindows();
+    }
+
+    public String getmultisigaddressofaddressoraccount(String tradeAccount) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_MULTISIG_ADDRESS_OF_ADDRESS_OR_ACCOUNT, new Object[]{tradeAccount});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsString();
     }
 }
