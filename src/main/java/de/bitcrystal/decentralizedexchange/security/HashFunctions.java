@@ -64,7 +64,7 @@ public class HashFunctions {
             return "";
         }
     }
-    
+
     public static String encryptAES256(String plainText, String password, String salt) {
         try {
             return encryptAES256(plainText, password, 65535, salt);
@@ -357,5 +357,91 @@ public class HashFunctions {
             }
         }
         return string;
+    }
+
+    public static String getProofOfWorkSHA256(int zeroCount, String string) {
+        try {
+            return getProofOfWork(zeroCount, string, "SHA-256");
+        } catch (NoSuchAlgorithmException ex) {
+            return "";
+        } catch (UnsupportedEncodingException ex) {
+            return "";
+        }
+    }
+
+    public static String getProofOfWorkSHA1(int zeroCount, String string) {
+        try {
+            return getProofOfWork(zeroCount, string, "SHA-1");
+        } catch (NoSuchAlgorithmException ex) {
+            return "";
+        } catch (UnsupportedEncodingException ex) {
+            return "";
+        }
+    }
+
+    public static String getProofOfWork(int zeroCount, String string, String hash) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        if (zeroCount <= 0) {
+            return "";
+        }
+        String proof = "";
+        for (int i = 0; i < zeroCount; i++) {
+            proof += "0";
+        }
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String challengeString = "";
+        int count = 0;
+        do {
+            challengeString = hash(hash, string + count);
+        } while (!challengeString.startsWith(proof));
+        return challengeString + ",," + count;
+    }
+
+    public static int getProofOfWorkNonce(String proofOfWorkString) {
+        if (!isValidProofOfWorkString(proofOfWorkString)) {
+            return -1;
+        }
+        String[] split = proofOfWorkString.split(",,");
+        return Integer.parseInt(split[1]);
+    }
+
+    public static String getProofOfWorkString(String proofOfWorkString) {
+        if (!isValidProofOfWorkString(proofOfWorkString)) {
+            return "";
+        }
+        String[] split = proofOfWorkString.split(",,");
+        return split[0];
+    }
+
+    public static boolean isValidProofOfWorkString(String proofOfWorkString) {
+        if (proofOfWorkString == null || proofOfWorkString.isEmpty()) {
+            return false;
+        }
+        if (!proofOfWorkString.contains(",,")) {
+            return false;
+        }
+
+        String[] split = proofOfWorkString.split(",,");
+        if (split.length != 2) {
+            return false;
+        }
+        int count = 0;
+        try {
+            count = Integer.parseInt(split[1]);
+        } catch (Exception ex) {
+            count = -1;
+        }
+        if (count <= 0) {
+            return false;
+        }
+        String proof = "";
+        for (int i = 0; i < count; i++) {
+            proof += "0";
+        }
+        if (!split[0].startsWith(proof)) {
+            return false;
+        }
+        return true;
     }
 }

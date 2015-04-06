@@ -28,9 +28,6 @@ import org.json.JSONObject;
  */
 public class ClientConnection implements Runnable {
 
-    private static Map<String, String> trader = new ConcurrentHashMap<String, String>();
-    private static List<String> list = new CopyOnWriteArrayList<String>();
-    private static PublicKey lastPubKey = null;
     private static String tradeAccount = "";
     private static String tradeAccount2 = "";
     private static String tradebtcry2btc = "";
@@ -41,6 +38,9 @@ public class ClientConnection implements Runnable {
     private static boolean isSynced = false;
     private static boolean isStarted = false;
     private static boolean isEnded = false;
+    private static boolean allok = false;
+    private static boolean isEndedMe = false;
+    private static boolean isEndedOther = false;
     private TCPClientSecurity server;
     private String command;
     private JSONObject clientJSON = null;
@@ -58,6 +58,7 @@ public class ClientConnection implements Runnable {
                 this.server.send("E_ERROR");
                 this.server.close();
                 DebugClient.println("mausssssssge");
+                setLastCommandStatus(false);
                 return;
             }
             if (!command.contains(" ")) {
@@ -71,6 +72,7 @@ public class ClientConnection implements Runnable {
                 this.server.close();
                 DebugClient.println("mausge");
                 DebugClient.println("mauasdadaaddasge");
+                setLastCommandStatus(false);
                 return;
             }
             switch (split.length) {
@@ -85,12 +87,14 @@ public class ClientConnection implements Runnable {
                     if (split[0].equalsIgnoreCase("GETCURRENTTRADERADDRESS")) {
                         System.out.println(currentTradeAddress);
                         this.server.close();
+                        setLastCommandStatus(true);
                         return;
                     }
 
                     if (split[0].equalsIgnoreCase("GETCURRENTTRADEWITHADDRESS")) {
                         System.out.println(tradeWithAddress);
                         this.server.close();
+                        setLastCommandStatus(true);
                         return;
                     }
 
@@ -103,6 +107,7 @@ public class ClientConnection implements Runnable {
                             System.out.println("No Trade available!");
                         }
                         this.server.close();
+                        setLastCommandStatus(true);
                         return;
                     }
 
@@ -182,6 +187,7 @@ public class ClientConnection implements Runnable {
             this.server.send("E_ERROR");
             this.server.close();
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
             return;
         }
     }
@@ -315,17 +321,18 @@ public class ClientConnection implements Runnable {
 
     private void add() {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("clientconnection@79");
             if (!currentTradeAddress.isEmpty()) {
                 this.server.send("E_ERROR");
                 this.server.close();
                 DebugClient.println("mausasdadadadae");
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("clientconnection@85");
             DebugClient.println("maadadadadadadadadusge");
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             String newAddress = bitcoinrpc.getNewAddress();
             currentTradeAddress = newAddress;
             DebugClient.println("mauadadadadadsge");
@@ -348,6 +355,7 @@ public class ClientConnection implements Runnable {
             DebugClient.println("cool");
             this.server.close();
             this.saveClient();
+            setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -359,18 +367,21 @@ public class ClientConnection implements Runnable {
             DebugClient.println("clientconnection@123");
             this.server.send("E_ERROR");
             this.server.close();
+            setLastCommandStatus(false);
             return;
         }
         if (tradebtc2btcry.isEmpty() && tradebtcry2btc.isEmpty()) {
             DebugClient.println("clientconnection@129");
             this.server.send("E_ERROR");
             this.server.close();
+            setLastCommandStatus(false);
             return;
         }
         if (!tradebtc2btcry.isEmpty() && !tradebtcry2btc.isEmpty()) {
             DebugClient.println("clientconnection@135");
             this.server.send("E_ERROR");
             this.server.close();
+            setLastCommandStatus(false);
             return;
         }
         if (!tradebtc2btcry.isEmpty()) {
@@ -381,12 +392,14 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@145");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             this.server.send("AWESOME!");
             this.server.close();
             isSynced = true;
             this.saveClient();
+            setLastCommandStatus(true);
             return;
         }
 
@@ -399,12 +412,14 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@162");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             this.server.send("AWESOME!");
             this.server.close();
             isSynced = true;
             this.saveClient();
+            setLastCommandStatus(true);
             return;
         }
     }
@@ -414,23 +429,46 @@ public class ClientConnection implements Runnable {
         String recv = this.server.recvLight();
         if (recv.equals("E_ERROR")) {
             this.server.close();
+            setLastCommandStatus(false);
+            isEnded = false;
             return;
         }
         if (recv.equals("ALL_OK")) {
             DebugClient.println("YEAH I'VE WON!!!!!!!!!!!!!!!!!!!11");
             this.server.close();
+            setLastCommandStatus(true);
+            isEnded = true;
             return;
         }
     }
 
     private void tradeabort() {
+        if ((currentTradePubKey.isEmpty() || currentTradeAddress.isEmpty() || isEndedMe || isEndedOther || isSynced || isStarted) && isEnded == false) {
+            this.server.close();
+            setLastCommandStatus(true);
+            return;
+        }
+        //String proofOfWorkSHA1 = HashFunctions.getProofOfWorkSHA1(1, currentTradePubKey);
+        //System.out.println(proofOfWorkSHA1);
+        currentTradeAddress = "";
         tradeAccount = "";
+        tradeAccount2 = "";
         tradebtc2btcry = "";
         tradebtcry2btc = "";
-        this.server.send("tradeabort;;"+currentTradePubKey);
+        String temp = currentTradePubKey;
+        currentTradePubKey = "";
+        tradeWithAddress = "";
+        isEndedMe = false;
+        isEndedOther = false;
+        isSynced = false;
+        isEnded = false;
+        isStarted = false;
+        //this.server.send("tradeabort;;" + temp + ";;" + proofOfWorkSHA1);
+        this.server.send("tradeabort;;" + temp);
         this.server.recvLight();
         this.server.close();
         this.saveClient();
+        setLastCommandStatus(true);
         return;
     }
 
@@ -440,6 +478,7 @@ public class ClientConnection implements Runnable {
             DebugClient.println("clientconnection@177");
             this.server.send("E_ERROR");
             this.server.close();
+            setLastCommandStatus(false);
             return;
         }
         DebugClient.println("clientconnection@182");
@@ -452,6 +491,7 @@ public class ClientConnection implements Runnable {
             DebugClient.println("clientconnection@185");
             this.server.send("E_ERROR");
             this.server.close();
+            setLastCommandStatus(false);
             return;
         }
         DebugClient.println("clientconnection@194");
@@ -459,18 +499,18 @@ public class ClientConnection implements Runnable {
         this.server.close();
         isStarted = true;
         this.saveClient();
+        setLastCommandStatus(true);
         return;
     }
 
     private void endtrademe() {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("clientconnection@201");
             if (!isStarted) {
                 DebugClient.println("clientconnection@203");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("clientconnection@208");
@@ -483,14 +523,18 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@215");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             if (!tradebtc2btcry.isEmpty()) {
                 DebugClient.println("clientconnection@221");
                 if (!recv.startsWith("btc2btcry;;")) {
                     DebugClient.println("clientconnection@223");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println("clientconnection@228");
@@ -498,6 +542,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@229");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String[] split2 = recv.split(";;");
@@ -506,6 +551,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@238");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String myTradeAccount = split2[1];
@@ -516,12 +562,14 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@248");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 if (!myTradeWithAddress.equals(tradeWithAddress)) {
                     DebugClient.println("clientconnection@254");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 double price = 0;
@@ -535,6 +583,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@267");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println(tradebtc2btcry);
@@ -554,8 +603,10 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@282");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
+
                 Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
                 String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                 DebugClient.println(myTransaction);
@@ -564,6 +615,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@290");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println("clientconnection@295");
@@ -575,6 +627,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@301");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(createrawtransaction_multisig, 1);
@@ -584,11 +637,13 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@310");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 if (recv1.equals("ALL_OK")) {
                     DebugClient.println("clientconnection@316");
                     this.server.close();
+                    setLastCommandStatus(true);
                     return;
                 }
             } else if (!tradebtcry2btc.isEmpty()) {
@@ -597,12 +652,14 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@323");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 if (!recv.contains(";;")) {
                     DebugClient.println("clientconnection@329");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String[] split2 = recv.split(";;");
@@ -611,6 +668,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@337");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String myTradeAccount = split2[1];
@@ -621,12 +679,14 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@347");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 if (!myTradeWithAddress.equals(tradeWithAddress)) {
                     DebugClient.println("clientconnection@353");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 double price = 0;
@@ -641,6 +701,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@367");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String[] split1 = tradebtcry2btc.split(",,");
@@ -657,6 +718,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@381");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
@@ -665,6 +727,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@390");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 JsonObject decodeRawTransactionMultisig = null;
@@ -675,6 +738,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@400");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String signrawtransaction_multisig = bitcrystalrpc.signrawtransaction_multisig(createrawtransaction_multisig);
@@ -685,29 +749,33 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@410");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 if (recv1.equals("ALL_OK")) {
                     DebugClient.println("clientconnection@416");
                     this.server.close();
                     this.saveClient();
+                    setLastCommandStatus(true);
+                    isEndedMe = true;
                     return;
                 }
             }
+            setLastCommandStatus(false);
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
         }
     }
 
     private void endtradeother() {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("clientconnection@424");
             if (!isStarted) {
                 DebugClient.println("clientconnection@362");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("clientconnection@367");
@@ -720,8 +788,11 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@374");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             if (!tradebtc2btcry.isEmpty()) {
                 DebugClient.println("clientconnection@380");
                 String[] split1 = tradebtc2btcry.split(",,");
@@ -736,6 +807,7 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("clientconnection@389");
                         this.server.send("E_ERROR");
                         this.server.close();
+                        setLastCommandStatus(false);
                         return;
                     }
                     DebugClient.println("clientconnection@728");
@@ -749,12 +821,14 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("clientconnection@398");
                         this.server.send("E_ERROR");
                         this.server.close();
+                        setLastCommandStatus(false);
                         return;
                     }
                 } catch (Exception ex2) {
                     DebugClient.println("clientconnection@404");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(recv, 1);
@@ -771,6 +845,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@419");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println("clientconnection@424");
@@ -778,6 +853,8 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@426");
                 this.server.recv();
                 this.server.close();
+                setLastCommandStatus(true);
+                return;
             } else if (!tradebtcry2btc.isEmpty()) {
                 DebugClient.println("clientconnection@430");
                 DebugClient.println(recv);
@@ -791,6 +868,7 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("clientconnection@440");
                         this.server.send("E_ERROR");
                         this.server.close();
+                        setLastCommandStatus(false);
                         return;
                     }
                     String asString = decodeRawTransactionMultisig1.get("toaddress").getAsString();
@@ -802,12 +880,14 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("clientconnection@449");
                         this.server.send("E_ERROR");
                         this.server.close();
+                        setLastCommandStatus(false);
                         return;
                     }
                 } catch (Exception ex2) {
                     DebugClient.println("clientconnection@455");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println("clientconnection@460");
@@ -824,6 +904,7 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@470");
                     this.server.send("E_ERROR");
                     this.server.close();
+                    setLastCommandStatus(false);
                     return;
                 }
                 DebugClient.println("clientconnection@476");
@@ -833,22 +914,24 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@480");
                 this.server.close();
                 this.saveClient();
+                setLastCommandStatus(true);
+                isEndedOther = true;
                 return;
             }
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
         }
     }
 
     private void tradewith(String[] split) {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("sssssad");
             if (!tradeAccount.isEmpty() && !tradeAccount2.isEmpty()) {
                 this.server.send("E_ERROR");
                 this.server.close();
                 DebugClient.println("ssasdas");
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("asljkfjcyklnjkcbgzbdsyxjbvcbcb");
@@ -860,11 +943,13 @@ public class ClientConnection implements Runnable {
             if (recv.equals("E_ERROR")) {
                 this.server.close();
                 DebugClient.println("asdasksdjkjasdkasjskdjsd");
+                setLastCommandStatus(false);
                 return;
             }
             if (!recv.contains(",,")) {
                 this.server.close();
                 DebugClient.println("xdadjkjsklhdjlfhjaskbhfjskdhjkdsfh");
+                setLastCommandStatus(false);
                 return;
             }
 
@@ -872,6 +957,7 @@ public class ClientConnection implements Runnable {
             if (split1.length != 3) {
                 this.server.close();
                 DebugClient.println("skjsfkljdskljfdkljdsikljsdfkljdkl");
+                setLastCommandStatus(false);
                 return;
             }
 
@@ -882,6 +968,8 @@ public class ClientConnection implements Runnable {
             Object[] values2 = {split1[1], tradeAccount};
             Object[] values3 = {split1[0], tradeAccount2};
             Object[] values4 = {split1[1], tradeAccount2};
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             try {
                 DebugClient.println("dddddd");
                 bitcoinrpc.addmultisigaddressex(values1);
@@ -913,28 +1001,30 @@ public class ClientConnection implements Runnable {
             DebugClient.println("djdnvncncnnccc");
             this.server.close();
             this.saveClient();
+            setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
         }
     }
 
     private void createtradebtcry2btc(String[] split) {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("clientconnection@545");
             tradebtc2btcry = "";
             if (tradeAccount.isEmpty() || tradeAccount2.isEmpty()) {
                 DebugClient.println("clientconnection@548");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             if (!tradebtcry2btc.isEmpty()) {
                 DebugClient.println("clientconnection@553");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("clientconnection@559");
@@ -942,6 +1032,8 @@ public class ClientConnection implements Runnable {
             this.server.close();
             double amount = 0;
             double price = 0;
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             double balance = bitcrystalrpc.getBalance(tradeAccount);
             try {
                 DebugClient.println("clientconnection@566");
@@ -955,6 +1047,7 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@574");
                 tradebtcry2btc = "";
                 tradebtc2btcry = "";
+                setLastCommandStatus(false);
                 return;
             }
 
@@ -962,28 +1055,30 @@ public class ClientConnection implements Runnable {
             tradebtc2btcry = "";
             this.saveClient();
             DebugClient.println("clientconnection@582");
+            setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
         }
     }
 
     private void createtradebtc2btcry(String[] split) {
         try {
-            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             DebugClient.println("clientconnection@586");
             tradebtcry2btc = "";
             if (tradeAccount.isEmpty() || tradeAccount2.isEmpty()) {
                 DebugClient.println("clientconnection@589");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             if (!tradebtc2btcry.isEmpty()) {
                 DebugClient.println("clientconnection@595");
                 this.server.send("E_ERROR");
                 this.server.close();
+                setLastCommandStatus(false);
                 return;
             }
             DebugClient.println("clientconnection@600");
@@ -991,6 +1086,8 @@ public class ClientConnection implements Runnable {
             this.server.close();
             double amount = 0;
             double price = 0;
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             double balance = bitcoinrpc.getBalance(tradeAccount);
             try {
                 System.out.println("clientconnection@607");
@@ -1004,14 +1101,67 @@ public class ClientConnection implements Runnable {
                 System.out.println("clientconnection@615");
                 tradebtcry2btc = "";
                 tradebtc2btcry = "";
+                setLastCommandStatus(false);
                 return;
             }
             tradebtc2btcry = amount + ",," + price + ",," + tradeAccount + ",," + tradeAccount2;
             tradebtcry2btc = "";
             this.saveClient();
+            setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            setLastCommandStatus(false);
         }
+    }
+
+    public static String getTradeAccount() {
+        return tradeAccount;
+    }
+
+    public static String getTradeAccount2() {
+        return tradeAccount2;
+    }
+
+    public static String getTradeBtc2btcry() {
+        return tradebtc2btcry;
+    }
+
+    public static String getTradeBtcry2btc() {
+        return tradebtcry2btc;
+    }
+
+    public static String getCurrentTradeAddress() {
+        return currentTradeAddress;
+    }
+
+    public static String getCurrentTradePubKey() {
+        return currentTradePubKey;
+    }
+
+    public static String getCurrentTradeWithAddress() {
+        return currentTradeAddress;
+    }
+
+    public static boolean isSynced() {
+        return isSynced;
+    }
+
+    public static boolean isStarted() {
+        return isStarted;
+    }
+
+    public static boolean isEnded() {
+        return isEnded;
+    }
+
+    public static boolean getLastCommandStatus() {
+        boolean temp = allok;
+        allok = false;
+        return temp;
+    }
+
+    public static void setLastCommandStatus(boolean set) {
+        allok = set;
     }
 }
