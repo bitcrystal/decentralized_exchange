@@ -1216,17 +1216,19 @@ public class ServerConnection implements Runnable {
                 this.client.close();
                 return;
             }
+            DebugServer.println("serverconnection@1221");
             String get1 = serverPubKeys.get(serverPubKeys.size() - 1);
-            serverPubKeys.remove(serverPubKeys.size() - 1);
             String get2 = pubKeysMap.get(hostAddress);
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             String ba = bitcoinrpc.getBitcoinAddressOfPubKey(get2);
+            DebugServer.println("serverconnection@1236");
             addresses.put(hostAddress, ba);
             String ba2 = bitcoinrpc.getBitcoinAddressOfPubKey(split[1]);
             String account = ba + "," + ba2;
             String account2 = ba2 + "," + ba;
             Object[] values = {get2, split[1], get1, true};
+            DebugServer.println("serverconnection@1242");
             String createmultisigaddressex = bitcoinrpc.createmultisigaddressex(values);
             String createmultisigaddressex2 = bitcrystalrpc.createmultisigaddressex(values);
             DebugServer.println("serverconnection@217");
@@ -1531,7 +1533,6 @@ public class ServerConnection implements Runnable {
             ips.remove(hostAddress);
             ips.remove(get);
         }
-        pubKeys.remove(split[1]);
         pubKeysMap.remove(hostAddress);
         pubKeysMap2.remove(split[1]);
         tradeAccountsIp.remove(hostAddress);

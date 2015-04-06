@@ -228,7 +228,7 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
     
     JOptionPane.showMessageDialog(null, "The Process takes a while! Please wait a minute or two!");
     processProcessed = true;
-   new Thread(new Runnable() {
+   new NotInterruptableThread(new Runnable() {
 
         public void run() {
             DecentralizedExchange.start();
@@ -282,8 +282,9 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-               new Thread(new Runnable() {
-
+               new NotInterruptableThread(
+                       new Runnable() {
+                   
                     public void run() {
                         new DecentralizedExchangeGUI().setVisible(true);
                         DecentralizedExchange.start();
@@ -297,6 +298,8 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
                             return;
                         }
                     }
+                    
+                   
                 }).start();
             }
         });
