@@ -31,6 +31,14 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
     /** Creates new form DecentralizedExchangeGUI */
     public DecentralizedExchangeGUI() {
         initComponents();
+        bitcoinBalanceLabel.setVisible(false);
+        bitcrystalBalanceLabel.setVisible(false);
+        bitcoinBalance.setVisible(false);
+        bitcrystalBalance.setVisible(false);
+        depositAddressForBitcoinsLabel.setVisible(false);
+        depositAddressForBitcrystal.setVisible(false);
+        depositAddressBitcoins.setVisible(false);
+        depositAddressBitcrystal.setVisible(false);
     }
 
     /** This method is called from within the constructor to
@@ -53,14 +61,14 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         currentTradeWithAddress = new javax.swing.JTextField();
         getNewCurrentTradeAddressButton = new javax.swing.JButton();
         currentTradeWithAddressButton = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        depositAddressForBitcoinsLabel = new javax.swing.JLabel();
+        depositAddressForBitcrystal = new javax.swing.JLabel();
         depositAddressBitcoins = new javax.swing.JTextField();
         depositAddressBitcrystal = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        bitcoinBalance = new javax.swing.JLabel();
-        bitcrystalBalance = new javax.swing.JLabel();
+        bitcoinBalanceLabel = new javax.swing.JLabel();
+        bitcrystalBalanceLabel = new javax.swing.JLabel();
+        bitcoinBalance = new javax.swing.JTextField();
+        bitcrystalBalance = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -70,6 +78,8 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jToolBar1.setRollover(true);
+
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(800, 800));
 
         jLabel2.setText("CurrentTradeAddress");
         jLabel2.setName(""); // NOI18N
@@ -96,9 +106,9 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Deposit Address For Bitcoins");
+        depositAddressForBitcoinsLabel.setText("Deposit Address For Bitcoins");
 
-        jLabel5.setText("Deposit Address For Bitcrystal");
+        depositAddressForBitcrystal.setText("Deposit Address For Bitcrystal");
 
         depositAddressBitcoins.setEditable(false);
         depositAddressBitcoins.setText("jTextField1");
@@ -106,21 +116,39 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         depositAddressBitcrystal.setEditable(false);
         depositAddressBitcrystal.setText("jTextField1");
 
-        jLabel6.setText("Bitcoin Balance");
+        bitcoinBalanceLabel.setText("Bitcoin Balance");
 
-        jLabel7.setText("Bjtcrystal Balance");
+        bitcrystalBalanceLabel.setText("Bitcrystal Balance");
 
-        bitcoinBalance.setText("jLabel8");
+        bitcoinBalance.setEditable(false);
+        bitcoinBalance.setText("jTextField1");
+        bitcoinBalance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bitcoinBalanceActionPerformed(evt);
+            }
+        });
         bitcoinBalance.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 bitcoinBalanceFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bitcoinBalanceFocusLost(evt);
+            }
         });
 
-        bitcrystalBalance.setText("jLabel9");
+        bitcrystalBalance.setEditable(false);
+        bitcrystalBalance.setText("jTextField2");
+        bitcrystalBalance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bitcrystalBalanceActionPerformed(evt);
+            }
+        });
         bitcrystalBalance.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 bitcrystalBalanceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bitcrystalBalanceFocusLost(evt);
             }
         });
 
@@ -132,23 +160,38 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(depositAddressForBitcoinsLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(currentTradeAddress, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(getNewCurrentTradeAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
-                    .addComponent(bitcoinBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(bitcrystalBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                                    .addGap(18, 18, 18))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                                    .addGap(24, 24, 24))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(bitcoinBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(bitcoinBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(depositAddressForBitcrystal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bitcrystalBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -156,8 +199,8 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentTradeAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,21 +211,21 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                     .addComponent(currentTradeWithAddressButton))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(depositAddressForBitcoinsLabel)
+                    .addComponent(depositAddressForBitcrystal))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                    .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(48, 48, 48)
+                    .addComponent(bitcoinBalanceLabel)
+                    .addComponent(bitcrystalBalanceLabel))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bitcoinBalance)
-                    .addComponent(bitcrystalBalance))
-                .addContainerGap(101, Short.MAX_VALUE))
+                    .addComponent(bitcrystalBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bitcoinBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab1", jPanel2);
@@ -195,7 +238,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
+            .addGap(0, 476, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab2", jPanel3);
@@ -208,7 +251,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
+            .addGap(0, 476, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab3", jPanel4);
@@ -221,7 +264,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
+            .addGap(0, 476, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab4", jPanel5);
@@ -231,22 +274,26 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,11 +301,13 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -303,8 +352,16 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
                 currentTradeAddress.setText(currentTradeAddressS);
                 canSetTradeWithAddress = false;
                 processProcessed = false;
+                bitcoinBalance.setVisible(true);
+                bitcrystalBalance.setVisible(true);
+                bitcoinBalanceLabel.setVisible(true);
+                bitcrystalBalanceLabel.setVisible(true);
+                depositAddressForBitcoinsLabel.setVisible(true);
+                depositAddressForBitcrystal.setVisible(true);
+                depositAddressBitcoins.setVisible(true);
+                depositAddressBitcrystal.setVisible(true);
                 String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
-                String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccount2MultisigAddressForBitcrystal();
+                String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
                 depositAddressBitcoins.setText(tradeAccountMultisigAddressForBitcoin);
                 depositAddressBitcrystal.setText(tradeAccountMultisigAddressForBitcrystal);
                 JOptionPane.showMessageDialog(null, "Successfully setted the current trade with address to " + currentTradeWithAddressS + "!");
@@ -319,21 +376,53 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
 
 }//GEN-LAST:event_currentTradeWithAddressButtonActionPerformed
 
-private void bitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusGained
-    double bitcoinBalanceTradeAccount = ClientConnection.getBitcoinBalanceTradeAccount();
-    if (bitcoinBalanceTradeAccount <= 0) {
-        bitcoinBalanceTradeAccount = 0;
+private void bitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinBalanceActionPerformed
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
     }
-    bitcoinBalance.setText("" + bitcoinBalanceTradeAccount);
+    bitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_bitcoinBalanceActionPerformed
+
+private void bitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusGained
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcoinBalance.setText("" + balance);
 }//GEN-LAST:event_bitcoinBalanceFocusGained
 
-private void bitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusGained
-    double bitcrystalBalanceTradeAccount = ClientConnection.getBitcrystalBalanceTradeAccount();
-    if (bitcrystalBalanceTradeAccount <= 0) {
-        bitcrystalBalanceTradeAccount = 0;
+private void bitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcrystalBalanceActionPerformed
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
     }
-    bitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount);
+    bitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_bitcrystalBalanceActionPerformed
+
+private void bitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusGained
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcrystalBalance.setText("" + balance);
 }//GEN-LAST:event_bitcrystalBalanceFocusGained
+
+private void bitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusLost
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_bitcoinBalanceFocusLost
+
+private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusLost
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_bitcrystalBalanceFocusLost
     private static String commandParser(String command) {
         String ret = "";
         try {
@@ -397,21 +486,21 @@ private void bitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel bitcoinBalance;
-    private javax.swing.JLabel bitcrystalBalance;
+    private javax.swing.JTextField bitcoinBalance;
+    private javax.swing.JLabel bitcoinBalanceLabel;
+    private javax.swing.JTextField bitcrystalBalance;
+    private javax.swing.JLabel bitcrystalBalanceLabel;
     private javax.swing.JTextField currentTradeAddress;
     private javax.swing.JTextField currentTradeWithAddress;
     private javax.swing.JButton currentTradeWithAddressButton;
     private javax.swing.JTextField depositAddressBitcoins;
     private javax.swing.JTextField depositAddressBitcrystal;
+    private javax.swing.JLabel depositAddressForBitcoinsLabel;
+    private javax.swing.JLabel depositAddressForBitcrystal;
     private javax.swing.JButton getNewCurrentTradeAddressButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

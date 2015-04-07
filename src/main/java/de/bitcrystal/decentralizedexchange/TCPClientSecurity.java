@@ -333,6 +333,32 @@ public class TCPClientSecurity {
         String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
         return BitCrystalJSON.decodeString(decryptAES256);
     }
+    
+     public boolean saveStringLight(String string, String key, String path) {
+        return saveStringLight(string, key, path, "");
+    }
+
+    public boolean saveStringLight(String stringk, String key, String path, String filename) {
+        String string = BitCrystalJSON.encodeStringLight(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
+        return BitCrystalJSON.saveString(encryptAES256, key, path, filename);
+    }
+
+    public String loadStringLight(String key, String path) {
+        return loadString(key, path, "");
+    }
+
+    public String loadStringLight(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
+        return BitCrystalJSON.decodeStringLight(decryptAES256);
+    }
 
     public boolean saveStringWallet(String string, String key, String path) {
         return saveStringWallet(string, key, path, "");
@@ -375,6 +401,32 @@ public class TCPClientSecurity {
     public JSONObject loadJSONObject(String key, String path, String filename) {
         try {
             String string = loadString(key, path, filename);
+            if (string == null || string.isEmpty()) {
+                return null;
+            }
+            JSONObject jSONObject = new JSONObject(string);
+            return jSONObject;
+        } catch (JSONException ex) {
+            return null;
+        }
+
+    }
+    
+     public boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectLight(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringLight(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectLight(String key, String path) {
+        return loadJSONObjectLight(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectLight(String key, String path, String filename) {
+        try {
+            String string = loadStringLight(key, path, filename);
             if (string == null || string.isEmpty()) {
                 return null;
             }

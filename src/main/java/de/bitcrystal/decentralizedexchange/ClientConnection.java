@@ -48,6 +48,7 @@ public class ClientConnection implements Runnable {
     private TCPClientSecurity server;
     private String command;
     private JSONObject clientJSON = null;
+    private static boolean isTradeAborted = false;
 
     public ClientConnection(TCPClient server, String command) {
         this.server = DecentralizedExchange.getSecurityClient(server);
@@ -444,10 +445,11 @@ public class ClientConnection implements Runnable {
             isEnded = true;
             return;
         }
+        this.saveClient();
     }
 
     private void tradeabort() {
-        if ((currentTradePubKey.isEmpty() || currentTradeAddress.isEmpty() || isEndedMe || isEndedOther || isSynced || isStarted) && isEnded == false) {
+        if ((isEndedMe || isEndedOther || isSynced || isStarted) && isEnded == false) {
             this.server.close();
             setLastCommandStatus(true);
             return;
@@ -455,6 +457,7 @@ public class ClientConnection implements Runnable {
         //String proofOfWorkSHA1 = HashFunctions.getProofOfWorkSHA1(1, currentTradePubKey);
         //System.out.println(proofOfWorkSHA1);
         currentTradeAddress = "";
+        tradeWithAddress = "";
         tradeAccount = "";
         tradeAccount2 = "";
         tradebtc2btcry = "";
@@ -468,10 +471,10 @@ public class ClientConnection implements Runnable {
         isEnded = false;
         isStarted = false;
         //this.server.send("tradeabort;;" + temp + ";;" + proofOfWorkSHA1);
-        this.server.send("tradeabort;;" + temp);
+        this.server.send("tradeabort,," + temp);
         this.server.recvLight();
         this.server.close();
-        this.saveClient();
+        isTradeAborted = true;
         setLastCommandStatus(true);
         return;
     }
@@ -858,6 +861,7 @@ public class ClientConnection implements Runnable {
                 this.server.recv();
                 this.server.close();
                 setLastCommandStatus(true);
+                this.saveClient();
                 return;
             } else if (!tradebtcry2btc.isEmpty()) {
                 DebugClient.println("clientconnection@430");
@@ -1133,10 +1137,10 @@ public class ClientConnection implements Runnable {
         }
         try {
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+            if (tradeAccount == null || tradeAccount.isEmpty()) {
                 return "";
             }
-            String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount);
             if (string == null || string.isEmpty()) {
                 return "";
             }
@@ -1153,10 +1157,10 @@ public class ClientConnection implements Runnable {
         }
         try {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            if (tradeAccount2 == null || tradeAccount2.isEmpty()) {
+            if (tradeAccount == null || tradeAccount.isEmpty()) {
                 return "";
             }
-            String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
+            String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount);
             if (string == null || string.isEmpty()) {
                 return "";
             }
@@ -1211,9 +1215,12 @@ public class ClientConnection implements Runnable {
         if (tradeAccountMultisigAddressBitcoin.isEmpty()) {
             return -1;
         }
+        if (tradeAccountMultisigAddressBitcoin.startsWith("1")) {
+            return -1;
+        }
         try {
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            return bitcoinrpc.getBalance(tradeAccountMultisigAddressBitcoin);
+            return bitcoinrpc.getBalance(tradeAccount);
         } catch (Exception ex) {
             return -1;
         }
@@ -1223,9 +1230,12 @@ public class ClientConnection implements Runnable {
         if (tradeAccountMultisigAddressBitcrystal.isEmpty()) {
             return -1;
         }
+        if (tradeAccountMultisigAddressBitcrystal.startsWith("1")) {
+            return -1;
+        }
         try {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            return bitcrystalrpc.getBalance(tradeAccountMultisigAddressBitcrystal);
+            return bitcrystalrpc.getBalance(tradeAccount);
         } catch (Exception ex) {
             return -1;
         }
@@ -1235,9 +1245,12 @@ public class ClientConnection implements Runnable {
         if (tradeAccount2MultisigAddressBitcoin.isEmpty()) {
             return -1;
         }
+        if (tradeAccount2MultisigAddressBitcoin.startsWith("1")) {
+            return -1;
+        }
         try {
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            return bitcoinrpc.getBalance(tradeAccount2MultisigAddressBitcoin);
+            return bitcoinrpc.getBalance(tradeAccount2);
         } catch (Exception ex) {
             return -1;
         }
@@ -1247,9 +1260,12 @@ public class ClientConnection implements Runnable {
         if (tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
             return -1;
         }
+        if (tradeAccount2MultisigAddressBitcrystal.startsWith("1")) {
+            return -1;
+        }
         try {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-            return bitcrystalrpc.getBalance(tradeAccount2MultisigAddressBitcrystal);
+            return bitcrystalrpc.getBalance(tradeAccount2);
         } catch (Exception ex) {
             return -1;
         }

@@ -7,6 +7,7 @@ package de.bitcrystal.decentralizedexchange;
 import com.google.gson.JsonObject;
 import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import de.bitcrystal.decentralizedexchange.security.HashFunctions;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -133,7 +134,7 @@ public class ServerConnection implements Runnable {
             return;
         }
 
-        if (recv.startsWith("tradeabort;;")) {
+        if (recv.startsWith("tradeabort,,")) {
             DebugServer.println("tradeabort open");
             tradeabort(recv);
             DebugServer.println("tradeabort close");
@@ -1121,7 +1122,7 @@ public class ServerConnection implements Runnable {
         return;
     }
 
-   private void tradewith(String recv) {
+    private void tradewith(String recv) {
         DebugServer.println("serverconnection@114");
         String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
         try {
@@ -1428,8 +1429,18 @@ public class ServerConnection implements Runnable {
         return map;
     }
 
+    private void reset() {
+        String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+        pubKeysMap.remove(hostAddress);
+        addresses.remove(hostAddress);
+        ips.remove(hostAddress);
+        this.saveServer();
+        
+    }
+    
     private void tradeabort(String recv) {
-        if (recv.contains(";;")) {
+        reset();
+        if (!recv.contains(",,")) {
             try {
                 this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
@@ -1443,7 +1454,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        String[] split = recv.split(";;");
+        String[] split = recv.split(",,");
         if (split.length != 2) {
             try {
                 DebugServer.println("serverconnection@1394");
@@ -1508,7 +1519,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        String hostAddress = client.getHostAddress();
+        String hostAddress =  this.client.getSocket().getInetAddress().getHostAddress();
         if (!pubKeysMap.containsKey(hostAddress)) {
             try {
                 this.client.sendLight("E_ERROR");
@@ -1543,10 +1554,12 @@ public class ServerConnection implements Runnable {
             ips.remove(get);
         }
         pubKeysMap.remove(hostAddress);
+        addresses.remove(hostAddress);
         pubKeysMap2.remove(split[1]);
         tradeAccountsIp.remove(hostAddress);
         tradeAccountsIp2.remove(hostAddress);
-        pubkeysAddresses.remove(split[1]);
+        addresses.remove(hostAddress);
+        this.saveServer();
         this.client.sendLight("ALL_OK");
         this.client.close();
         return;
