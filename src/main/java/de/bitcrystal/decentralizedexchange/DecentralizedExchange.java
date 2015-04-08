@@ -68,6 +68,9 @@ public class DecentralizedExchange {
             DecentralizedExchangeGUI.main(args);
         } else {
             DecentralizedExchange.start();
+            if(args[0].equalsIgnoreCase("createtrade")) {
+                return;
+            }
             if(!(args.length==1&&args[0].equalsIgnoreCase("server")))
                 command(args);
         }

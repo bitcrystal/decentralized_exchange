@@ -1028,6 +1028,7 @@ public class ClientConnection implements Runnable {
                 setLastCommandStatus(false);
                 return;
             }
+            createtrade();
             if (!tradebtcry2btc.isEmpty()) {
                 DebugClient.println("clientconnection@553");
                 this.server.send("E_ERROR");
@@ -1071,6 +1072,11 @@ public class ClientConnection implements Runnable {
         }
     }
 
+    private void createtrade() {
+        this.server.send("createtrade,," + tradeAccount);
+        this.server.recvLight();
+    }
+
     private void createtradebtc2btcry(String[] split) {
         try {
             DebugClient.println("clientconnection@586");
@@ -1089,6 +1095,7 @@ public class ClientConnection implements Runnable {
                 setLastCommandStatus(false);
                 return;
             }
+            createtrade();
             DebugClient.println("clientconnection@600");
             this.server.send("E_ERROR");
             this.server.close();

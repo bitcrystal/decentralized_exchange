@@ -142,6 +142,14 @@ public class ServerConnection implements Runnable {
             this.saveServer();
             return;
         }
+
+        if (recv.startsWith("createtrade,,")) {
+            DebugServer.println("createtrade open");
+            createtrade(recv);
+            DebugServer.println("createtrade close");
+            this.saveServer();
+            return;
+        }
     }
 
     private void starttrade() {
@@ -338,8 +346,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        if(startedtrades.containsKey(tradeAccount)&&startedtrades.containsKey(tradeWithAccount))
-        {
+        if (startedtrades.containsKey(tradeAccount) && startedtrades.containsKey(tradeWithAccount)) {
             this.client.sendLight("ALL_OK");
             this.client.recv();
             this.client.close();
@@ -1582,5 +1589,49 @@ public class ServerConnection implements Runnable {
         this.client.sendLight("ALL_OK");
         this.client.close();
         return;
+    }
+
+    private void createtrade(String recv) {
+        if (!recv.contains(",,")) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+        String[] split = recv.split(",,");
+        if (split.length != 2) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+        String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
+        if (!ipsTradeAccounts.containsKey(split[1])) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+         if (!tradeAccountsIp.containsKey(hostAddress)) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+        String get = ipsTradeAccounts.get(split[1]);
+        String get2 = tradeAccountsIp.get(hostAddress);
+        if (!get.equals(hostAddress)) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+        if (!get2.equals(split[1])) {
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
+        }
+        startedtradesaccount.remove(split[1]);
+        syncedtrades.remove(hostAddress);
+        startedtrades.remove(split[1]);
+        endtradesme.remove(split[1]);
+        this.saveServer();
+        this.client.sendLight("ALL_OK");
+        this.client.close();
     }
 }
