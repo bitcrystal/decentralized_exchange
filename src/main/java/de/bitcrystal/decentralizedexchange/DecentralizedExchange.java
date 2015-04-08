@@ -63,8 +63,14 @@ public class DecentralizedExchange {
     }
 
     public static void main(String[] args) {
-        DecentralizedExchange.start();
-        command(args);
+        if(args==null||args.length==0)
+        {
+            DecentralizedExchangeGUI.main(args);
+        } else {
+            DecentralizedExchange.start();
+            if(!(args.length==1&&args[0].equalsIgnoreCase("server")))
+                command(args);
+        }
     }
 
     public static void command(final String command) {

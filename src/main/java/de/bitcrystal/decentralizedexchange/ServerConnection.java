@@ -49,6 +49,7 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> endtradesme = new ConcurrentHashMap<String, String>();
     private static Map<String, String> endtradesother = new ConcurrentHashMap<String, String>();
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
+    private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
     private static JSONObject serverJSON = null;
     private static boolean isInit = false;
 
@@ -271,8 +272,8 @@ public class ServerConnection implements Runnable {
             }
         }
         DebugServer.println(split[0]);
-        DebugServer.println(split[2]);
-        DebugServer.println("split[0] == split[2] ?");
+        DebugServer.println(split2[0]);
+        DebugServer.println("split[0] == split2[2] ?");
         /*if (split[0].equals(split2[0])) {
         DebugServer.println("serverconnection@488");
         try {
@@ -336,6 +337,13 @@ public class ServerConnection implements Runnable {
                 this.client.close();
                 return;
             }
+        }
+        if(startedtrades.containsKey(tradeAccount)&&startedtrades.containsKey(tradeWithAccount))
+        {
+            this.client.sendLight("ALL_OK");
+            this.client.recv();
+            this.client.close();
+            return;
         }
         if (startedtrades.containsKey(tradeAccount) || startedtrades.containsKey(tradeAccount2) || startedtrades.containsKey(tradeWithAccount) || startedtrades.containsKey(tradeWithAccount2)) {
             DebugServer.println("serverconnection@550");
@@ -472,7 +480,7 @@ public class ServerConnection implements Runnable {
                 //startedtrades.put(tradeWithAccount, tradeWithAccountSend);
                 startedtradesaccount.put(tradeAccount, tradeWithAccount);
                 //startedtradesaccount.put(tradeWithAccount, tradeAccount);
-                client.send("ALL_OK");
+                client.sendLight("ALL_OK");
                 DebugServer.println("TRADE IS STARTED");
                 client.recv();
                 DebugServer.println("WORKED AWESOME!");
@@ -532,7 +540,7 @@ public class ServerConnection implements Runnable {
                 startedtradesaccount.put(tradeAccount, tradeWithAccount);
                 //startedtradesaccount.put(tradeWithAccount, tradeAccount);
                 DebugServer.println("serverconnection@739");
-                client.send("ALL_OK");
+                client.sendLight("ALL_OK");
                 DebugServer.println("TRADE IS STARTED");
                 client.recv();
                 DebugServer.println("WORKED AWESOME");
@@ -555,6 +563,14 @@ public class ServerConnection implements Runnable {
         String otherip = "";
         try {
             hostAddress = this.client.getHostAddress();
+            if (endedlasttrades.contains(tradeAccount) && endedlasttrades.contains(tradeWithAccount) && endedlasttrades.contains(hostAddress)) {
+                this.client.sendLight("ALL_OK");
+                this.client.close();
+                endedlasttrades.remove(tradeAccount);
+                endedlasttrades.remove(tradeWithAccount);
+                endedlasttrades.remove(hostAddress);
+                return;
+            }
             if (!ips.containsKey(hostAddress)) {
                 DebugServer.println("serverconnection@881");
                 try {
@@ -703,6 +719,9 @@ public class ServerConnection implements Runnable {
             this.client.close();
             return;
         }
+        endedlasttrades.add(otherip);
+        endedlasttrades.add(tradeAccount);
+        endedlasttrades.add(tradeWithAccount);
         endtradesme.remove(tradeAccount);
         endtradesme.remove(tradeWithAccount);
         endtradesother.remove(tradeAccount);
@@ -1435,9 +1454,9 @@ public class ServerConnection implements Runnable {
         addresses.remove(hostAddress);
         ips.remove(hostAddress);
         this.saveServer();
-        
+
     }
-    
+
     private void tradeabort(String recv) {
         reset();
         if (!recv.contains(",,")) {
@@ -1519,7 +1538,7 @@ public class ServerConnection implements Runnable {
                 return;
             }
         }
-        String hostAddress =  this.client.getSocket().getInetAddress().getHostAddress();
+        String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
         if (!pubKeysMap.containsKey(hostAddress)) {
             try {
                 this.client.sendLight("E_ERROR");

@@ -27,18 +27,21 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
     private static boolean isInit = false;
     private static boolean processProcessed = false;
     private static boolean canSetTradeWithAddress = true;
+    private static boolean startTrade = false;
 
     /** Creates new form DecentralizedExchangeGUI */
     public DecentralizedExchangeGUI() {
         initComponents();
-        bitcoinBalanceLabel.setVisible(false);
-        bitcrystalBalanceLabel.setVisible(false);
-        bitcoinBalance.setVisible(false);
-        bitcrystalBalance.setVisible(false);
-        depositAddressForBitcoinsLabel.setVisible(false);
-        depositAddressForBitcrystal.setVisible(false);
-        depositAddressBitcoins.setVisible(false);
-        depositAddressBitcrystal.setVisible(false);
+        StartTradeBuyBtcSellBitcrystal.setEnabled(false);
+        startTradeBuyBtcrySellBtc.setEnabled(false);
+        bitcoinBalanceLabel.setEnabled(false);
+        bitcrystalBalanceLabel.setEnabled(false);
+        bitcoinBalance.setEnabled(false);
+        bitcrystalBalance.setEnabled(false);
+        depositAddressForBitcoinsLabel.setEnabled(false);
+        depositAddressForBitcrystal.setEnabled(false);
+        depositAddressBitcoins.setEnabled(false);
+        depositAddressBitcrystal.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -52,7 +55,6 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -70,14 +72,30 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         bitcoinBalance = new javax.swing.JTextField();
         bitcrystalBalance = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        buyBitcrystal = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        sellBitcoin = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        startTradeBuyBtcrySellBtc = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        buyBitcoin = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        sellBitcrystal = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        StartTradeBuyBtcSellBitcrystal = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jToolBar1.setRollover(true);
+        setTitle("Decentralized Exchange v0.1 by BitCrystal Developers");
 
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(800, 800));
 
@@ -87,10 +105,9 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         jLabel3.setText("CurrentTradeWithAddress");
 
         currentTradeAddress.setEditable(false);
-        currentTradeAddress.setText("jTextField1");
         currentTradeAddress.setName(""); // NOI18N
 
-        currentTradeWithAddress.setText("jTextField1");
+        currentTradeWithAddress.setText("Enter here the partner address");
 
         getNewCurrentTradeAddressButton.setText("Get Current Trade Address");
         getNewCurrentTradeAddressButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,17 +128,15 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         depositAddressForBitcrystal.setText("Deposit Address For Bitcrystal");
 
         depositAddressBitcoins.setEditable(false);
-        depositAddressBitcoins.setText("jTextField1");
 
         depositAddressBitcrystal.setEditable(false);
-        depositAddressBitcrystal.setText("jTextField1");
 
         bitcoinBalanceLabel.setText("Bitcoin Balance");
 
         bitcrystalBalanceLabel.setText("Bitcrystal Balance");
 
         bitcoinBalance.setEditable(false);
-        bitcoinBalance.setText("jTextField1");
+        bitcoinBalance.setText("0.0");
         bitcoinBalance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcoinBalanceActionPerformed(evt);
@@ -137,7 +152,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         });
 
         bitcrystalBalance.setEditable(false);
-        bitcrystalBalance.setText("jTextField2");
+        bitcrystalBalance.setText("0.0");
         bitcrystalBalance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bitcrystalBalanceActionPerformed(evt);
@@ -167,31 +182,31 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                                     .addGap(18, 18, 18))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                                    .addComponent(depositAddressBitcoins, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                                     .addGap(24, 24, 24))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(bitcoinBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                    .addComponent(bitcoinBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(bitcoinBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bitcoinBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                            .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                            .addComponent(depositAddressForBitcrystal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(depositAddressForBitcrystal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                                .addComponent(depositAddressBitcrystal, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                                .addComponent(bitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bitcrystalBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))))
+                                .addComponent(bitcrystalBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -228,33 +243,151 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addContainerGap(155, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel2);
+        jTabbedPane1.addTab("Main", jPanel2);
+
+        jLabel4.setText("Trade BitCrystal / Bitcoin");
+
+        buyBitcrystal.setText("Enter here the money...");
+
+        jLabel6.setText("Buy");
+
+        jLabel7.setText("BTCRY");
+
+        jLabel8.setText("Sell");
+
+        sellBitcoin.setText("Enter here the money...");
+
+        jLabel9.setText("BTC");
+
+        startTradeBuyBtcrySellBtc.setText("Start Trade");
+        startTradeBuyBtcrySellBtc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTradeBuyBtcrySellBtcActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sellBitcoin, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buyBitcrystal, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(149, 149, 149))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(startTradeBuyBtcrySellBtc, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addGap(268, 268, 268))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buyBitcrystal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(sellBitcoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(startTradeBuyBtcrySellBtc)
+                .addContainerGap(323, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel3);
+        jTabbedPane1.addTab("BTCRY/BTC", jPanel3);
+
+        jLabel10.setText("Trade Bitcoin / BitCrystal");
+
+        jLabel11.setText("Buy");
+
+        buyBitcoin.setText("Enter here the money...");
+        buyBitcoin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buyBitcoinActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("BTC");
+
+        sellBitcrystal.setText("Enter here the money...");
+
+        jLabel13.setText("BTCRY");
+
+        jLabel14.setText("Sell");
+
+        StartTradeBuyBtcSellBitcrystal.setText("Start Trade");
+        StartTradeBuyBtcSellBitcrystal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartTradeBuyBtcSellBitcrystalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(StartTradeBuyBtcSellBitcrystal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buyBitcoin, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sellBitcrystal, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(buyBitcoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sellBitcrystal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(StartTradeBuyBtcSellBitcrystal)
+                .addContainerGap(331, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel4);
+        jTabbedPane1.addTab("BTC/BTCRY", jPanel4);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -267,20 +400,15 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGap(0, 476, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("tab4", jPanel5);
+        jTabbedPane1.addTab("About", jPanel5);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)))
+                .addGap(30, 30, 30)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -288,12 +416,13 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Decentralized Exchange v0.1 by the BitCrystal Developers Team");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,11 +431,16 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(57, 57, 57))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -318,8 +452,9 @@ private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.Actio
         JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
         return;
     }
-    DecentralizedExchange.start();
-    currentTradeAddressS = ClientConnection.getCurrentTradeAddress();
+    if (currentTradeAddressS == null || currentTradeAddressS.isEmpty()) {
+        currentTradeAddressS = ClientConnection.getCurrentTradeAddress();
+    }
     currentTradeAddress.setText(currentTradeAddressS);
 }//GEN-LAST:event_getNewCurrentTradeAddressButtonActionPerformed
 
@@ -352,14 +487,16 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
                 currentTradeAddress.setText(currentTradeAddressS);
                 canSetTradeWithAddress = false;
                 processProcessed = false;
-                bitcoinBalance.setVisible(true);
-                bitcrystalBalance.setVisible(true);
-                bitcoinBalanceLabel.setVisible(true);
-                bitcrystalBalanceLabel.setVisible(true);
-                depositAddressForBitcoinsLabel.setVisible(true);
-                depositAddressForBitcrystal.setVisible(true);
-                depositAddressBitcoins.setVisible(true);
-                depositAddressBitcrystal.setVisible(true);
+                bitcoinBalance.setEnabled(true);
+                bitcrystalBalance.setEnabled(true);
+                bitcoinBalanceLabel.setEnabled(true);
+                bitcrystalBalanceLabel.setEnabled(true);
+                depositAddressForBitcoinsLabel.setEnabled(true);
+                depositAddressForBitcrystal.setEnabled(true);
+                depositAddressBitcoins.setEnabled(true);
+                depositAddressBitcrystal.setEnabled(true);
+                StartTradeBuyBtcSellBitcrystal.setEnabled(true);
+                startTradeBuyBtcrySellBtc.setEnabled(true);
                 String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
                 String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
                 depositAddressBitcoins.setText(tradeAccountMultisigAddressForBitcoin);
@@ -423,6 +560,255 @@ private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
     }
     bitcrystalBalance.setText("" + balance);
 }//GEN-LAST:event_bitcrystalBalanceFocusLost
+
+private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradeBuyBtcrySellBtcActionPerformed
+    if (startTrade == true) {
+        JOptionPane.showMessageDialog(null, "You have start already a trade!");
+        return;
+    }
+    startTrade = true;
+    String buyBitcrystalText = buyBitcrystal.getText();
+    String sellBitcoinText = sellBitcoin.getText();
+    double buyBitcrystalDouble = -1;
+    double sellBitcoinDouble = -1;
+    try {
+        buyBitcrystalDouble = Double.parseDouble(buyBitcrystalText);
+        sellBitcoinDouble = Double.parseDouble(sellBitcoinText);
+    } catch (Exception ex) {
+        buyBitcrystalDouble = -1;
+        sellBitcoinDouble = -1;
+    }
+    if (buyBitcrystalDouble <= 0 || sellBitcoinDouble <= 0) {
+        JOptionPane.showMessageDialog(null, "Not valid numbers!");
+        startTrade = false;
+        return;
+    }
+    double btc = ClientConnection.getBitcoinBalanceTradeAccount();
+    double btcry = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (btc <= 0 || btcry <= 0) {
+        JOptionPane.showMessageDialog(null, "You have not enough balance!");
+        startTrade = false;
+        return;
+    }
+    if (btcry < buyBitcrystalDouble || btc < sellBitcoinDouble) {
+        JOptionPane.showMessageDialog(null, "You cannot start the trade, have you enough balance?");
+        startTrade = false;
+        return;
+    }
+    int ret = JOptionPane.showConfirmDialog(null, "Start the trade? You can not stop the trade if the trade is started!", "Question", JOptionPane.YES_NO_OPTION);
+    if (ret == JOptionPane.NO_OPTION) {
+        JOptionPane.showMessageDialog(null, "Trade is aborted!");
+        startTrade = false;
+        return;
+    } else {
+        JOptionPane.showMessageDialog(null, "Trade is started! Please be patient okay!");
+    }
+    DecentralizedExchange.command("createtradebtc2btcry " + buyBitcrystalDouble + " " + sellBitcoinDouble);
+    if (!ClientConnection.getLastCommandStatus()) {
+        JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    DecentralizedExchange.command("synctrade");
+    if (!ClientConnection.getLastCommandStatus()) {
+        startTrade = false;
+        JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Cool! Make sure that your partner with you trade also has the same message as you.");
+    boolean lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("starttrade");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be started. Have your partner also the message All Cool!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Overcool! Make sure that your partner with you trade also has the same message as you.");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtrademe");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Overcool!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Good! Make sure that your partner with you trade also has the same message as you.");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtradeother");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade from the other user can not be ended. Have your partner also the message All Good!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Perfect! Make sure that your partner with you trade also has the same message as you.");
+    JOptionPane.showMessageDialog(null, "Click ok to finish the trade!");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtrade");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Perfect!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    startTrade = false;
+    JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
+}//GEN-LAST:event_startTradeBuyBtcrySellBtcActionPerformed
+
+private void buyBitcoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBitcoinActionPerformed
+}//GEN-LAST:event_buyBitcoinActionPerformed
+
+private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
+    if (startTrade == true) {
+        JOptionPane.showMessageDialog(null, "You have start already a trade!");
+        return;
+    }
+    startTrade = true;
+    String buyBitcoinText = buyBitcoin.getText();
+    String sellBitcrystalText = sellBitcrystal.getText();
+    double buyBitcoinDouble = -1;
+    double sellBitcrystalDouble = -1;
+    try {
+        buyBitcoinDouble = Double.parseDouble(buyBitcoinText);
+        sellBitcrystalDouble = Double.parseDouble(sellBitcrystalText);
+    } catch (Exception ex) {
+        buyBitcoinDouble = -1;
+        sellBitcrystalDouble = -1;
+    }
+    if (buyBitcoinDouble <= 0 || sellBitcrystalDouble <= 0) {
+        JOptionPane.showMessageDialog(null, "Not valid numbers!");
+        startTrade = false;
+        return;
+    }
+    double btc = ClientConnection.getBitcoinBalanceTradeAccount();
+    double btcry = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (btc <= 0 || btcry <= 0) {
+        JOptionPane.showMessageDialog(null, "You have not enough balance!");
+        startTrade = false;
+        return;
+    }
+    if (btcry < sellBitcrystalDouble || btc < buyBitcoinDouble) {
+        startTrade = false;
+        JOptionPane.showMessageDialog(null, "You cannot start the trade, have you enough balance?");
+        return;
+    }
+    int ret = JOptionPane.showConfirmDialog(null, "Start the trade? You can not stop the trade if the trade is started!", "Question", JOptionPane.YES_NO_OPTION);
+    if (ret == JOptionPane.NO_OPTION) {
+        startTrade = false;
+        JOptionPane.showMessageDialog(null, "Trade is aborted!");
+        return;
+    } else {
+        JOptionPane.showMessageDialog(null, "Trade is started! Please be patient okay!");
+    }
+    DecentralizedExchange.command("createtradebtcry2btc " + buyBitcoinDouble + " " + sellBitcrystalDouble);
+    if (!ClientConnection.getLastCommandStatus()) {
+        startTrade = false;
+        JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
+        return;
+    }
+    DecentralizedExchange.command("synctrade");
+    if (!ClientConnection.getLastCommandStatus()) {
+        startTrade = false;
+        JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Cool! Make sure that your partner with you trade also has the same message as you.");
+    boolean lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("starttrade");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be started. Have your partner also the message All Cool!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Overcool! Make sure that your partner with you trade also has the same message as you.");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtrademe");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Overcool!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Good! Make sure that your partner with you trade also has the same message as you.");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtradeother");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade from the other user can not be ended. Have your partner also the message All Good!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    JOptionPane.showMessageDialog(null, "All Perfect! Make sure that your partner with you trade also has the same message as you.");
+    JOptionPane.showMessageDialog(null, "Click ok to finish the trade!");
+    lastStatus = false;
+    for (int i = 0; i < 5; i++) {
+        DecentralizedExchange.command("endtrade");
+        lastStatus = ClientConnection.getLastCommandStatus();
+        if (!lastStatus) {
+            JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Perfect!...? Try again!");
+        } else {
+            break;
+        }
+    }
+    if (!lastStatus) {
+        JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+        startTrade = false;
+        return;
+    }
+    startTrade = false;
+    JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
+}//GEN-LAST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
     private static String commandParser(String command) {
         String ret = "";
         try {
@@ -486,10 +872,13 @@ private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton StartTradeBuyBtcSellBitcrystal;
     private javax.swing.JTextField bitcoinBalance;
     private javax.swing.JLabel bitcoinBalanceLabel;
     private javax.swing.JTextField bitcrystalBalance;
     private javax.swing.JLabel bitcrystalBalanceLabel;
+    private javax.swing.JTextField buyBitcoin;
+    private javax.swing.JTextField buyBitcrystal;
     private javax.swing.JTextField currentTradeAddress;
     private javax.swing.JTextField currentTradeWithAddress;
     private javax.swing.JButton currentTradeWithAddressButton;
@@ -499,14 +888,27 @@ private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
     private javax.swing.JLabel depositAddressForBitcrystal;
     private javax.swing.JButton getNewCurrentTradeAddressButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField sellBitcoin;
+    private javax.swing.JTextField sellBitcrystal;
+    private javax.swing.JButton startTradeBuyBtcrySellBtc;
     // End of variables declaration//GEN-END:variables
 }
