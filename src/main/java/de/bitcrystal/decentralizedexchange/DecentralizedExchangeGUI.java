@@ -391,7 +391,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("BTC/BTCRY", jPanel4);
 
-        jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\ABC\\Pictures\\dex.png")); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/bitcrystal/decentralizedexchange/dex.png"))); // NOI18N
 
         jLabel16.setText("@ copyright 2015 by the BitCrystal Developers Team");
 
@@ -453,7 +453,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel5.setText("Decentralized Exchange v0.1 by the BitCrystal Developers Team");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -479,261 +479,8 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getNewCurrentTradeAddressButtonActionPerformed
-    if (!isInit) {
-        JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
-        JOptionPane.showMessageDialog(null, getWaitMessage());
-        return;
-    }
-    if (currentTradeAddressS == null || currentTradeAddressS.isEmpty()) {
-        currentTradeAddressS = ClientConnection.getCurrentTradeAddress();
-    }
-    currentTradeAddress.setText(currentTradeAddressS);
-}//GEN-LAST:event_getNewCurrentTradeAddressButtonActionPerformed
-
-private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentTradeWithAddressButtonActionPerformed
-
-    if (!isInit) {
-        JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
-        JOptionPane.showMessageDialog(null, getWaitMessage());
-        return;
-    }
-    if (processProcessed) {
-        JOptionPane.showMessageDialog(null, "The Process is working! Please be patient!");
-        JOptionPane.showMessageDialog(null, getWaitMessage());
-        return;
-    }
-    if (!canSetTradeWithAddress) {
-        JOptionPane.showMessageDialog(null, "In order to change the current trade with address you must restart the client!");
-        return;
-    }
-
-    JOptionPane.showMessageDialog(null, "The Process takes a while! Please wait a minute or two!");
-    new NotInterruptableDaemonThread(new Runnable() {
-
-        public void run() {
-            processProcessed = true;
-            setDiff(300);
-
-            currentTradeWithAddressS = currentTradeWithAddress.getText();
-            DecentralizedExchange.command("tradewith " + currentTradeWithAddressS);
-            if (ClientConnection.getLastCommandStatus()) {
-                currentTradeWithAddress.setEditable(false);
-                currentTradeWithAddressS = ClientConnection.getCurrentTradeWithAddress();
-                currentTradeWithAddress.setText(currentTradeWithAddressS);
-                canSetTradeWithAddress = false;
-                processProcessed = false;
-                bitcoinBalance.setEnabled(true);
-                bitcrystalBalance.setEnabled(true);
-                bitcoinBalanceLabel.setEnabled(true);
-                bitcrystalBalanceLabel.setEnabled(true);
-                depositAddressForBitcoinsLabel.setEnabled(true);
-                depositAddressForBitcrystal.setEnabled(true);
-                depositAddressBitcoins.setEnabled(true);
-                depositAddressBitcrystal.setEnabled(true);
-                StartTradeBuyBtcSellBitcrystal.setEnabled(true);
-                startTradeBuyBtcrySellBtc.setEnabled(true);
-                String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
-                String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
-                depositAddressBitcoins.setText(tradeAccountMultisigAddressForBitcoin);
-                depositAddressBitcrystal.setText(tradeAccountMultisigAddressForBitcrystal);
-                updateBalance = true;
-                JOptionPane.showMessageDialog(null, "Successfully setted the current trade with address to " + currentTradeWithAddressS + "!");
-            } else {
-                processProcessed = false;
-                JOptionPane.showMessageDialog(null, "Error ! The Address is not contains in the database of the node server!");
-                return;
-            }
-        }
-    }).start();
-
-
-}//GEN-LAST:event_currentTradeWithAddressButtonActionPerformed
-
-private void bitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinBalanceActionPerformed
-    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcoinBalance.setText("" + balance);
-}//GEN-LAST:event_bitcoinBalanceActionPerformed
-
-private void bitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusGained
-    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcoinBalance.setText("" + balance);
-}//GEN-LAST:event_bitcoinBalanceFocusGained
-
-private void bitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcrystalBalanceActionPerformed
-    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcrystalBalance.setText("" + balance);
-}//GEN-LAST:event_bitcrystalBalanceActionPerformed
-
-private void bitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusGained
-    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcrystalBalance.setText("" + balance);
-}//GEN-LAST:event_bitcrystalBalanceFocusGained
-
-private void bitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusLost
-    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcoinBalance.setText("" + balance);
-}//GEN-LAST:event_bitcoinBalanceFocusLost
-
-private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusLost
-    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
-    if (balance <= 0) {
-        balance = 0;
-    }
-    bitcrystalBalance.setText("" + balance);
-}//GEN-LAST:event_bitcrystalBalanceFocusLost
-
-private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradeBuyBtcrySellBtcActionPerformed
-    new NotInterruptableDaemonThread(new Runnable() {
-
-        public void run() {
-            if (startTrade == true) {
-                JOptionPane.showMessageDialog(null, "You have start already a trade!");
-                JOptionPane.showMessageDialog(null, getWaitMessage());
-                return;
-            }
-            setDiff(150);
-            startTrade = true;
-            String buyBitcrystalText = buyBitcrystal.getText();
-            String sellBitcoinText = sellBitcoin.getText();
-            double buyBitcrystalDouble = -1;
-            double sellBitcoinDouble = -1;
-            try {
-                buyBitcrystalDouble = Double.parseDouble(buyBitcrystalText);
-                sellBitcoinDouble = Double.parseDouble(sellBitcoinText);
-            } catch (Exception ex) {
-                buyBitcrystalDouble = -1;
-                sellBitcoinDouble = -1;
-            }
-            if (buyBitcrystalDouble <= 0 || sellBitcoinDouble <= 0) {
-                JOptionPane.showMessageDialog(null, "Not valid numbers!");
-                startTrade = false;
-                return;
-            }
-            double btc = ClientConnection.getBitcoinBalanceTradeAccount();
-            double btcry = ClientConnection.getBitcrystalBalanceTradeAccount();
-            if (btc <= 0 || btcry <= 0) {
-                JOptionPane.showMessageDialog(null, "You have not enough balance!");
-                startTrade = false;
-                return;
-            }
-            if (btcry < buyBitcrystalDouble || btc < sellBitcoinDouble) {
-                JOptionPane.showMessageDialog(null, "You cannot start the trade, have you enough balance?");
-                startTrade = false;
-                return;
-            }
-            int ret = JOptionPane.showConfirmDialog(null, "Start the trade? You can not stop the trade if the trade is started!", "Question", JOptionPane.YES_NO_OPTION);
-            if (ret == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null, "Trade is aborted!");
-                startTrade = false;
-                return;
-            } else {
-                JOptionPane.showMessageDialog(null, "Trade is started! Please be patient okay!");
-            }
-            DecentralizedExchange.command("createtradebtc2btcry " + buyBitcrystalDouble + " " + sellBitcoinDouble);
-            if (!ClientConnection.getLastCommandStatus()) {
-                JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
-                startTrade = false;
-                return;
-            }
-            DecentralizedExchange.command("synctrade");
-            if (!ClientConnection.getLastCommandStatus()) {
-                startTrade = false;
-                JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
-                return;
-            }
-            JOptionPane.showMessageDialog(null, "All Cool! Make sure that your partner with you trade also has the same message as you.");
-            boolean lastStatus = false;
-            for (int i = 0; i < 5; i++) {
-                DecentralizedExchange.command("starttrade");
-                lastStatus = ClientConnection.getLastCommandStatus();
-                if (!lastStatus) {
-                    JOptionPane.showMessageDialog(null, "Trade can not be started. Have your partner also the message All Cool!...? Try again!");
-                } else {
-                    break;
-                }
-            }
-            if (!lastStatus) {
-                JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
-                startTrade = false;
-                return;
-            }
-            JOptionPane.showMessageDialog(null, "All Overcool! Make sure that your partner with you trade also has the same message as you.");
-            lastStatus = false;
-            for (int i = 0; i < 5; i++) {
-                DecentralizedExchange.command("endtrademe");
-                lastStatus = ClientConnection.getLastCommandStatus();
-                if (!lastStatus) {
-                    JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Overcool!...? Try again!");
-                } else {
-                    break;
-                }
-            }
-            if (!lastStatus) {
-                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
-                startTrade = false;
-                return;
-            }
-            JOptionPane.showMessageDialog(null, "All Good! Make sure that your partner with you trade also has the same message as you.");
-            lastStatus = false;
-            for (int i = 0; i < 5; i++) {
-                DecentralizedExchange.command("endtradeother");
-                lastStatus = ClientConnection.getLastCommandStatus();
-                if (!lastStatus) {
-                    JOptionPane.showMessageDialog(null, "Trade from the other user can not be ended. Have your partner also the message All Good!...? Try again!");
-                } else {
-                    break;
-                }
-            }
-            if (!lastStatus) {
-                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
-                startTrade = false;
-                return;
-            }
-            JOptionPane.showMessageDialog(null, "All Perfect! Make sure that your partner with you trade also has the same message as you.");
-            JOptionPane.showMessageDialog(null, "Click ok to finish the trade!");
-            lastStatus = false;
-            for (int i = 0; i < 5; i++) {
-                DecentralizedExchange.command("endtrade");
-                lastStatus = ClientConnection.getLastCommandStatus();
-                if (!lastStatus) {
-                    JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Perfect!...? Try again!");
-                } else {
-                    break;
-                }
-            }
-            if (!lastStatus) {
-                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
-                startTrade = false;
-                return;
-            }
-            startTrade = false;
-            JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
-        }
-    }).start();
-
-}//GEN-LAST:event_startTradeBuyBtcrySellBtcActionPerformed
-
-private void buyBitcoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBitcoinActionPerformed
-}//GEN-LAST:event_buyBitcoinActionPerformed
-
 private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
-    new NotInterruptableDaemonThread(new Runnable() {
+    new NotInterruptableThread(new Runnable() {
 
         public void run() {
             if (startTrade == true) {
@@ -860,8 +607,259 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
             JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
         }
     }).start();
-
 }//GEN-LAST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
+
+private void buyBitcoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBitcoinActionPerformed
+
+}//GEN-LAST:event_buyBitcoinActionPerformed
+
+private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradeBuyBtcrySellBtcActionPerformed
+    new NotInterruptableThread(new Runnable() {
+
+        public void run() {
+            if (startTrade == true) {
+                JOptionPane.showMessageDialog(null, "You have start already a trade!");
+                JOptionPane.showMessageDialog(null, getWaitMessage());
+                return;
+            }
+            setDiff(150);
+            startTrade = true;
+            String buyBitcrystalText = buyBitcrystal.getText();
+            String sellBitcoinText = sellBitcoin.getText();
+            double buyBitcrystalDouble = -1;
+            double sellBitcoinDouble = -1;
+            try {
+                buyBitcrystalDouble = Double.parseDouble(buyBitcrystalText);
+                sellBitcoinDouble = Double.parseDouble(sellBitcoinText);
+            } catch (Exception ex) {
+                buyBitcrystalDouble = -1;
+                sellBitcoinDouble = -1;
+            }
+            if (buyBitcrystalDouble <= 0 || sellBitcoinDouble <= 0) {
+                JOptionPane.showMessageDialog(null, "Not valid numbers!");
+                startTrade = false;
+                return;
+            }
+            double btc = ClientConnection.getBitcoinBalanceTradeAccount();
+            double btcry = ClientConnection.getBitcrystalBalanceTradeAccount();
+            if (btc <= 0 || btcry <= 0) {
+                JOptionPane.showMessageDialog(null, "You have not enough balance!");
+                startTrade = false;
+                return;
+            }
+            if (btcry < buyBitcrystalDouble || btc < sellBitcoinDouble) {
+                JOptionPane.showMessageDialog(null, "You cannot start the trade, have you enough balance?");
+                startTrade = false;
+                return;
+            }
+            int ret = JOptionPane.showConfirmDialog(null, "Start the trade? You can not stop the trade if the trade is started!", "Question", JOptionPane.YES_NO_OPTION);
+            if (ret == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "Trade is aborted!");
+                startTrade = false;
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Trade is started! Please be patient okay!");
+            }
+            DecentralizedExchange.command("createtradebtc2btcry " + buyBitcrystalDouble + " " + sellBitcoinDouble);
+            if (!ClientConnection.getLastCommandStatus()) {
+                JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
+                startTrade = false;
+                return;
+            }
+            DecentralizedExchange.command("synctrade");
+            if (!ClientConnection.getLastCommandStatus()) {
+                startTrade = false;
+                JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "All Cool! Make sure that your partner with you trade also has the same message as you.");
+            boolean lastStatus = false;
+            for (int i = 0; i < 5; i++) {
+                DecentralizedExchange.command("starttrade");
+                lastStatus = ClientConnection.getLastCommandStatus();
+                if (!lastStatus) {
+                    JOptionPane.showMessageDialog(null, "Trade can not be started. Have your partner also the message All Cool!...? Try again!");
+                } else {
+                    break;
+                }
+            }
+            if (!lastStatus) {
+                JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
+                startTrade = false;
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "All Overcool! Make sure that your partner with you trade also has the same message as you.");
+            lastStatus = false;
+            for (int i = 0; i < 5; i++) {
+                DecentralizedExchange.command("endtrademe");
+                lastStatus = ClientConnection.getLastCommandStatus();
+                if (!lastStatus) {
+                    JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Overcool!...? Try again!");
+                } else {
+                    break;
+                }
+            }
+            if (!lastStatus) {
+                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+                startTrade = false;
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "All Good! Make sure that your partner with you trade also has the same message as you.");
+            lastStatus = false;
+            for (int i = 0; i < 5; i++) {
+                DecentralizedExchange.command("endtradeother");
+                lastStatus = ClientConnection.getLastCommandStatus();
+                if (!lastStatus) {
+                    JOptionPane.showMessageDialog(null, "Trade from the other user can not be ended. Have your partner also the message All Good!...? Try again!");
+                } else {
+                    break;
+                }
+            }
+            if (!lastStatus) {
+                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+                startTrade = false;
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "All Perfect! Make sure that your partner with you trade also has the same message as you.");
+            JOptionPane.showMessageDialog(null, "Click ok to finish the trade!");
+            lastStatus = false;
+            for (int i = 0; i < 5; i++) {
+                DecentralizedExchange.command("endtrade");
+                lastStatus = ClientConnection.getLastCommandStatus();
+                if (!lastStatus) {
+                    JOptionPane.showMessageDialog(null, "Trade can not be ended. Have your partner also the message All Perfect!...? Try again!");
+                } else {
+                    break;
+                }
+            }
+            if (!lastStatus) {
+                JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
+                startTrade = false;
+                return;
+            }
+            startTrade = false;
+            JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
+        }
+    }).start();
+}//GEN-LAST:event_startTradeBuyBtcrySellBtcActionPerformed
+
+private void bitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusLost
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_bitcrystalBalanceFocusLost
+
+private void bitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcrystalBalanceFocusGained
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_bitcrystalBalanceFocusGained
+
+private void bitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcrystalBalanceActionPerformed
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_bitcrystalBalanceActionPerformed
+
+private void bitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusLost
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_bitcoinBalanceFocusLost
+
+private void bitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bitcoinBalanceFocusGained
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_bitcoinBalanceFocusGained
+
+private void bitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitcoinBalanceActionPerformed
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    bitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_bitcoinBalanceActionPerformed
+
+private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentTradeWithAddressButtonActionPerformed
+
+    if (!isInit) {
+        JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
+        JOptionPane.showMessageDialog(null, getWaitMessage());
+        return;
+    }
+    if (processProcessed) {
+        JOptionPane.showMessageDialog(null, "The Process is working! Please be patient!");
+        JOptionPane.showMessageDialog(null, getWaitMessage());
+        return;
+    }
+    if (!canSetTradeWithAddress) {
+        JOptionPane.showMessageDialog(null, "In order to change the current trade with address you must restart the client!");
+        return;
+    }
+
+    JOptionPane.showMessageDialog(null, "The Process takes a while! Please wait a minute or two!");
+    new NotInterruptableThread(new Runnable() {
+
+        public void run() {
+            processProcessed = true;
+            setDiff(300);
+
+            currentTradeWithAddressS = currentTradeWithAddress.getText();
+            DecentralizedExchange.command("tradewith " + currentTradeWithAddressS);
+            if (ClientConnection.getLastCommandStatus()) {
+                currentTradeWithAddress.setEditable(false);
+                currentTradeWithAddressS = ClientConnection.getCurrentTradeWithAddress();
+                currentTradeWithAddress.setText(currentTradeWithAddressS);
+                canSetTradeWithAddress = false;
+                processProcessed = false;
+                bitcoinBalance.setEnabled(true);
+                bitcrystalBalance.setEnabled(true);
+                bitcoinBalanceLabel.setEnabled(true);
+                bitcrystalBalanceLabel.setEnabled(true);
+                depositAddressForBitcoinsLabel.setEnabled(true);
+                depositAddressForBitcrystal.setEnabled(true);
+                depositAddressBitcoins.setEnabled(true);
+                depositAddressBitcrystal.setEnabled(true);
+                StartTradeBuyBtcSellBitcrystal.setEnabled(true);
+                startTradeBuyBtcrySellBtc.setEnabled(true);
+                String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
+                String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
+                depositAddressBitcoins.setText(tradeAccountMultisigAddressForBitcoin);
+                depositAddressBitcrystal.setText(tradeAccountMultisigAddressForBitcrystal);
+                updateBalance = true;
+                JOptionPane.showMessageDialog(null, "Successfully setted the current trade with address to " + currentTradeWithAddressS + "!");
+            } else {
+                processProcessed = false;
+                JOptionPane.showMessageDialog(null, "Error ! The Address is not contains in the database of the node server!");
+                return;
+            }
+        }
+    }).start();
+
+}//GEN-LAST:event_currentTradeWithAddressButtonActionPerformed
+
+private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getNewCurrentTradeAddressButtonActionPerformed
+    if (!isInit) {
+        JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
+        JOptionPane.showMessageDialog(null, getWaitMessage());
+        return;
+    }
+    if (currentTradeAddressS == null || currentTradeAddressS.isEmpty()) {
+        currentTradeAddressS = ClientConnection.getCurrentTradeAddress();
+    }
+    currentTradeAddress.setText(currentTradeAddressS);
+}//GEN-LAST:event_getNewCurrentTradeAddressButtonActionPerformed
     private static String commandParser(String command) {
         String ret = "";
         try {

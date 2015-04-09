@@ -21,6 +21,7 @@
                 <filtering>false</filtering>
                 <includes>
                     <include>log4j.properties</include>
+                    <include>de/bitcrystal/decentralizedexchange/dex.png</include>
                 </includes>
             </resource>
         </resources>

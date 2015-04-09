@@ -282,20 +282,20 @@ public class ServerConnection implements Runnable {
         DebugServer.println(split[0]);
         DebugServer.println(split2[0]);
         DebugServer.println("split[0] == split2[2] ?");
-        /*if (split[0].equals(split2[0])) {
-        DebugServer.println("serverconnection@488");
-        try {
-        this.client.sendLight("E_ERROR");
-        Thread.sleep(3000L);
-        this.client.close();
-        return;
-        } catch (InterruptedException ex) {
-        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        this.client.sendLight("E_ERROR");
-        this.client.close();
-        return;
+        if (split[0].equals(split2[0])) {
+            DebugServer.println("serverconnection@488");
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                return;
+            }
         }
-        }*/
         DebugServer.println(split[1]);
         DebugServer.println(split2[2]);
         if (!(split[1].equals(split2[2]) && split2[1].equals(split[2]))) {
@@ -369,20 +369,20 @@ public class ServerConnection implements Runnable {
 
         String get3 = ipsTradeAccounts.get(tradeAccount);
         String get4 = ipsTradeAccounts2.get(tradeAccount2);
-        /* if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
-        DebugServer.println("serverconnection@568");
-        try {
-        this.client.sendLight("E_ERROR");
-        Thread.sleep(3000L);
-        this.client.close();
-        return;
-        } catch (InterruptedException ex) {
-        Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        this.client.sendLight("E_ERROR");
-        this.client.close();
-        return;
+        if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
+            DebugServer.println("serverconnection@568");
+            try {
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                this.client.sendLight("E_ERROR");
+                this.client.close();
+                return;
+            }
         }
-        }*/
         String[] tradeAccountAddresses = split[3].split(",");
         String[] tradeWithAccountAddresses = split[4].split(",");
         String[] tradeAccount2Addresses = split2[3].split(",");
@@ -435,14 +435,14 @@ public class ServerConnection implements Runnable {
         }
 
 
-        if (split[0].equals("btc2btcry") || split2[0].equals("btcry2btc")) {
+        if (split[0].equals("btc2btcry") && split2[0].equals("btcry2btc")) {
             DebugServer.println("serverconnection@634");
             try {
                 DebugServer.println("serverconnection@636");
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00};
-                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00};
+                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001};
+                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001};
                 DebugServer.println(split_price);
                 DebugServer.println(split_amount);
                 DebugServer.println("serverconnection@643");
@@ -484,9 +484,9 @@ public class ServerConnection implements Runnable {
                 DebugServer.println(createrawtransaction_multisig1);
                 DebugServer.println("serverconnection@680");
                 startedtrades.put(tradeAccount, tradeAccountSend);
-                //startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                startedtrades.put(tradeWithAccount, tradeWithAccountSend);
                 startedtradesaccount.put(tradeAccount, tradeWithAccount);
-                //startedtradesaccount.put(tradeWithAccount, tradeAccount);
+                startedtradesaccount.put(tradeWithAccount, tradeAccount);
                 client.sendLight("ALL_OK");
                 DebugServer.println("TRADE IS STARTED");
                 client.recv();
@@ -508,8 +508,8 @@ public class ServerConnection implements Runnable {
                 DebugServer.println("serverconnection@698");
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price};
-                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount};
+                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001};
+                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001};
                 if (bitcrystalrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
                     DebugServer.println("serverconnection@704");
                     try {
@@ -543,9 +543,9 @@ public class ServerConnection implements Runnable {
                 String tradeAccountSend = "btcry2btc;;" + values[0] + ";;" + values[1] + ";;" + values[2] + ";;" + createrawtransaction_multisig;
                 String tradeWithAccountSend = "btc2btcry;;" + values2[0] + ";;" + values2[1] + ";;" + values2[2] + ";;" + createrawtransaction_multisig1;
                 startedtrades.put(tradeAccount, tradeAccountSend);
-                //startedtrades.put(tradeWithAccount, tradeWithAccountSend);
+                startedtrades.put(tradeWithAccount, tradeWithAccountSend);
                 startedtradesaccount.put(tradeAccount, tradeWithAccount);
-                //startedtradesaccount.put(tradeWithAccount, tradeAccount);
+                startedtradesaccount.put(tradeWithAccount, tradeAccount);
                 DebugServer.println("serverconnection@739");
                 client.sendLight("ALL_OK");
                 DebugServer.println("TRADE IS STARTED");
@@ -657,21 +657,23 @@ public class ServerConnection implements Runnable {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             String get2 = startedtrades.get(tradeAccount);
             String get3 = startedtrades.get(tradeWithAccount);
-            /*if (get2.startsWith("btc2btcry") && get3.startsWith("btc2btcry") || get2.startsWith("btcry2btc") && get3.startsWith("btcry2btc")) {
-            DebugServer.println("serverconnection@937");
-            try {
-            this.client.sendLight("E_ERROR");
-            Thread.sleep(3000L);
-            this.client.close();
-            return;
-            } catch (InterruptedException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-            this.client.sendLight("E_ERROR");
-            this.client.close();
-            return;
+            if (get2.startsWith("btc2btcry") && get3.startsWith("btc2btcry") || get2.startsWith("btcry2btc") && get3.startsWith("btcry2btc")) {
+                DebugServer.println("serverconnection@937");
+                try {
+                    this.client.sendLight("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+                    this.client.sendLight("E_ERROR");
+                    this.client.close();
+                    return;
+                }
             }
-            }*/
-            if (get2.startsWith("btc2btcry") || get3.startsWith("btcry2btc")) {
+
+
+            if (get2.startsWith("btc2btcry") && get3.startsWith("btcry2btc")) {
                 DebugServer.println("serverconnection@951");
                 String signrawtransaction_multisig = bitcoinrpc.signrawtransaction_multisig(get, 1);
                 String signrawtransaction_multisig1 = bitcrystalrpc.signrawtransaction_multisig(get1, 1);
@@ -1201,12 +1203,13 @@ public class ServerConnection implements Runnable {
                     this.client.close();
                     return;
                 }
-                /*if (get10.equals(hostAddress)) {
-                this.client.sendLight("E_ERROR");
-                Thread.sleep(3000L);
-                this.client.close();
-                return;
-                }*/
+                if (get10.equals(hostAddress)) {
+                    DebugServer.println("serverconnection@156");
+                    this.client.sendLight("E_ERROR");
+                    Thread.sleep(3000L);
+                    this.client.close();
+                    return;
+                }
                 String get11 = pubKeysMap.get(get10);
                 DebugServer.println("get11");
                 DebugServer.println(get11);
@@ -1238,12 +1241,13 @@ public class ServerConnection implements Runnable {
             String get = pubKeysMap2.get(split[1]);
             DebugServer.println("get");
             DebugServer.println(get);
-            /*if (get.equals(hostAddress)) {
-            this.client.sendLight("E_ERROR");
-            Thread.sleep(3000L);
-            this.client.close();
-            return;
-            }*/
+            if (get.equals(hostAddress)) {
+                DebugServer.println("serverconnection@187");
+                this.client.sendLight("E_ERROR");
+                Thread.sleep(3000L);
+                this.client.close();
+                return;
+            }
             if (pubKeys.size() <= 0) {
                 DebugServer.println("serverconnection@201");
                 this.client.sendLight("E_ERROR");
@@ -1324,7 +1328,7 @@ public class ServerConnection implements Runnable {
                 this.client.sendLight("E_ERROR");
                 Thread.sleep(3000L);
                 this.client.close();
-
+                return;
             }
             if (!pubKeys.contains(split[1])) {
                 DebugServer.println("serverconnection@72");
@@ -1609,7 +1613,7 @@ public class ServerConnection implements Runnable {
             this.client.close();
             return;
         }
-         if (!tradeAccountsIp.containsKey(hostAddress)) {
+        if (!tradeAccountsIp.containsKey(hostAddress)) {
             this.client.sendLight("E_ERROR");
             this.client.close();
             return;

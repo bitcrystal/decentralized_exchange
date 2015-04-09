@@ -614,7 +614,7 @@ public class ClientConnection implements Runnable {
                     return;
                 }
 
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001};
                 String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                 DebugClient.println(myTransaction);
                 DebugClient.println(createrawtransaction_multisig);
@@ -728,7 +728,7 @@ public class ClientConnection implements Runnable {
                     setLastCommandStatus(false);
                     return;
                 }
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001};
                 String createrawtransaction_multisig = bitcrystalrpc.createrawtransaction_multisig(values);
                 if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     DebugClient.println("clientconnection@390");
@@ -823,7 +823,7 @@ public class ClientConnection implements Runnable {
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
                     DebugClient.println("clientconnection@732");
                     if (!(("" + asDouble).equals(split1[0]))
-                            || //!currencyprefix.equals("BTCRY") ||
+                            || !currencyprefix.equals("BTCRY") ||
                             !asString.equals(currentTradeAddress)) {
                         DebugClient.println("clientconnection@398");
                         this.server.sendLight("E_ERROR");
@@ -843,11 +843,11 @@ public class ClientConnection implements Runnable {
                     DebugClient.println("clientconnection@411");
                     DebugClient.println(signrawtransaction_multisig1);
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
-                    //JsonElement get = decodeRawTransactionMultisig1.get("complete");
-                   /* if (get.getAsBoolean() == true) {
+                    JsonElement get = decodeRawTransactionMultisig1.get("complete");
+                    if (get.getAsBoolean() == true) {
                     DebugClient.println("clientconnection@415");
                     throw new Exception();
-                    }*/
+                    }
                 } catch (Exception ex2) {
                     DebugClient.println("clientconnection@419");
                     this.server.sendLight("E_ERROR");
@@ -883,7 +883,7 @@ public class ClientConnection implements Runnable {
                     double asDouble = decodeRawTransactionMultisig1.get("amount").getAsDouble();
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
                     if (!(("" + asDouble).equals(split1[0]))
-                            //|| !currencyprefix.equals("BTC") 
+                            || !currencyprefix.equals("BTC") 
                             || !asString.equals(currentTradeAddress)) {
                         DebugClient.println("clientconnection@449");
                         this.server.sendLight("E_ERROR");
@@ -1048,7 +1048,7 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("clientconnection@566");
                 amount = Double.parseDouble(split[1]);
                 price = Double.parseDouble(split[2]);
-                if (amount <= 0 || price <= 0 || price > balance) {
+                if (amount <= 0 || price <= 0 || price + 0.00000001 > balance) {
                     DebugClient.println("clientconnection@570");
                     throw new Exception();
                 }
@@ -1108,7 +1108,7 @@ public class ClientConnection implements Runnable {
                 System.out.println("clientconnection@607");
                 amount = Double.parseDouble(split[1]);
                 price = Double.parseDouble(split[2]);
-                if (amount <= 0 || price <= 0 || price > balance) {
+                if (amount <= 0 || price <= 0 || price + 0.00000001 > balance) {
                     System.out.println("clientconnection@611");
                     throw new Exception();
                 }
