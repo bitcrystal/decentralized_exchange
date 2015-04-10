@@ -92,7 +92,8 @@ public enum APICalls {
     DECODE_TRADE("decodetrade"),
     ENCODE_TRADE_WITH("encodetradewith"),
     DECODE_TRADE_WITH("decodetradewith"), 
-    TEST_TRANSACTION_MULTISIG_EQUALS("testtransactionequals_multisig");
+    TEST_TRANSACTION_MULTISIG_EQUALS("testtransactionequals_multisig"),
+    GET_HASHES_PER_SEC("gethashespersec");
     private String value;
 
     private APICalls(String value) {

@@ -51,9 +51,14 @@ public class ClientConnection implements Runnable {
     private static boolean isTradeAborted = false;
 
     public ClientConnection(TCPClient server, String command) {
+        DebugClient.println("@clienctconnection 54");
         this.server = DecentralizedExchange.getSecurityClient(server);
+        DebugClient.println("@clienctconnection 55");
         this.command = command;
+        DebugClient.println("@clienctconnection 57");
         this.initClient();
+        DebugClient.println("@clienctconnection 59");
+
     }
 
     public void run() {
@@ -199,7 +204,7 @@ public class ClientConnection implements Runnable {
 
     private synchronized void initClient() {
         DebugClient.println("test");
-        clientJSON = this.server.loadJSONObject("client", "", "client.properties");
+        clientJSON = this.server.loadJSON("client", "", "client.properties");
         DebugClient.println("cool");
         if (clientJSON == null) {
             try {
@@ -214,9 +219,9 @@ public class ClientConnection implements Runnable {
                 json.put("tradeAccount2", "");
                 json.put("tradeWithAddress", "");
                 json.put("tradebtc2btcry", "");
-                json.put("tradebtcry2ntc", "");
+                json.put("tradebtcry2btc", "");
                 DebugClient.println("nein");
-                this.server.saveJSONObject(json, "client", "", "client.properties");
+                this.server.saveJSON(json, "client", "", "client.properties");
                 DebugClient.println("hier");
                 clientJSON = json;
             } catch (JSONException ex) {
@@ -298,7 +303,7 @@ public class ClientConnection implements Runnable {
 
     private synchronized void saveClient() {
         DebugClient.println("clientconnection@727");
-        JSONObject json = this.server.loadJSONObject("client", "", "client.properties");
+        JSONObject json = server.loadJSON("client", "", "client.properties");
         if (json == null) {
             return;
         }
@@ -314,7 +319,7 @@ public class ClientConnection implements Runnable {
             json.put("tradeWithAddress", tradeWithAddress);
             json.put("tradebtc2btcry", tradebtc2btcry);
             json.put("tradebtcry2btc", tradebtcry2btc);
-            this.server.saveJSONObject(json, "client", "", "client.properties");
+            server.saveJSON(json, "client", "", "client.properties");
             clientJSON = json;
             DebugClient.println("clientconnection@745");
         } catch (JSONException ex) {
@@ -347,8 +352,9 @@ public class ClientConnection implements Runnable {
             String pubKey = bitcoinrpc.getPubKey(newAddress);
             currentTradePubKey = pubKey;
             String privKey = bitcoinrpc.getPrivKey(newAddress);
-            if (!bitcrystalrpc.addressexists(newAddress)) {
+            try {
                 bitcrystalrpc.importPrivKey(privKey);
+            } catch (Exception ex) {
             }
             DebugClient.println(privKey);
             DebugClient.println(newAddress);
@@ -823,8 +829,8 @@ public class ClientConnection implements Runnable {
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
                     DebugClient.println("clientconnection@732");
                     if (!(("" + asDouble).equals(split1[0]))
-                            || !currencyprefix.equals("BTCRY") ||
-                            !asString.equals(currentTradeAddress)) {
+                            || !currencyprefix.equals("BTCRY")
+                            || !asString.equals(currentTradeAddress)) {
                         DebugClient.println("clientconnection@398");
                         this.server.sendLight("E_ERROR");
                         this.server.close();
@@ -845,8 +851,8 @@ public class ClientConnection implements Runnable {
                     decodeRawTransactionMultisig1 = bitcrystalrpc.decodeRawTransactionMultisig(signrawtransaction_multisig1);
                     JsonElement get = decodeRawTransactionMultisig1.get("complete");
                     if (get.getAsBoolean() == true) {
-                    DebugClient.println("clientconnection@415");
-                    throw new Exception();
+                        DebugClient.println("clientconnection@415");
+                        throw new Exception();
                     }
                 } catch (Exception ex2) {
                     DebugClient.println("clientconnection@419");
@@ -883,7 +889,7 @@ public class ClientConnection implements Runnable {
                     double asDouble = decodeRawTransactionMultisig1.get("amount").getAsDouble();
                     String currencyprefix = decodeRawTransactionMultisig1.get("currencyprefix").getAsString();
                     if (!(("" + asDouble).equals(split1[0]))
-                            || !currencyprefix.equals("BTC") 
+                            || !currencyprefix.equals("BTC")
                             || !asString.equals(currentTradeAddress)) {
                         DebugClient.println("clientconnection@449");
                         this.server.sendLight("E_ERROR");
@@ -943,7 +949,7 @@ public class ClientConnection implements Runnable {
                 return;
             }
             DebugClient.println("asljkfjcyklnjkcbgzbdsyxjbvcbcb");
-            this.server.send("tradewith," + split[1]);
+            this.server.send("tradewith," + split[1] + "," + currentTradePubKey);
             String recv = this.server.recvLight();
             this.server.close();
             DebugClient.println(recv);
@@ -962,27 +968,40 @@ public class ClientConnection implements Runnable {
             }
 
             String[] split1 = recv.split(",,");
-            if (split1.length != 3) {
+            if (split1.length != 5) {
                 this.server.close();
                 DebugClient.println("skjsfkljdskljfdkljdsikljsdfkljdkl");
                 setLastCommandStatus(false);
                 return;
             }
 
-            tradeWithAddress = split1[2];
+            tradeWithAddress = split1[4];
+            DebugClient.println(tradeWithAddress);
             tradeAccount = currentTradeAddress + "," + tradeWithAddress;
             tradeAccount2 = tradeWithAddress + "," + currentTradeAddress;
             Object[] values1 = {split1[0], tradeAccount};
             Object[] values2 = {split1[1], tradeAccount};
-            Object[] values3 = {split1[0], tradeAccount2};
-            Object[] values4 = {split1[1], tradeAccount2};
+            Object[] values3 = {split1[2], tradeAccount2};
+            Object[] values4 = {split1[3], tradeAccount2};
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             try {
-                DebugClient.println("dddddd");
+                DebugClient.println("dddddd1");
                 bitcoinrpc.addmultisigaddressex(values1);
+            } catch (Exception ex2) {
+            }
+            try {
+                DebugClient.println("dddddd2");
                 bitcrystalrpc.addmultisigaddressex(values2);
+            } catch (Exception ex2) {
+            }
+            try {
+                DebugClient.println("dddddd3");
                 bitcoinrpc.addmultisigaddressex(values3);
+            } catch (Exception ex2) {
+            }
+            try {
+                DebugClient.println("dddddd4");
                 bitcrystalrpc.addmultisigaddressex(values4);
             } catch (Exception ex2) {
             }
@@ -1148,7 +1167,7 @@ public class ClientConnection implements Runnable {
                 return "";
             }
             String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount);
-            if (string == null || string.isEmpty()) {
+            if (string == null || string.isEmpty() || string.equalsIgnoreCase("false")) {
                 return "";
             }
             tradeAccountMultisigAddressBitcoin = string;
@@ -1168,7 +1187,7 @@ public class ClientConnection implements Runnable {
                 return "";
             }
             String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount);
-            if (string == null || string.isEmpty()) {
+            if (string == null || string.isEmpty() || string.equalsIgnoreCase("false")) {
                 return "";
             }
             tradeAccountMultisigAddressBitcrystal = string;
@@ -1188,7 +1207,7 @@ public class ClientConnection implements Runnable {
                 return "";
             }
             String string = bitcoinrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
-            if (string == null || string.isEmpty()) {
+            if (string == null || string.isEmpty() || string.equalsIgnoreCase("false")) {
                 return "";
             }
             tradeAccount2MultisigAddressBitcoin = string;
@@ -1208,7 +1227,7 @@ public class ClientConnection implements Runnable {
                 return "";
             }
             String string = bitcrystalrpc.getmultisigaddressofaddressoraccount(tradeAccount2);
-            if (string == null || string.isEmpty()) {
+            if (string == null || string.isEmpty() || string.equalsIgnoreCase("false")) {
                 return "";
             }
             tradeAccount2MultisigAddressBitcrystal = string;
@@ -1295,7 +1314,7 @@ public class ClientConnection implements Runnable {
     }
 
     public static String getCurrentTradeWithAddress() {
-        return currentTradeAddress;
+        return tradeWithAddress;
     }
 
     public static boolean isSynced() {

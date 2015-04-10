@@ -109,7 +109,7 @@ final class TCPServer {
                 if (!tcpClient.isValidConnection()) {
                     return;
                 }
-                new Thread(new ServerConnection(tcpClient)).start();
+                new NotInterruptableThread(new ServerConnection(tcpClient)).start();
             }
         }).start();
     }

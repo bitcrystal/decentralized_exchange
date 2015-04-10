@@ -10,6 +10,7 @@
  */
 package de.bitcrystal.decentralizedexchange;
 
+import com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
@@ -44,6 +45,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         depositAddressForBitcrystal.setEnabled(false);
         depositAddressBitcoins.setEnabled(false);
         depositAddressBitcrystal.setEnabled(false);
+        rpcTests();
         balanceUpdater();
         currentTradeAddressUpdater();
         initUpdater();
@@ -610,7 +612,6 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
 }//GEN-LAST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
 
 private void buyBitcoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBitcoinActionPerformed
-
 }//GEN-LAST:event_buyBitcoinActionPerformed
 
 private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradeBuyBtcrySellBtcActionPerformed
@@ -812,6 +813,7 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
     new NotInterruptableThread(new Runnable() {
 
         public void run() {
+            ClientConnection.getLastCommandStatus();
             processProcessed = true;
             setDiff(300);
 
@@ -835,6 +837,11 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
                 startTradeBuyBtcrySellBtc.setEnabled(true);
                 String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
                 String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
+                while(tradeAccountMultisigAddressForBitcoin.isEmpty()||tradeAccountMultisigAddressForBitcrystal.isEmpty())
+                {
+                    tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
+                    tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
+                }
                 depositAddressBitcoins.setText(tradeAccountMultisigAddressForBitcoin);
                 depositAddressBitcrystal.setText(tradeAccountMultisigAddressForBitcrystal);
                 updateBalance = true;
@@ -957,38 +964,66 @@ private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.Actio
             }
         }).start();
     }
-    
-     private void initUpdater() {
+
+    private void initUpdater() {
         new NotInterruptableDaemonThread(new Runnable() {
 
             public void run() {
                 JOptionPane.showMessageDialog(null, "Decentralized Exchange Server is initialized... Please wait its take a while so estimated 150 seconds!");
-                while (isInit==false) {
+                while (isInit == false) {
                 }
-                 JOptionPane.showMessageDialog(null, "Decentralized Exchange Server successfully initialized!");
+                JOptionPane.showMessageDialog(null, "Decentralized Exchange Server successfully initialized!");
             }
         }).start();
     }
-    
-    private static long getDiff()
-    {
-        return timestamp-System.currentTimeMillis();
+
+    private static long getDiff() {
+        return timestamp - System.currentTimeMillis();
     }
-    
-    private static void setDiff(long seconds)
-    {
-        timestamp=System.currentTimeMillis()+seconds*1000;
+
+    private static void setDiff(long seconds) {
+        timestamp = System.currentTimeMillis() + seconds * 1000;
     }
-    
-    private static String getWaitMessage()
-    {
-        long seconds=getDiff();
-        seconds=seconds/1000;
-        if(seconds<=0)
-            seconds=0;
+
+    private static String getWaitMessage() {
+        long seconds = getDiff();
+        seconds = seconds / 1000;
+        if (seconds <= 0) {
+            seconds = 0;
+        }
         return "You must to wait estimated " + seconds + " seconds!";
     }
-    
+
+    private static void rpctest() throws Exception {
+        throw new Exception();
+    }
+
+    private static void rpcTests() {
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            String newAddress = bitcoinrpc.getNewAddress();
+            String newAddress2 = bitcrystalrpc.getNewAddress();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Cannot connect to the wallets! Are the wallets online?");
+            System.exit(0);
+        }
+        try {
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            bitcoinrpc.gethashespersec();
+            rpctest();
+            JOptionPane.showMessageDialog(null, "Fail! Problems with the bitcoin wallet! Please check the rpc settings!");
+            System.exit(0);
+        } catch (Exception ex) {
+        }
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            bitcrystalrpc.gethashespersec();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Fail! Problems with the bitcrystal wallet! Please check the rpc settings!");
+            System.exit(0);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton StartTradeBuyBtcSellBitcrystal;
     private javax.swing.JTextField bitcoinBalance;

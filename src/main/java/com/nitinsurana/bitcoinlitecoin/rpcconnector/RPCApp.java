@@ -264,7 +264,7 @@ public class RPCApp {
     }
 
     public void importPrivKey(String hex) throws Exception {
-        JsonObject jsonObj = callAPIMethod(APICalls.IMPORT_PRIVATE_KEY, hex);
+        JsonObject jsonObj = callAPIMethod(APICalls.IMPORT_PRIVATE_KEY, hex, "''", false);
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
 //        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
@@ -936,5 +936,17 @@ public class RPCApp {
             throw new RpcInvalidResponseException(message);
         }
         return jsonObj.get("result").getAsString();
+    }
+
+    public int gethashespersec() throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_HASHES_PER_SEC, new Object[]{});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsInt();
     }
 }

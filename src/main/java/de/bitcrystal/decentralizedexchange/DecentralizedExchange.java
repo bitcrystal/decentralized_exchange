@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.omg.IOP.ENCODING_CDR_ENCAPS;
 
 /**
  * Hello world!
@@ -63,16 +64,18 @@ public class DecentralizedExchange {
     }
 
     public static void main(String[] args) {
-        if(args==null||args.length==0)
-        {
+        DebugClient.println("@DecentralizedExchange 67");
+        if (args == null || args.length == 0) {
             DecentralizedExchangeGUI.main(args);
         } else {
             DecentralizedExchange.start();
-            if(args[0].equalsIgnoreCase("createtrade")) {
+            if (args[0].equalsIgnoreCase("createtrade")) {
                 return;
             }
-            if(!(args.length==1&&args[0].equalsIgnoreCase("server")))
+            if (!(args.length == 1 && args[0].equalsIgnoreCase("server"))) {
                 command(args);
+                DebugClient.println("@DecentralizedExchange 77");
+            }
         }
     }
 
@@ -82,18 +85,21 @@ public class DecentralizedExchange {
         }
         //new Thread(new Runnable() {
 
-         //   public void run() {
-                List<String> nodeServers = getNodeServers();
-                int length = nodeServers.size();
-                int port = nodeServerPort;
-                for (int i = 0; i < length; i++) {
-                    boolean serverConnection = serverConnection(nodeServers.get(i), port, command);
-                    if (serverConnection) {
-                        break;
-                    }
-                }
-           // }
-     //   }).start();
+        //   public void run() {
+        DebugClient.println("@DecentralizedExchange 89");
+        List<String> nodeServers = getNodeServers();
+        int length = nodeServers.size();
+        int port = nodeServerPort;
+        DebugClient.println("@DecentralizedExchange 93");
+        for (int i = 0; i < length; i++) {
+            boolean serverConnection = serverConnection(nodeServers.get(i), port, command);
+            if (serverConnection) {
+                DebugClient.println("@DecentralizedExchange 95");
+                break;
+            }
+        }
+        // }
+        //   }).start();
     }
 
     public static void command(String[] args) {
@@ -111,6 +117,7 @@ public class DecentralizedExchange {
             con.put("nodeclientport", "6789");
             con.put("password", "standard");
             con.put("salt", "cool");
+            con.put("encryptionmethod", "normal");
             config.update(con);
             config.save("=");
         }
@@ -156,6 +163,37 @@ public class DecentralizedExchange {
                 salt = t;
                 continue;
             }
+
+            if (key.equalsIgnoreCase("encryptionmethod")) {
+                try {
+                    if (t == null || t.isEmpty()) {
+                        continue;
+                    }
+                    if (t.equalsIgnoreCase("fast")) {
+                        File a = new File("transfer.fast");
+                        if (!a.exists()) {
+                            a.createNewFile();
+                        }
+                    } else if (t.equalsIgnoreCase("fastest")) {
+                        File a = new File("transfer.fastest");
+                        if (!a.exists()) {
+                            a.createNewFile();
+                        }
+                    } else if (t.equalsIgnoreCase("normal")) {
+                        File a = new File("transfer.fast");
+                        File b = new File("transfer.fastest");
+                        if (a.exists()) {
+                            a.delete();
+                        }
+                        if (b.exists()) {
+                            b.delete();
+                        }
+                    }
+                } catch (Exception ex) {
+                }
+                continue;
+            }
+
             if (!key.startsWith("nodeserver")) {
                 continue;
             }
@@ -185,11 +223,12 @@ public class DecentralizedExchange {
     }
 
     private static void serverConnection(final TCPClient tcpClient, final String command) {
-       // new Thread(new Runnable() {
-           // public void run() {
-                //new Thread(new ClientConnection(tcpClient, command)).start();  
-            //}
+        // new Thread(new Runnable() {
+        // public void run() {
+        //new Thread(new ClientConnection(tcpClient, command)).start();  
+        //}
         //}).start();
+        DebugClient.println("@DecentralizedExchange 193");
         new ClientConnection(tcpClient, command).run();
     }
 

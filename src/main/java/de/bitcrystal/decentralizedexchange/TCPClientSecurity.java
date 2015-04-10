@@ -7,6 +7,7 @@ package de.bitcrystal.decentralizedexchange;
 import com.google.common.collect.BiMap;
 import de.bitcrystal.decentralizedexchange.security.BitCrystalJSON;
 import de.bitcrystal.decentralizedexchange.security.HashFunctions;
+import de.bitcrystal.decentralizedexchange.security.Json;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -97,27 +98,372 @@ public class TCPClientSecurity {
         return this.tcpClient;
     }
 
+    private String encryptedString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
+        return encryptAES256;
+    }
+
+    private String decryptedString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
+        return decryptAES256;
+    }
+
+    private String encodeString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String encodeString = BitCrystalJSON.encodeString(string);
+        String encryptAES256 = encryptedString(encodeString);
+        return encryptAES256;
+    }
+
+    private String decodeString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String decodeString = decryptedString(string);
+        String decryptAES256 = BitCrystalJSON.decodeString(decodeString);
+        return decryptAES256;
+    }
+
+    private String encodeStringLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String encodeString = BitCrystalJSON.encodeStringLight(string);
+        String encryptAES256 = encryptedString(encodeString);
+        return encryptAES256;
+    }
+
+    private String decodeStringLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String decodeString = decryptedString(string);
+        String decryptAES256 = BitCrystalJSON.decodeStringLight(decodeString);
+        return decryptAES256;
+    }
+
+    private String encodeStringCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool()) {
+            return encodeString(string);
+        } else if (BitCrystalJSON.isFastCool()) {
+            return encodeStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String decodeStringCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool()) {
+            return decodeString(string);
+        } else if (BitCrystalJSON.isFastCool()) {
+            return decodeStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String encodeStringCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
+            return encodeStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String decodeStringCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
+            return decodeStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String encodeWalletString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String encodeString = BitCrystalJSON.encodeWalletString(string);
+        String encryptAES256 = encryptedString(encodeString);
+        return encryptAES256;
+    }
+
+    private String decodeWalletString(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String decodeString = decryptedString(string);
+        String decryptAES256 = BitCrystalJSON.decodeWalletString(decodeString);
+        return decryptAES256;
+    }
+
+    private String encodeWalletStringLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String encodeString = BitCrystalJSON.encodeWalletStringLight(string);
+        String encryptAES256 = encryptedString(encodeString);
+        return encryptAES256;
+    }
+
+    private String decodeWalletStringLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        String decodeString = decryptedString(string);
+        String decryptAES256 = BitCrystalJSON.decodeWalletStringLight(decodeString);
+        return decryptAES256;
+    }
+
+    private String encodeWalletStringCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else if (BitCrystalJSON.isFastCool()) {
+            return encodeWalletStringLight(string);
+        } else {
+            return encodeWalletString(string);
+        }
+    }
+
+    private String decodeWalletStringCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else if (BitCrystalJSON.isFastCool()) {
+            return decodeWalletStringLight(string);
+        } else {
+            return decodeWalletString(string);
+        }
+    }
+
+    private String encodeWalletStringCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
+            return encodeWalletStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String decodeWalletStringCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
+            return decodeWalletStringLight(string);
+        } else if (BitCrystalJSON.isFastestCool()) {
+            return string;
+        } else {
+            return string;
+        }
+    }
+
+    private String encode(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeString(obj.toString());
+    }
+
+    private JSONObject decode(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeString(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeLight(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeStringLight(obj.toString());
+    }
+
+    private JSONObject decodeLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeStringLight(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeCool(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeStringCool(obj.toString());
+    }
+
+    private JSONObject decodeCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeStringCool(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeCoolLight(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeStringCoolLight(obj.toString());
+    }
+
+    private JSONObject decodeCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeStringCoolLight(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeWallet(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeWalletString(obj.toString());
+    }
+
+    private JSONObject decodeWallet(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeWalletString(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeWalletLight(JSONObject obj) {
+        if (obj == null) {
+            return null;
+        }
+        return encodeWalletStringLight(obj.toString());
+    }
+
+    private JSONObject decodeWalletLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeWalletStringLight(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeWalletCool(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeWalletStringCool(obj.toString());
+    }
+
+    private JSONObject decodeWalletCool(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeWalletStringCool(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
+    private String encodeWalletCoolLight(JSONObject obj) {
+        if (obj == null) {
+            return "";
+        }
+        return encodeWalletStringCoolLight(obj.toString());
+    }
+
+    private JSONObject decodeWalletCoolLight(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        try {
+            return new JSONObject(decodeWalletStringCoolLight(string));
+        } catch (JSONException ex) {
+            return null;
+        }
+    }
+
     public void send(String string) {
-        this.sendSecurity(string);
+        this.sendSecurityCool(string);
     }
 
     public String recv() {
-        String recv = this.recvSecurity();
+        String recv = this.recvSecurityCool();
         return recv;
     }
 
     public void sendLight(String string) {
-        this.sendSecurityLight(string);
+        this.sendSecurityCoolLight(string);
     }
 
     public String recvLight() {
-        String recv = this.recvSecurityLight();
+        String recv = this.recvSecurityCoolLight();
         return recv;
     }
 
     public void send(String data, int buffer) {
-        String encryptAES256 = HashFunctions.encryptAES256(data, password, salt);
-        this.tcpClient.send(encryptAES256, buffer);
+        this.tcpClient.send(encryptedString(data), buffer);
     }
 
     public String recv(int buffer) {
@@ -125,14 +471,11 @@ public class TCPClientSecurity {
         if (recv == null) {
             return "";
         }
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        return decryptAES256;
+        return decryptedString(recv);
     }
 
     public void sendSecurity(String string) {
-        String encodeString = BitCrystalJSON.encodeString(string);
-        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeString(string), 40000);
     }
 
     public String recvSecurity() {
@@ -141,15 +484,11 @@ public class TCPClientSecurity {
             return "";
         }
 
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        decryptAES256 = BitCrystalJSON.decodeString(decryptAES256);
-        return decryptAES256;
+        return decodeString(recv);
     }
 
     public void sendSecurityLight(String string) {
-        String encodeString = BitCrystalJSON.encodeStringLight(string);
-        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeStringLight(string), 40000);
     }
 
     public String recvSecurityLight() {
@@ -158,15 +497,35 @@ public class TCPClientSecurity {
             return "";
         }
 
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        decryptAES256 = BitCrystalJSON.decodeStringLight(decryptAES256);
-        return decryptAES256;
+        return decodeStringLight(recv);
+    }
+
+    public void sendSecurityCool(String string) {
+        this.tcpClient.send(encodeStringCool(string), 40000);
+    }
+
+    public String recvSecurityCool() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+        return decodeStringCool(recv);
+    }
+
+    public void sendSecurityCoolLight(String string) {
+        this.tcpClient.send(encodeStringCoolLight(string), 40000);
+    }
+
+    public String recvSecurityCoolLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+        return decodeStringCoolLight(recv);
     }
 
     public void sendSecurityWallet(String string) {
-        String encodeString = BitCrystalJSON.encodeWalletString(string);
-        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeWalletString(string), 40000);
     }
 
     public String recvSecurityWallet() {
@@ -174,15 +533,12 @@ public class TCPClientSecurity {
         if (recv == null) {
             return "";
         }
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        decryptAES256 = BitCrystalJSON.decodeWalletString(decryptAES256);
-        return decryptAES256;
+
+        return decodeWalletString(recv);
     }
 
     public void sendSecurityWalletLight(String string) {
-        String encodeString = BitCrystalJSON.encodeWalletStringLight(string);
-        String encryptAES256 = HashFunctions.encryptAES256(encodeString, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeWalletStringLight(string), 40000);
     }
 
     public String recvSecurityWalletLight() {
@@ -190,16 +546,36 @@ public class TCPClientSecurity {
         if (recv == null) {
             return "";
         }
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        decryptAES256 = BitCrystalJSON.decodeWalletStringLight(decryptAES256);
-        return decryptAES256;
+        return decodeWalletStringLight(recv);
+    }
+
+    public void sendSecurityWalletCool(String string) {
+        this.tcpClient.send(encodeWalletStringCool(string), 40000);
+    }
+
+    public String recvSecurityWalletCool() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+        return decodeWalletStringCool(recv);
+    }
+
+    public void sendSecurityWalletCoolLight(String string) {
+        this.tcpClient.send(encodeWalletStringCoolLight(string), 40000);
+    }
+
+    public String recvSecurityWalletCoolLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return "";
+        }
+        return decodeWalletStringCoolLight(recv);
     }
 
     public void sendJSONObject(JSONObject jsonObject) {
 
-        String string = BitCrystalJSON.encode(jsonObject);
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encode(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObject() {
@@ -208,15 +584,12 @@ public class TCPClientSecurity {
         if (string == null) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
-        JSONObject jsonObject = BitCrystalJSON.decode(decryptAES256);
-        return jsonObject;
+
+        return decode(string);
     }
 
     public void sendJSONObjectWallet(JSONObject jsonObject) {
-        String string = BitCrystalJSON.encodeWallet(jsonObject);
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeWallet(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectWallet() {
@@ -224,16 +597,14 @@ public class TCPClientSecurity {
         if (recv == null) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        JSONObject jsonObject = BitCrystalJSON.decodeWallet(decryptAES256);
-        return jsonObject;
+
+        return decodeWallet(recv);
     }
 
     public void sendJSONObjectLight(JSONObject jsonObject) {
 
-        String string = BitCrystalJSON.encodeLight(jsonObject);
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+
+        this.tcpClient.send(encodeLight(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectLight() {
@@ -242,15 +613,11 @@ public class TCPClientSecurity {
         if (string == null) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
-        JSONObject jsonObject = BitCrystalJSON.decodeLight(decryptAES256);
-        return jsonObject;
+        return decodeLight(string);
     }
 
     public void sendJSONObjectWalletLight(JSONObject jsonObject) {
-        String string = BitCrystalJSON.encodeWalletLight(jsonObject);
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        this.tcpClient.send(encryptAES256, 40000);
+        this.tcpClient.send(encodeWalletLight(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectWalletLight() {
@@ -258,9 +625,64 @@ public class TCPClientSecurity {
         if (recv == null) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(recv, password, salt);
-        JSONObject jsonObject = BitCrystalJSON.decodeWalletLight(decryptAES256);
-        return jsonObject;
+
+        return decodeWalletLight(recv);
+    }
+
+    public void sendJSONObjectCool(JSONObject jsonObject) {
+
+        this.tcpClient.send(encodeCool(jsonObject), 40000);
+    }
+
+    public JSONObject recvJSONObjectCool() {
+
+        String string = this.tcpClient.recv(40000);
+        if (string == null) {
+            return null;
+        }
+
+        return decodeCool(string);
+    }
+
+    public void sendJSONObjectWalletCool(JSONObject jsonObject) {
+
+        this.tcpClient.send(encodeWalletCool(jsonObject), 40000);
+    }
+
+    public JSONObject recvJSONObjectWalletCool() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return null;
+        }
+        return decodeWalletCool(recv);
+    }
+
+    public void sendJSONObjectCoolLight(JSONObject jsonObject) {
+
+        this.tcpClient.send(encodeCoolLight(jsonObject), 40000);
+    }
+
+    public JSONObject recvJSONObjectCoolLight() {
+
+        String string = this.tcpClient.recv(40000);
+        if (string == null) {
+            return null;
+        }
+
+        return decodeCoolLight(string);
+    }
+
+    public void sendJSONObjectWalletCoolLight(JSONObject jsonObject) {
+
+        this.tcpClient.send(encodeWalletCoolLight(jsonObject), 40000);
+    }
+
+    public JSONObject recvJSONObjectWalletCoolLight() {
+        String recv = this.tcpClient.recv(40000);
+        if (recv == null) {
+            return null;
+        }
+        return decodeWalletCoolLight(recv);
     }
 
     public void close() {
@@ -313,12 +735,11 @@ public class TCPClientSecurity {
     }
 
     public boolean saveString(String stringk, String key, String path, String filename) {
-        String string = BitCrystalJSON.encodeString(stringk);
+        String string = encodeString(stringk);
         if (string == null || string.isEmpty()) {
             return false;
         }
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        return BitCrystalJSON.saveString(encryptAES256, key, path, filename);
+        return BitCrystalJSON.saveString(string, key, path, filename);
     }
 
     public String loadString(String key, String path) {
@@ -330,25 +751,23 @@ public class TCPClientSecurity {
         if (string == null || string.isEmpty()) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
-        return BitCrystalJSON.decodeString(decryptAES256);
+        return decodeString(string);
     }
-    
-     public boolean saveStringLight(String string, String key, String path) {
+
+    public boolean saveStringLight(String string, String key, String path) {
         return saveStringLight(string, key, path, "");
     }
 
     public boolean saveStringLight(String stringk, String key, String path, String filename) {
-        String string = BitCrystalJSON.encodeStringLight(stringk);
+        String string = encodeStringLight(stringk);
         if (string == null || string.isEmpty()) {
             return false;
         }
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        return BitCrystalJSON.saveString(encryptAES256, key, path, filename);
+        return BitCrystalJSON.saveString(string, key, path, filename);
     }
 
     public String loadStringLight(String key, String path) {
-        return loadString(key, path, "");
+        return loadStringLight(key, path, "");
     }
 
     public String loadStringLight(String key, String path, String filename) {
@@ -356,8 +775,55 @@ public class TCPClientSecurity {
         if (string == null || string.isEmpty()) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
-        return BitCrystalJSON.decodeStringLight(decryptAES256);
+        return decodeStringLight(string);
+    }
+
+    public boolean saveStringCool(String string, String key, String path) {
+        return saveStringCool(string, key, path, "");
+    }
+
+    public boolean saveStringCool(String stringk, String key, String path, String filename) {
+        String string = encodeStringCool(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        return BitCrystalJSON.saveString(string, key, path, filename);
+    }
+
+    public String loadStringCool(String key, String path) {
+        return loadString(key, path, "");
+    }
+
+    public String loadStringCool(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        return decodeStringCool(string);
+    }
+
+    public boolean saveStringCoolLight(String string, String key, String path) {
+        return saveStringCoolLight(string, key, path, "");
+    }
+
+    public boolean saveStringCoolLight(String stringk, String key, String path, String filename) {
+        String string = encodeStringCoolLight(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        return BitCrystalJSON.saveString(string, key, path, filename);
+    }
+
+    public String loadStringCoolLight(String key, String path) {
+        return loadString(key, path, "");
+    }
+
+    public String loadStringCoolLight(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        return decodeStringCoolLight(string);
     }
 
     public boolean saveStringWallet(String string, String key, String path) {
@@ -365,12 +831,11 @@ public class TCPClientSecurity {
     }
 
     public boolean saveStringWallet(String stringk, String key, String path, String filename) {
-        String string = BitCrystalJSON.encodeWalletString(stringk);
+        String string = encodeWalletString(stringk);
         if (string == null || string.isEmpty()) {
             return false;
         }
-        String encryptAES256 = HashFunctions.encryptAES256(string, password, salt);
-        return BitCrystalJSON.saveString(encryptAES256, key, path, filename);
+        return BitCrystalJSON.saveString(string, key, path, filename);
     }
 
     public String loadStringWallet(String key, String path) {
@@ -382,8 +847,79 @@ public class TCPClientSecurity {
         if (string == null || string.isEmpty()) {
             return null;
         }
-        String decryptAES256 = HashFunctions.decryptAES256(string, password, salt);
-        return BitCrystalJSON.decodeWalletString(decryptAES256);
+        return decodeWalletString(string);
+    }
+
+    public boolean saveStringWalletLight(String string, String key, String path) {
+        return saveStringWalletLight(string, key, path, "");
+    }
+
+    public boolean saveStringWalletLight(String stringk, String key, String path, String filename) {
+        String string = encodeWalletStringLight(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        return BitCrystalJSON.saveString(string, key, path, filename);
+    }
+
+    public String loadStringWalletLight(String key, String path) {
+        return loadStringWalletLight(key, path, "");
+    }
+
+    public String loadStringWalletLight(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        return decodeWalletStringLight(string);
+    }
+
+    public boolean saveStringWalletCool(String string, String key, String path) {
+        return saveStringWalletCool(string, key, path, "");
+    }
+
+    public boolean saveStringWalletCool(String stringk, String key, String path, String filename) {
+        String string = encodeWalletStringCool(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        return BitCrystalJSON.saveString(string, key, path, filename);
+    }
+
+    public String loadStringWalletCool(String key, String path) {
+        return loadStringWalletCool(key, path, "");
+    }
+
+    public String loadStringWalletCool(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        return decodeWalletStringCool(string);
+    }
+
+    public boolean saveStringWalletCoolLight(String string, String key, String path) {
+        return saveStringWalletCoolLight(string, key, path, "");
+    }
+
+    public boolean saveStringWalletCoolLight(String stringk, String key, String path, String filename) {
+        String string = encodeWalletStringCoolLight(stringk);
+        if (string == null || string.isEmpty()) {
+            return false;
+        }
+        return BitCrystalJSON.saveString(string, key, path, filename);
+    }
+
+    public String loadStringWalletCoolLight(String key, String path) {
+        return loadStringWalletCoolLight(key, path, "");
+    }
+
+    public String loadStringWalletCoolLight(String key, String path, String filename) {
+        String string = BitCrystalJSON.loadString(key, path, filename);
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        return decodeWalletStringCoolLight(string);
     }
 
     public boolean saveJSONObject(JSONObject jsonObject, String key, String path) {
@@ -399,20 +935,11 @@ public class TCPClientSecurity {
     }
 
     public JSONObject loadJSONObject(String key, String path, String filename) {
-        try {
-            String string = loadString(key, path, filename);
-            if (string == null || string.isEmpty()) {
-                return null;
-            }
-            JSONObject jSONObject = new JSONObject(string);
-            return jSONObject;
-        } catch (JSONException ex) {
-            return null;
-        }
-
+        String string = loadString(key, path, filename);
+        return Json.toJSONObject(string);
     }
-    
-     public boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path) {
+
+    public boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path) {
         return saveJSONObjectLight(jsonObject, key, path, "");
     }
 
@@ -425,17 +952,42 @@ public class TCPClientSecurity {
     }
 
     public JSONObject loadJSONObjectLight(String key, String path, String filename) {
-        try {
-            String string = loadStringLight(key, path, filename);
-            if (string == null || string.isEmpty()) {
-                return null;
-            }
-            JSONObject jSONObject = new JSONObject(string);
-            return jSONObject;
-        } catch (JSONException ex) {
-            return null;
-        }
+        String string = loadStringLight(key, path, filename);
+        return Json.toJSONObject(string);
+    }
 
+    public boolean saveJSONObjectCool(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectCool(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectCool(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringCool(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectCool(String key, String path) {
+        return loadJSONObjectCool(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectCool(String key, String path, String filename) {
+        String string = loadStringCool(key, path, filename);
+        return Json.toJSONObject(string);
+    }
+
+    public boolean saveJSONObjectCoolLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectCoolLight(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectCoolLight(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringCoolLight(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectCoolLight(String key, String path) {
+        return loadJSONObjectCoolLight(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectCoolLight(String key, String path, String filename) {
+        String string = loadStringCoolLight(key, path, filename);
+        return Json.toJSONObject(string);
     }
 
     public boolean saveJSONObjectWallet(JSONObject jsonObject, String key, String path) {
@@ -452,12 +1004,90 @@ public class TCPClientSecurity {
 
     public JSONObject loadJSONObjectWallet(String key, String path, String filename) {
         String string = loadStringWallet(key, path, filename);
-        JSONObject jSONObject = null;
-        try {
-            jSONObject = new JSONObject(string);
-            return jSONObject;
-        } catch (JSONException ex) {
-            return null;
-        }
+        return Json.toJSONObject(string);
+    }
+
+    public boolean saveJSONObjectWalletLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectWalletLight(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectWalletLight(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringWalletLight(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectWalletLight(String key, String path) {
+        return loadJSONObjectWalletLight(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectWalletLight(String key, String path, String filename) {
+        String string = loadStringWalletLight(key, path, filename);
+        return Json.toJSONObject(string);
+    }
+
+    public boolean saveJSONObjectWalletCool(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectWalletCool(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectWalletCool(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringWalletCool(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectWalletCool(String key, String path) {
+        return loadJSONObjectWalletCool(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectWalletCool(String key, String path, String filename) {
+        String string = loadStringWalletCool(key, path, filename);
+        return Json.toJSONObject(string);
+    }
+
+    public boolean saveJSONObjectWalletCoolLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectWalletCoolLight(jsonObject, key, path, "");
+    }
+
+    public boolean saveJSONObjectWalletCoolLight(JSONObject jsonObject, String key, String path, String filename) {
+        return saveStringWalletCoolLight(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSONObjectWalletCoolLight(String key, String path) {
+        return loadJSONObjectWalletCoolLight(key, path, "");
+    }
+
+    public JSONObject loadJSONObjectWalletCoolLight(String key, String path, String filename) {
+        String string = loadStringWalletCoolLight(key, path, filename);
+        return Json.toJSONObject(string);
+    }
+
+    public boolean saveJSON(JSONObject jsonObject, String key, String path) {
+        return saveJSON(jsonObject, key, path, "");
+    }
+
+    public JSONObject loadJSON(String key, String path) {
+        return loadJSON(key, path, "");
+    }
+
+    public boolean saveJSON(JSONObject jsonObject, String key, String path, String filename) {
+        return save(jsonObject.toString(), key, path, filename);
+    }
+
+    public JSONObject loadJSON(String key, String path, String filename) {
+        String string = load(key, path, filename);
+        return Json.toJSONObject(string);
+    }
+
+    public boolean save(String string, String key, String path) {
+        return save(string, key, path, "");
+    }
+
+    public String load(String key, String path) {
+        return load(key, path, "");
+    }
+
+    public boolean save(String string, String key, String path, String filename) {
+        return saveStringCool(string, key, path, filename);
+    }
+
+    public String load(String key, String path, String filename) {
+        return loadStringCool(key, path, filename);
     }
 }

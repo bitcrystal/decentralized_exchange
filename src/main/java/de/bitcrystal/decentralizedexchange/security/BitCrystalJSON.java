@@ -46,6 +46,12 @@ public class BitCrystalJSON {
     private static String fivePassword = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCG7UvfdG0EkOorlIfqVwx07ltsdqv8+ZcqG3/locOHvpB0QaelMfJP1whHSuQ9dIvHPNHeBukFKgiSQ8Oew+sVemDQXIU3wLzxdf8DDCzjf2WIm5WLpUEzg7kKmoU+C/8WKTC+Tr7QPEvGswVd7HnSP7Av7lLhOMvrAzBrTqz/6QIDAQAB";
     private static String fiveSalt = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAIbtS990bQSQ6iuUh+pXDHTuW2x2q/z5lyobf+Whw4e+kHRBp6Ux8k/XCEdK5D10i8c80d4G6QUqCJJDw57D6xV6YNBchTfAvPF1/wMMLON/ZYiblYulQTODuQqahT4L/xYpML5OvtA8S8azBV3sedI/sC/uUuE4y+sDMGtOrP/pAgMBAAECgYAwBOvnzuutoFV2xRnKEMjiJKJs658yHTHrTnYqJ3QLL4sBlQwxAqGWQJU1qjWomX3VnpOiTRtJNzhttag9LMTRDnyNartnyCjccwOmbeEcvJrKL/JYoCTXR8YsbfAkpMrG+d2Jx4UT13N42eBPTsOP7t+rNkSgNEmmeluhs9GXMQJBANVS6yAagmNlYSZUtjTo+x5TwfYSrwetQnUJqVQy/EsLG0ccXTxb3Ns70mUzdvNSnMbwi9kgOH3SPaw5cO4FGhcCQQCh62N3PPpA7fg7SwOjKDhO5g/CZMghGJRqKd4tpDIoZUDFJEasoZuRGZwWZriqW/N1VBlTwwejpG406qP7YPX/AkBbuEUkDoHVXreAlZep9CpUhcq1lJ7w/AvA6qCFdU6IrYPS9V0ZIJ47HON/Y7tXL0P9PVvDxVjEsGqX7DKkBEmNAkBKVQtWg/HGuPhKEAfdcOtYnRkC/s05FFWd3xaWEVjNXp47YonnWlFWbVFQn1uLKac8Z50w7MmnACdvt4AMONj1AkEA1EQ3lK7W9v6thMH9e4iKMxUVKL3o23CQC7Cai/ECvKd8jOz22umZ7so/0S4JiWhu7Z29NdX+N0TaEqaCGsXxDA==";
     private static KeyPairGenerator keyPairGenerator = null;
+    private static boolean isFastestCool = false;
+    private static boolean isFastCool = false;
+    private static boolean isNormalCool = false;
+    private static boolean isFastestCoolSet = false;
+    private static boolean isFastCoolSet = false;
+    private static boolean isNormalCoolSet = false;
 
     public static void setPasswordSaltPair(String password, String salt, int count) {
         switch (count) {
@@ -213,6 +219,44 @@ public class BitCrystalJSON {
         return toJSONString;
     }
 
+    public static String encodeStringCool(String obj) {
+        if (new File("transfer.fastest").exists()) {
+            return obj.toString();
+        } else if (new File("transfer.fast").exists()) {
+            return encodeStringLight(obj);
+        } else {
+            return encodeString(obj);
+        }
+    }
+
+    public static boolean isFastestCool() {
+        if (isFastestCoolSet) {
+            return isFastestCool;
+        }
+        isFastestCoolSet = true;
+        isFastestCool = new File("transfer.fastest").exists();
+        return isFastestCool;
+    }
+
+    public static boolean isFastCool() {
+        if (isFastCoolSet) {
+            return isFastCool;
+        }
+        isFastCoolSet = true;
+        isFastCool = new File("transfer.fast").exists();
+        return isFastCool;
+    }
+
+    public static boolean isNormalCool() {
+        if(isNormalCoolSet)
+        {
+            return isNormalCool;
+        }
+        isNormalCoolSet=true;
+        isNormalCool = !isFastestCool() && !isFastCool();
+        return isNormalCool;
+    }
+
     public static String decodeString(String encode) {
         String toJSONString = encode;
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
@@ -236,6 +280,16 @@ public class BitCrystalJSON {
         String toJSONString = encode;
         toJSONString = HashFunctions.decryptAES256(toJSONString, firstPassword, firstSalt);
         return toJSONString;
+    }
+
+    public static String decodeStringCool(String decode) {
+        if (new File("transfer.fastest").exists()) {
+            return decode.toString();
+        } else if (new File("transfer.fast").exists()) {
+            return decodeStringLight(decode);
+        } else {
+            return decodeString(decode);
+        }
     }
 
     public static String encodeWalletString(String obj) {
@@ -296,6 +350,35 @@ public class BitCrystalJSON {
         }
     }
 
+    public static String encodeWalletStringCool(String obj) {
+        try {
+            String encode = encodeStringCool(obj);
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            String encodeDataSecurityEmail = bitcrystalrpc.encodeDataSecurityEmail(encode);
+            String encodeDataSecurityEmail1 = bitcoinrpc.encodeDataSecurityEmail(encodeDataSecurityEmail);
+            String encodeDataSecurityEmailNeutral = bitcoinrpc.encodeDataSecurityEmailNeutral(encodeDataSecurityEmail1);
+            return encodeDataSecurityEmailNeutral;
+        } catch (Exception ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public static String decodeWalletStringCool(String decode) {
+        try {
+            RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
+            RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
+            decode = bitcoinrpc.decodeDataSecurityEmailNeutral(decode);
+            decode = bitcoinrpc.decodeDataSecurityEmail(decode);
+            decode = bitcrystalrpc.decodeDataSecurityEmail(decode);
+            return decodeStringCool(decode);
+        } catch (Exception ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     public static String encode(JSONObject obj) {
         String encode = obj.toString();
         return encodeString(encode);
@@ -328,6 +411,22 @@ public class BitCrystalJSON {
         }
     }
 
+    public static String encodeCool(JSONObject obj) {
+        String encode = obj.toString();
+        return encodeStringCool(encode);
+    }
+
+    public static JSONObject decodeCool(String encode) {
+        try {
+            String toJSONString = decodeStringCool(encode);
+            JSONObject jSONObject = new JSONObject(toJSONString);
+            return jSONObject;
+        } catch (JSONException ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     public static String encodeWallet(JSONObject obj) {
         return encodeWalletString(obj.toString());
     }
@@ -348,6 +447,19 @@ public class BitCrystalJSON {
     public static JSONObject decodeWalletLight(String decode) {
         try {
             return new JSONObject(decodeWalletStringLight(decode));
+        } catch (JSONException ex) {
+            Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public static String encodeWalletCool(JSONObject obj) {
+        return encodeWalletStringCool(obj.toString());
+    }
+
+    public static JSONObject decodeWalletCool(String decode) {
+        try {
+            return new JSONObject(decodeWalletStringCool(decode));
         } catch (JSONException ex) {
             Logger.getLogger(BitCrystalJSON.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -459,6 +571,80 @@ public class BitCrystalJSON {
     public static JSONObject loadJSONObjectWallet(String key, String path, String filename) {
         String loadString = loadString(key, path, filename);
         JSONObject decode = BitCrystalJSON.decodeWallet(loadString);
+        return decode;
+    }
+
+    public static boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObject(jsonObject, key, path, "");
+    }
+
+    public static boolean saveJSONObjectLight(JSONObject jsonObject, String key, String path, String filename) {
+        String encode = BitCrystalJSON.encodeLight(jsonObject);
+        return saveString(encode, key, path, filename);
+    }
+
+    public static JSONObject loadJSONObjectLight(String key, String path) {
+        return loadJSONObjectLight(key, path, "");
+    }
+
+    public static JSONObject loadJSONObjectLight(String key, String path, String filename) {
+        String loadString = loadString(key, path, filename);
+        JSONObject decode = BitCrystalJSON.decodeLight(loadString);
+        return decode;
+    }
+
+    public static boolean saveJSONObjectWalletLight(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectWalletLight(jsonObject, key, path, "");
+    }
+
+    public static boolean saveJSONObjectWalletLight(JSONObject jsonObject, String key, String path, String filename) {
+        return saveString(encodeWalletLight(jsonObject), key, path, filename);
+    }
+
+    public static JSONObject loadJSONObjectWalletLight(String key, String path) {
+        return loadJSONObjectWalletLight(key, path, "");
+    }
+
+    public static JSONObject loadJSONObjectWalletLight(String key, String path, String filename) {
+        String loadString = loadString(key, path, filename);
+        JSONObject decode = BitCrystalJSON.decodeWalletLight(loadString);
+        return decode;
+    }
+
+    public static boolean saveJSONObjectCool(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectCool(jsonObject, key, path, "");
+    }
+
+    public static boolean saveJSONObjectCool(JSONObject jsonObject, String key, String path, String filename) {
+        String encode = BitCrystalJSON.encodeCool(jsonObject);
+        return saveString(encode, key, path, filename);
+    }
+
+    public static JSONObject loadJSONObjectCool(String key, String path) {
+        return loadJSONObjectCool(key, path, "");
+    }
+
+    public static JSONObject loadJSONObjectCool(String key, String path, String filename) {
+        String loadString = loadString(key, path, filename);
+        JSONObject decode = BitCrystalJSON.decodeCool(loadString);
+        return decode;
+    }
+
+    public static boolean saveJSONObjectWalletCool(JSONObject jsonObject, String key, String path) {
+        return saveJSONObjectWalletCool(jsonObject, key, path, "");
+    }
+
+    public static boolean saveJSONObjectWalletCool(JSONObject jsonObject, String key, String path, String filename) {
+        return saveString(encodeWalletCool(jsonObject), key, path, filename);
+    }
+
+    public static JSONObject loadJSONObjectWalletCool(String key, String path) {
+        return loadJSONObjectWalletCool(key, path, "");
+    }
+
+    public static JSONObject loadJSONObjectWalletCool(String key, String path, String filename) {
+        String loadString = loadString(key, path, filename);
+        JSONObject decode = BitCrystalJSON.decodeWalletCool(loadString);
         return decode;
     }
 }
