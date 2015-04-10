@@ -45,14 +45,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jLabel5" pref="681" max="32767" attributes="0"/>
+              <Component id="jLabel5" pref="735" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" max="32767" attributes="0"/>
+              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,7 +61,8 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jLabel5" min="-2" pref="51" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,7 +76,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTabbedPane1" min="-2" pref="661" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="64" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,8 +84,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTabbedPane1" min="-2" pref="504" max="-2" attributes="0"/>
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                  <Component id="jTabbedPane1" min="-2" pref="612" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -116,26 +117,34 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="depositAddressForBitcoinsLabel" alignment="0" pref="321" max="32767" attributes="1"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="partnerBitcoinBalance" alignment="0" pref="321" max="32767" attributes="0"/>
+                              <Component id="partnerBitcoinBalanceLabel" alignment="0" pref="321" max="32767" attributes="0"/>
+                              <Component id="partnerDepositBitcoinAddress" alignment="0" pref="321" max="32767" attributes="0"/>
+                              <Component id="partnerDepositBitcoinAddressLabel" alignment="0" pref="321" max="32767" attributes="0"/>
+                              <Component id="yourDepositBitcoinAddressLabel" alignment="0" pref="321" max="32767" attributes="1"/>
                               <Component id="currentTradeAddress" alignment="0" pref="321" max="32767" attributes="1"/>
                               <Component id="getNewCurrentTradeAddressButton" alignment="0" pref="321" max="32767" attributes="1"/>
                               <Component id="jLabel2" alignment="1" pref="321" max="32767" attributes="1"/>
-                              <Component id="bitcoinBalanceLabel" alignment="0" pref="321" max="32767" attributes="1"/>
-                              <Component id="depositAddressBitcoins" alignment="0" pref="321" max="32767" attributes="1"/>
-                              <Component id="bitcoinBalance" alignment="0" pref="321" max="32767" attributes="1"/>
+                              <Component id="yourBitcoinBalanceLabel" alignment="0" pref="321" max="32767" attributes="1"/>
+                              <Component id="yourDepositBitcoinAddress" alignment="0" pref="321" max="32767" attributes="1"/>
+                              <Component id="yourBitcoinBalance" alignment="0" pref="321" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="partnerDepositBitcrystalAddress" alignment="1" pref="292" max="32767" attributes="0"/>
+                              <Component id="partnerDepositBitcrystalAddressLabel" alignment="1" pref="292" max="32767" attributes="0"/>
                               <Component id="currentTradeWithAddress" alignment="0" pref="292" max="32767" attributes="1"/>
                               <Component id="jLabel3" alignment="0" pref="292" max="32767" attributes="1"/>
                               <Component id="currentTradeWithAddressButton" alignment="0" pref="292" max="32767" attributes="0"/>
-                              <Component id="depositAddressForBitcrystal" alignment="0" pref="292" max="32767" attributes="0"/>
-                              <Component id="depositAddressBitcrystal" alignment="1" pref="292" max="32767" attributes="0"/>
-                              <Component id="bitcrystalBalance" alignment="0" pref="292" max="32767" attributes="0"/>
-                              <Component id="bitcrystalBalanceLabel" alignment="1" pref="292" max="32767" attributes="0"/>
+                              <Component id="yourDepositBitcrystalAddressLabel" alignment="0" pref="292" max="32767" attributes="0"/>
+                              <Component id="yourDepositBitcrystalAddress" alignment="1" pref="292" max="32767" attributes="0"/>
+                              <Component id="yourBitcrystalBalance" alignment="0" pref="292" max="32767" attributes="0"/>
+                              <Component id="yourBitcrystalBalanceLabel" alignment="1" pref="292" max="32767" attributes="0"/>
+                              <Component id="partnerBitcrystalBalanceLabel" alignment="0" pref="292" max="32767" attributes="0"/>
+                              <Component id="partnerBitcrystalBalance" alignment="0" pref="292" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -161,25 +170,45 @@
                           </Group>
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="depositAddressForBitcoinsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="depositAddressForBitcrystal" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourDepositBitcoinAddressLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourDepositBitcrystalAddressLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="depositAddressBitcrystal" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="depositAddressBitcoins" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourDepositBitcrystalAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourDepositBitcoinAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="bitcoinBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bitcrystalBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourBitcoinBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourBitcrystalBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="bitcrystalBalance" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bitcoinBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourBitcrystalBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="yourBitcoinBalance" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="167" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="partnerDepositBitcoinAddressLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="partnerDepositBitcrystalAddressLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="partnerDepositBitcoinAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="partnerDepositBitcrystalAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="partnerBitcoinBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="partnerBitcrystalBalanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="partnerBitcoinBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="partnerBitcrystalBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="109" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -223,57 +252,99 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="currentTradeWithAddressButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="depositAddressForBitcoinsLabel">
+                <Component class="javax.swing.JLabel" name="yourDepositBitcoinAddressLabel">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Deposit Address For Bitcoins"/>
+                    <Property name="text" type="java.lang.String" value="Your Deposit Bitcoin Address"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="depositAddressForBitcrystal">
+                <Component class="javax.swing.JLabel" name="yourDepositBitcrystalAddressLabel">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Deposit Address For Bitcrystal"/>
+                    <Property name="text" type="java.lang.String" value="Your Deposit Bitcrystal Address"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="depositAddressBitcoins">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="depositAddressBitcrystal">
+                <Component class="javax.swing.JTextField" name="yourDepositBitcoinAddress">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="bitcoinBalanceLabel">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Bitcoin Balance"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="bitcrystalBalanceLabel">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Bitcrystal Balance"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="bitcoinBalance">
+                <Component class="javax.swing.JTextField" name="yourDepositBitcrystalAddress">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bitcoinBalanceActionPerformed"/>
-                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcoinBalanceFocusGained"/>
-                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcoinBalanceFocusLost"/>
-                  </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="bitcrystalBalance">
+                <Component class="javax.swing.JLabel" name="yourBitcoinBalanceLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Your Bitcoin Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="yourBitcrystalBalanceLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Your Bitcrystal Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="yourBitcoinBalance">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bitcrystalBalanceActionPerformed"/>
-                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcrystalBalanceFocusGained"/>
-                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bitcrystalBalanceFocusLost"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yourBitcoinBalanceActionPerformed"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="yourBitcoinBalanceFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="yourBitcoinBalanceFocusLost"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="yourBitcrystalBalance">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" value="0.0"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yourBitcrystalBalanceActionPerformed"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="yourBitcrystalBalanceFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="yourBitcrystalBalanceFocusLost"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="partnerDepositBitcoinAddressLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Partner Deposit Bitcoin Address"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="partnerDepositBitcrystalAddressLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Partner Deposit Bitcrystal Address"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="partnerDepositBitcoinAddress">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="partnerDepositBitcrystalAddress">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="partnerBitcoinBalanceLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Partner Bitcoin Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="partnerBitcrystalBalanceLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Partner Bitcrystal Balance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="partnerBitcoinBalance">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" value="0.0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="partnerBitcrystalBalance">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" value="0.0"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -340,7 +411,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="startTradeBuyBtcrySellBtc" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="316" max="32767" attributes="0"/>
+                          <EmptySpace pref="424" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -452,7 +523,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="StartTradeBuyBtcSellBitcrystal" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="326" max="32767" attributes="0"/>
+                          <EmptySpace pref="434" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -551,7 +622,7 @@
                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="28" max="32767" attributes="0"/>
+                          <EmptySpace pref="136" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
