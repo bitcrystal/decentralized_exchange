@@ -220,9 +220,35 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         partnerBitcoinBalance.setEditable(false);
         partnerBitcoinBalance.setText("0.0");
+        partnerBitcoinBalance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                partnerBitcoinBalanceActionPerformed(evt);
+            }
+        });
+        partnerBitcoinBalance.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                partnerBitcoinBalanceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                partnerBitcoinBalanceFocusLost(evt);
+            }
+        });
 
         partnerBitcrystalBalance.setEditable(false);
         partnerBitcrystalBalance.setText("0.0");
+        partnerBitcrystalBalance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                partnerBitcrystalBalanceActionPerformed(evt);
+            }
+        });
+        partnerBitcrystalBalance.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                partnerBitcrystalBalanceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                partnerBitcrystalBalanceFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -867,7 +893,6 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
         JOptionPane.showMessageDialog(null, "In order to change the current trade with address you must restart the client!");
         return;
     }
-
     JOptionPane.showMessageDialog(null, "The Process takes a while! Please wait a minute or two!");
     new NotInterruptableThread(new Runnable() {
 
@@ -904,22 +929,20 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
                 startTradeBuyBtcrySellBtc.setEnabled(true);
                 String tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
                 String tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
-                while(tradeAccountMultisigAddressForBitcoin.isEmpty()||tradeAccountMultisigAddressForBitcrystal.isEmpty())
-                {
+                while (tradeAccountMultisigAddressForBitcoin.isEmpty() || tradeAccountMultisigAddressForBitcrystal.isEmpty()) {
                     tradeAccountMultisigAddressForBitcoin = ClientConnection.getTradeAccountMultisigAddressForBitcoin();
                     tradeAccountMultisigAddressForBitcrystal = ClientConnection.getTradeAccountMultisigAddressForBitcrystal();
                 }
                 yourDepositBitcoinAddress.setText(tradeAccountMultisigAddressForBitcoin);
                 yourDepositBitcrystalAddress.setText(tradeAccountMultisigAddressForBitcrystal);
-                 String tradeAccountMultisigAddressForBitcoin2 = ClientConnection.getTradeAccount2MultisigAddressForBitcoin();
+                String tradeAccountMultisigAddressForBitcoin2 = ClientConnection.getTradeAccount2MultisigAddressForBitcoin();
                 String tradeAccountMultisigAddressForBitcrystal2 = ClientConnection.getTradeAccount2MultisigAddressForBitcrystal();
-                while(tradeAccountMultisigAddressForBitcoin2.isEmpty()||tradeAccountMultisigAddressForBitcrystal2.isEmpty())
-                {
+                while (tradeAccountMultisigAddressForBitcoin2.isEmpty() || tradeAccountMultisigAddressForBitcrystal2.isEmpty()) {
                     tradeAccountMultisigAddressForBitcoin2 = ClientConnection.getTradeAccount2MultisigAddressForBitcoin();
                     tradeAccountMultisigAddressForBitcrystal2 = ClientConnection.getTradeAccount2MultisigAddressForBitcrystal();
                 }
-                partnerDepositBitcoinAddress.setText(tradeAccountMultisigAddressForBitcoin);
-                partnerDepositBitcrystalAddress.setText(tradeAccountMultisigAddressForBitcrystal);
+                partnerDepositBitcoinAddress.setText(tradeAccountMultisigAddressForBitcoin2);
+                partnerDepositBitcrystalAddress.setText(tradeAccountMultisigAddressForBitcrystal2);
                 updateBalance = true;
                 JOptionPane.showMessageDialog(null, "Successfully setted the current trade with address to " + currentTradeWithAddressS + "!");
             } else {
@@ -943,6 +966,54 @@ private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.Actio
     }
     currentTradeAddress.setText(currentTradeAddressS);
 }//GEN-LAST:event_getNewCurrentTradeAddressButtonActionPerformed
+
+private void partnerBitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceActionPerformed
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcoinBalanceActionPerformed
+
+private void partnerBitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceFocusGained
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcoinBalanceFocusGained
+
+private void partnerBitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceFocusLost
+    double balance = ClientConnection.getBitcoinBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcoinBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcoinBalanceFocusLost
+
+private void partnerBitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceFocusGained
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcrystalBalanceFocusGained
+
+private void partnerBitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceFocusLost
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcrystalBalanceFocusLost
+
+private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceActionPerformed
+    double balance = ClientConnection.getBitcrystalBalanceTradeAccount2();
+    if (balance <= 0) {
+        balance = 0;
+    }
+    partnerBitcrystalBalance.setText("" + balance);
+}//GEN-LAST:event_partnerBitcrystalBalanceActionPerformed
     private static String commandParser(String command) {
         String ret = "";
         try {

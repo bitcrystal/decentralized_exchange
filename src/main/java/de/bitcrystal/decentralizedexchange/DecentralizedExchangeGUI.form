@@ -339,12 +339,22 @@
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="partnerBitcoinBalanceActionPerformed"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="partnerBitcoinBalanceFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="partnerBitcoinBalanceFocusLost"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="partnerBitcrystalBalance">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="partnerBitcrystalBalanceActionPerformed"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="partnerBitcrystalBalanceFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="partnerBitcrystalBalanceFocusLost"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

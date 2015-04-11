@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class DebugClient {
 
     private static boolean debug = true;
-    private static boolean addlines = true;
+    private static boolean addlines = false;
     private static PrintStream out = System.out;
     private static List<String> list = new CopyOnWriteArrayList<String>();
 

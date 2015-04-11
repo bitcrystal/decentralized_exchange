@@ -50,7 +50,7 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> endtradesother = new ConcurrentHashMap<String, String>();
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
     private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
-    private static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
+    private final static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
     private static JSONObject serverJSON = null;
     private static boolean isInit = false;
 
@@ -881,34 +881,6 @@ public class ServerConnection implements Runnable {
                 this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
-            } else {
-                if (!pubKeysMap2.containsKey(split[1])) {
-                    DebugServer.println("serverconnection@146");
-                    this.client.sendLight("E_ERROR");
-                    this.client.close();
-                    return;
-                }
-                String get10 = pubKeysMap2.get(split[1]);
-                DebugServer.println("get10");
-                DebugServer.println(get10);
-                if (!pubKeysMap.containsKey(get10)) {
-                    DebugServer.println("serverconnection@155");
-                    this.client.sendLight("E_ERROR");
-                    this.client.close();
-                    return;
-                }
-                /* if (get10.equals(hostAddress)) {
-                DebugServer.println("serverconnection@156");
-                this.client.sendLight("E_ERROR");
-                this.client.close();
-                return;
-                }*/
-                //String get11 = pubKeysMap.get(get10);
-                DebugServer.println("get11");
-                // DebugServer.println(get11);
-                //split[1] = get11;
-                DebugServer.println("split[1] = get11");
-                DebugServer.println(split[1]);
             }
             if (addresses.containsKey(hostAddress)) {
                 DebugServer.println("serverconnection@174");
@@ -937,14 +909,17 @@ public class ServerConnection implements Runnable {
             this.client.close();
             return;
             }*/
+
             if (pubKeys.size() <= 0) {
                 DebugServer.println("serverconnection@201");
                 this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
             }
+
             DebugServer.println("serverconnection@1221");
-            String get1 = serverPubKeys.get(serverPubKeys.size() - 1);
+            int index = serverPubKeys.size() - 1;
+            String get1 = serverPubKeys.get(index);
             //String get2 = pubKeysMap.get(hostAddress);
             String get2 = split[2];
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
@@ -966,6 +941,9 @@ public class ServerConnection implements Runnable {
             Object[] values = {get2, split[1], lastUsedPubKey, true};
             Object[] values_2 = {split[1], get2, lastUsedPubKey, true};
             DebugServer.println("serverconnection@1242");
+            DebugServer.println(values[0].toString());
+            DebugServer.println(values[1].toString());
+            DebugServer.println(values[2].toString());
             String createmultisigaddressex = bitcoinrpc.createmultisigaddressex(values);
             String createmultisigaddressex2 = bitcrystalrpc.createmultisigaddressex(values);
             String createmultisigaddressex_1 = bitcoinrpc.createmultisigaddressex(values_2);
@@ -1047,14 +1025,25 @@ public class ServerConnection implements Runnable {
                 String newAddress = bitcoinrpc.getNewAddress();
                 String pubKey = bitcoinrpc.getPubKey(newAddress);
                 String privKey = bitcoinrpc.getPrivKey(newAddress);
+                String newAddress2 = bitcoinrpc.getNewAddress();
+                String pubKey2 = bitcoinrpc.getPubKey(newAddress);
+                String privKey2 = bitcoinrpc.getPrivKey(newAddress);
                 try {
                     DebugServer.println("serverconnection@83");
                     bitcrystalrpc.importPrivKey(privKey);
                 } catch (Exception ex) {
                 }
+                try {
+                    DebugServer.println("serverconnection@83");
+                    bitcrystalrpc.importPrivKey(privKey2);
+                } catch (Exception ex) {
+                }
                 serverPubKeys.add(pubKey);
                 serverAddressesPubkeys.put(newAddress, pubKey);
                 serverPubkeysAddresses.put(pubKey, newAddress);
+                serverPubKeys.add(pubKey2);
+                serverAddressesPubkeys.put(newAddress2, pubKey2);
+                serverPubkeysAddresses.put(pubKey2, newAddress2);
                 this.client.sendLight("ALL_OK");
                 this.client.close();
                 return;
@@ -1157,9 +1146,11 @@ public class ServerConnection implements Runnable {
 
     private void reset() {
         String hostAddress = this.client.getSocket().getInetAddress().getHostAddress();
-        pubKeysMap.remove(hostAddress);
+        //pubKeysMap.remove(hostAddress);
         addresses.remove(hostAddress);
         ips.remove(hostAddress);
+        //tradeAccountsIp.remove(hostAddress);
+        //tradeAccountsIp2.remove(hostAddress);
         this.saveServer();
 
     }
@@ -1213,6 +1204,7 @@ public class ServerConnection implements Runnable {
         }
         }*/
 
+
         if (!pubKeys.contains(split[1])) {
             this.client.sendLight("E_ERROR");
             this.client.close();
@@ -1234,13 +1226,13 @@ public class ServerConnection implements Runnable {
             ips.remove(hostAddress);
             ips.remove(get);
         }
-        pubKeysMap.remove(hostAddress);
-        addresses.remove(hostAddress);
-        pubKeysMap2.remove(split[1]);
-        tradeAccountsIp.remove(hostAddress);
-        tradeAccountsIp2.remove(hostAddress);
-        addresses.remove(hostAddress);
-        this.saveServer();
+        // pubKeysMap.remove(hostAddress);
+        //addresses.remove(hostAddress);
+        //pubKeysMap2.remove(split[1]);
+        // tradeAccountsIp.remove(hostAddress);
+        //  tradeAccountsIp2.remove(hostAddress);
+        //  addresses.remove(hostAddress);
+        //this.saveServer();
         this.client.sendLight("ALL_OK");
         this.client.close();
         return;
