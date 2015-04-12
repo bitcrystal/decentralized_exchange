@@ -1,0 +1,14 @@
+
+
+Version:	3.7
+CmdLine:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\Dex\Dex.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\Dex\.
+Bundled JRE:	C:\Program Files (x86)\Java\jdk1.7.0_10\jre
+Check launcher:	C:\Program Files (x86)\Java\jdk1.7.0_10\jre\bin\javaw.exe (OK)
+Heap -Xms:	Requested 500 MB / 10%, Available: 4255 MB, Heap size: 500 MB
+Heap -Xmx:	Requested 500 MB / 20%, Available: 4255 MB, Heap size: 851 MB
+Launcher:	C:\Program Files (x86)\Java\jdk1.7.0_10\jre\bin\javaw.exe
+Launcher args:	-Xms500m -Xmx851m -jar "C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\Dex\Dex.exe"
+Args length:	98/32768 chars
+Exit code:	0

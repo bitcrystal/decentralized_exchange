@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\DecentralizedExchange.jar</jar>
+  <outfile>C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\DecentralizedExchange.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\my\ddd\BitCrystal\BitCrystal\BitCrystal-0.8.3r17-master\src\qt\res\icons\bitcoin.ico</icon>
+  <singleInstance>
+    <mutexName>DexExchange</mutexName>
+    <windowTitle>Decentralized Exchange</windowTitle>
+  </singleInstance>
+  <jre>
+    <path>lib\jre</path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>true</bundledJreAsFallback>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>32</runtimeBits>
+    <initialHeapSize>30</initialHeapSize>
+    <maxHeapSize>1000</maxHeapSize>
+  </jre>
+</launch4jConfig>

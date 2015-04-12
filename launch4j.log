@@ -1,0 +1,14 @@
+
+
+Version:	3.7
+CmdLine:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\DecentralizedExchange.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\.
+Bundled JRE:	lib\jre
+Check launcher:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\lib\jre\bin\javaw.exe (OK)
+Heap -Xms:	Requested 30 MB / 0%, Available: 5018 MB, Heap size: 30 MB
+Heap -Xmx:	Requested 1000 MB / 0%, Available: 5018 MB, Heap size: 1000 MB
+Launcher:	C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\lib\jre\bin\javaw.exe
+Launcher args:	-Xms30m -Xmx1000m -jar "C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\DecentralizedExchange.exe"
+Args length:	112/32768 chars
+Exit code:	0
