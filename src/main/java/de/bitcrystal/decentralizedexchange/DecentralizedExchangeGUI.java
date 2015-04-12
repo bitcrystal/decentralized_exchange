@@ -119,7 +119,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         yourLastUsedBitcoinTxidHash = new javax.swing.JTextField();
-        yourLastUsedBitcrystalHash = new javax.swing.JTextField();
+        yourLastUsedBitcrystalTxidHash = new javax.swing.JTextField();
         partnerLastUsedBitcoinTxidHash = new javax.swing.JTextField();
         partnerLastUsedBitcrystalTxidHash = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -499,15 +499,15 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         yourLastUsedBitcoinTxidHash.setEditable(false);
 
-        yourLastUsedBitcrystalHash.setEditable(false);
+        yourLastUsedBitcrystalTxidHash.setEditable(false);
 
         partnerLastUsedBitcoinTxidHash.setEditable(false);
 
         partnerLastUsedBitcrystalTxidHash.setEditable(false);
 
-        jLabel23.setText("With the command decodetxids <txid hash> in the debug console on the  bitcoin/bitcrystal wallet you can see the last used txids");
+        jLabel23.setText("With the command decodetxids <txid hash> in the debug console on the  bitcoin/bitcrystal wallet you can see the last");
 
-        jLabel24.setText("from the last sended transactions.");
+        jLabel24.setText("used txids from the last sended transactions.");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -523,19 +523,17 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addContainerGap(463, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addContainerGap(429, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
                             .addComponent(partnerLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(partnerLastUsedBitcoinTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yourLastUsedBitcrystalHash, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(yourLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(yourLastUsedBitcoinTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addContainerGap(481, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel23)
                         .addContainerGap())))
         );
         jPanel7Layout.setVerticalGroup(
@@ -548,7 +546,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel20)
                 .addGap(18, 18, 18)
-                .addComponent(yourLastUsedBitcrystalHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(yourLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel21)
                 .addGap(27, 27, 27)
@@ -1198,6 +1196,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                         DecentralizedExchange.command("getbalance");
                         double bitcoinBalanceTradeAccount = ClientConnection.getBitcoinBalanceTradeAccountEx();
                         double bitcrystalBalanceTradeAccount = ClientConnection.getBitcrystalBalanceTradeAccountEx();
+                        String txbtc = ClientConnection.getBitcoinTxSendHashTradeAccountEx();
+                        String txbtcry = ClientConnection.getBitcrystalTxSendHashTradeAccountEx();
                         if (bitcoinBalanceTradeAccount <= 0) {
                             bitcoinBalanceTradeAccount = 0.0;
                         }
@@ -1206,8 +1206,12 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                         }
                         yourBitcoinBalance.setText("" + bitcoinBalanceTradeAccount);
                         yourBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount);
+                        yourLastUsedBitcoinTxidHash.setText(txbtc);
+                        yourLastUsedBitcrystalTxidHash.setText(txbtcry);
                         double bitcoinBalanceTradeAccount2 = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
                         double bitcrystalBalanceTradeAccount2 = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
+                        String txbtc2 = ClientConnection.getBitcoinTxSendHashTradeAccount2Ex();
+                        String txbtcry2 = ClientConnection.getBitcrystalTxSendHashTradeAccount2Ex();
                         if (bitcoinBalanceTradeAccount2 <= 0) {
                             bitcoinBalanceTradeAccount2 = 0.0;
                         }
@@ -1216,6 +1220,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                         }
                         partnerBitcoinBalance.setText("" + bitcoinBalanceTradeAccount2);
                         partnerBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount2);
+                        partnerLastUsedBitcoinTxidHash.setText(txbtc2);
+                        partnerLastUsedBitcrystalTxidHash.setText(txbtcry2);
                     }
                 }
             }
@@ -1356,6 +1362,6 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JTextField yourDepositBitcrystalAddress;
     private javax.swing.JLabel yourDepositBitcrystalAddressLabel;
     private javax.swing.JTextField yourLastUsedBitcoinTxidHash;
-    private javax.swing.JTextField yourLastUsedBitcrystalHash;
+    private javax.swing.JTextField yourLastUsedBitcrystalTxidHash;
     // End of variables declaration//GEN-END:variables
 }

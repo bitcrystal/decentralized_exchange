@@ -51,7 +51,7 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
     private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
     private final static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
-    private static Map<String,String> balancedata = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> balancedata = new ConcurrentHashMap<String, String>();
     private static JSONObject serverJSON = null;
     private static boolean isInit = false;
 
@@ -152,16 +152,16 @@ public class ServerConnection implements Runnable {
             this.saveServer();
             return;
         }
-        
-         if (recv.startsWith("updatebalance____")) {
+
+        if (recv.startsWith("updatebalance____")) {
             DebugServer.println("updatabalance open");
             updatebalance(recv);
             DebugServer.println("updatebalance close");
             this.saveServer();
             return;
         }
-         
-         if (recv.startsWith("getbalance____")) {
+
+        if (recv.startsWith("getbalance____")) {
             DebugServer.println("getbalance open");
             getbalance(recv);
             DebugServer.println("getbalance close");
@@ -331,18 +331,18 @@ public class ServerConnection implements Runnable {
                 DebugServer.println("serverconnection@636");
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001};
-                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001};
+                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001, 1, getBitcoinTradeAccountTxidHashOutBalanceData(tradeAccount)};
+                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001, 1, getBitcrystalTradeAccountTxidHashOutBalanceData(tradeWithAccount)};
                 DebugServer.println(split_price);
                 DebugServer.println(split_amount);
                 DebugServer.println("serverconnection@643");
-                if (bitcoinrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
+                if (getBitcoinBalanceOutBalanceData(tradeAccount) < split_price + 0.00000001) {
                     DebugServer.println("serverconnection@642");
                     this.client.sendLight("E_ERROR");
                     this.client.close();
                     return;
                 }
-                if (bitcrystalrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
+                if (getBitcrystalBalanceOutBalanceData(tradeWithAccount) < split_amount + 0.00000001) {
                     DebugServer.println("serverconnection@659");
                     this.client.sendLight("E_ERROR");
                     this.client.close();
@@ -382,15 +382,15 @@ public class ServerConnection implements Runnable {
                 DebugServer.println("serverconnection@698");
                 RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
                 RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
-                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001};
-                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001};
-                if (bitcrystalrpc.getBalance(tradeAccount) < split_price + 0.00000001) {
+                Object[] values = {tradeAccount, tradeAccountAddresses[1], split_price, 0.00000001, 1, getBitcrystalTradeAccountTxidHashOutBalanceData(tradeAccount)};
+                Object[] values2 = {tradeWithAccount, tradeAccountAddresses[0], split_amount, 0.00000001, 1, getBitcoinTradeAccountTxidHashOutBalanceData(tradeWithAccount)};
+                if (getBitcrystalBalanceOutBalanceData(tradeAccount) < split_price + 0.00000001) {
                     DebugServer.println("serverconnection@704");
                     this.client.sendLight("E_ERROR");
                     this.client.close();
                     return;
                 }
-                if (bitcoinrpc.getBalance(tradeWithAccount) < split_amount + 0.00000001) {
+                if (getBitcoinBalanceOutBalanceData(tradeWithAccount) < split_amount + 0.00000001) {
                     DebugServer.println("serverconnection@718");
                     this.client.sendLight("E_ERROR");
                     this.client.close();
@@ -1303,8 +1303,7 @@ public class ServerConnection implements Runnable {
 
     private void updatebalance(String recv) {
         String[] split = recv.split("____");
-        if(split.length!=3)
-        {
+        if (split.length != 3) {
             this.client.close();
             return;
         }
@@ -1314,19 +1313,97 @@ public class ServerConnection implements Runnable {
 
     private void getbalance(String recv) {
         String[] split = recv.split("____");
-        if(split.length!=2)
-        {
+        if (split.length != 2) {
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        if(!balancedata.containsKey(split[0]))
-        {
+        if (!balancedata.containsKey(split[0])) {
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
         this.client.send(balancedata.get(split[1]));
         this.client.close();
+    }
+
+    private static String getBitcoinTradeAccountTxidHashOutBalanceData(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (!balancedata.containsKey(string)) {
+            return "";
+        }
+        string = balancedata.get(string);
+        if (!string.contains(",,")) {
+            return "";
+        }
+        String[] split = string.split(",,");
+        if (split.length != 4) {
+            return "";
+        }
+        return split[0];
+    }
+
+    private static String getBitcrystalTradeAccountTxidHashOutBalanceData(String string) {
+        if (string == null || string.isEmpty()) {
+            return "";
+        }
+        if (!balancedata.containsKey(string)) {
+            return "";
+        }
+        string = balancedata.get(string);
+        if (!string.contains(",,")) {
+            return "";
+        }
+        String[] split = string.split(",,");
+        if (split.length != 4) {
+            return "";
+        }
+        return split[1];
+    }
+
+    private static double getBitcoinBalanceOutBalanceData(String string) {
+        if (string == null || string.isEmpty()) {
+            return -1;
+        }
+        if (!balancedata.containsKey(string)) {
+            return -1;
+        }
+        string = balancedata.get(string);
+        if (!string.contains(",,")) {
+            return -1;
+        }
+        String[] split = string.split(",,");
+        if (split.length != 4) {
+            return -1;
+        }
+        try {
+            return Double.parseDouble(split[2]);
+        } catch (Exception ex) {
+            return -1;
+        }
+    }
+
+    private static double getBitcrystalBalanceOutBalanceData(String string) {
+        if (string == null || string.isEmpty()) {
+            return -1;
+        }
+        if (!balancedata.containsKey(string)) {
+            return -1;
+        }
+        string = balancedata.get(string);
+        if (!string.contains(",,")) {
+            return -1;
+        }
+        String[] split = string.split(",,");
+        if (split.length != 4) {
+            return -1;
+        }
+        try {
+            return Double.parseDouble(split[3]);
+        } catch (Exception ex) {
+            return -1;
+        }
     }
 }

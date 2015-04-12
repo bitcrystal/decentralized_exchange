@@ -625,22 +625,19 @@
                                   <EmptySpace pref="463" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="429" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jLabel23" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
                                       <Component id="partnerLastUsedBitcrystalTxidHash" alignment="0" max="32767" attributes="1"/>
                                       <Component id="partnerLastUsedBitcoinTxidHash" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="yourLastUsedBitcrystalHash" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="yourLastUsedBitcrystalTxidHash" alignment="0" max="32767" attributes="1"/>
                                       <Component id="yourLastUsedBitcoinTxidHash" alignment="0" max="32767" attributes="1"/>
                                       <Component id="jLabel21" alignment="0" max="32767" attributes="1"/>
                                       <Component id="jLabel20" alignment="0" pref="584" max="32767" attributes="1"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="481" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -657,7 +654,7 @@
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="yourLastUsedBitcrystalHash" min="-2" max="-2" attributes="0"/>
+                          <Component id="yourLastUsedBitcrystalTxidHash" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -701,7 +698,7 @@
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="yourLastUsedBitcrystalHash">
+                <Component class="javax.swing.JTextField" name="yourLastUsedBitcrystalTxidHash">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -718,12 +715,12 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel23">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="With the command decodetxids &lt;txid hash&gt; in the debug console on the  bitcoin/bitcrystal wallet you can see the last used txids"/>
+                    <Property name="text" type="java.lang.String" value="With the command decodetxids &lt;txid hash&gt; in the debug console on the  bitcoin/bitcrystal wallet you can see the last"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel24">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="from the last sended transactions."/>
+                    <Property name="text" type="java.lang.String" value="used txids from the last sended transactions."/>
                   </Properties>
                 </Component>
               </SubComponents>

@@ -707,7 +707,7 @@ public class ClientConnection implements Runnable {
                     return;
                 }
 
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001, 1, txsendhashTradeAccountBitcoin};
                 String createrawtransaction_multisig = bitcoinrpc.createrawtransaction_multisig(values);
                 DebugClient.println(myTransaction);
                 DebugClient.println(createrawtransaction_multisig);
@@ -821,7 +821,7 @@ public class ClientConnection implements Runnable {
                     setLastCommandStatus(false);
                     return;
                 }
-                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001};
+                Object[] values = {tradeAccount, tradeWithAddress, price, 0.00000001, 1, txsendhashTradeAccountBitcrystal};
                 String createrawtransaction_multisig = bitcrystalrpc.createrawtransaction_multisig(values);
                 if (!bitcrystalrpc.testtransactionequals_multisig(createrawtransaction_multisig, myTransaction)) {
                     DebugClient.println("clientconnection@390");
