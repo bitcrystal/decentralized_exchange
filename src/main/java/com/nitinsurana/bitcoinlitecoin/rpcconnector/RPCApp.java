@@ -949,4 +949,72 @@ public class RPCApp {
         }
         return jsonObj.get("result").getAsInt();
     }
+
+    public JsonArray decodetxidshash(String txidshash) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.DECODE_TXIDS_HASH, new Object[]{txidshash});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        if (!jsonObj.get("result").isJsonArray()) {
+            throw new Exception("Not a json array!");
+        }
+        return jsonObj.get("result").getAsJsonArray();
+    }
+
+    public int getbalance_multisigex(String account) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_MULTISIGEX, new Object[]{account});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsInt();
+    }
+
+    public int getbalancefrommultisigaddress_multisigex(String account_or_address) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_FROM_MULTIISIG_ADDRESS_MULTISIG_EX, new Object[]{account_or_address});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsInt();
+    }
+
+    public int getbalancefromtxids_multisigex(String account_or_address, String txids) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_FROM_TXIDS_MULTISIG_EX, new Object[]{account_or_address, txids});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        return jsonObj.get("result").getAsInt();
+        //getbalancefrommultisigaddress_multisigex
+    }
+
+    public String getsendedtxidsfrommultisigaddressex_multisigex(String account_or_address) throws Exception {
+        JsonObject jsonObj = callAPIMethod(APICalls.GET_SENDED_TXIDS_FROM_MULTISIG_ADDRESS_EX_MULTISIG_EX, new Object[]{account_or_address});
+
+//        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
+//        LOG.info("Decode Raw Transaction : " + ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
+        if (jsonObj.get("error") != null && jsonObj.get("error").isJsonObject() == true) {
+            String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
+            throw new RpcInvalidResponseException(message);
+        }
+        if (jsonObj.get("result").getAsString().equalsIgnoreCase("false")) {
+            throw new Exception("Not a good result!");
+        }
+        return jsonObj.get("result").getAsString();
+        //getbalancefrommultisigaddress_multisigex
+    }
 }

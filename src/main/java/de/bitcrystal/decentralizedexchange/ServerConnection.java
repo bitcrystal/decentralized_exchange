@@ -51,6 +51,7 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
     private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
     private final static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
+    private static Map<String,String> balancedata = new ConcurrentHashMap<String, String>();
     private static JSONObject serverJSON = null;
     private static boolean isInit = false;
 
@@ -148,6 +149,22 @@ public class ServerConnection implements Runnable {
             DebugServer.println("createtrade open");
             createtrade(recv);
             DebugServer.println("createtrade close");
+            this.saveServer();
+            return;
+        }
+        
+         if (recv.startsWith("updatebalance____")) {
+            DebugServer.println("updatabalance open");
+            updatebalance(recv);
+            DebugServer.println("updatebalance close");
+            this.saveServer();
+            return;
+        }
+         
+         if (recv.startsWith("getbalance____")) {
+            DebugServer.println("getbalance open");
+            getbalance(recv);
+            DebugServer.println("getbalance close");
             this.saveServer();
             return;
         }
@@ -644,6 +661,7 @@ public class ServerConnection implements Runnable {
                 json.put("endtradesme", mapToJSONObject(endtradesme));
                 json.put("endtradesother", mapToJSONObject(endtradesother));
                 json.put("startedtradesaccount", mapToJSONObject(startedtradesaccount));
+                json.put("balancedata", balancedata);
                 DebugServer.println(json.toString());
                 this.client.saveJSON(json, "server", "", "server.properties");
                 serverJSON = json;
@@ -780,6 +798,7 @@ public class ServerConnection implements Runnable {
             json.put("endtradesme", mapToJSONObject(endtradesme));
             json.put("endtradesother", mapToJSONObject(endtradesother));
             json.put("startedtradesaccount", mapToJSONObject(startedtradesaccount));
+            json.put("balancedata", mapToJSONObject(balancedata));
             DebugServer.println(json.toString());
             client.saveJSON(json, "server", "", "server.properties");
             serverJSON = json;
@@ -1279,6 +1298,35 @@ public class ServerConnection implements Runnable {
         endtradesme.remove(split[1]);
         this.saveServer();
         this.client.sendLight("ALL_OK");
+        this.client.close();
+    }
+
+    private void updatebalance(String recv) {
+        String[] split = recv.split("____");
+        if(split.length!=3)
+        {
+            this.client.close();
+            return;
+        }
+        this.client.close();
+        balancedata.put(split[1], split[2]);
+    }
+
+    private void getbalance(String recv) {
+        String[] split = recv.split("____");
+        if(split.length!=2)
+        {
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
+        }
+        if(!balancedata.containsKey(split[0]))
+        {
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
+        }
+        this.client.send(balancedata.get(split[1]));
         this.client.close();
     }
 }
