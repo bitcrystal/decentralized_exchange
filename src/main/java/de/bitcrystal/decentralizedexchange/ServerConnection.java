@@ -52,6 +52,8 @@ public class ServerConnection implements Runnable {
     private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
     private final static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
     private static Map<String, String> balancedata = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> bitcoinbalancedata = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> bitcrystalbalancedata = new ConcurrentHashMap<String, String>();
     private static JSONObject serverJSON = null;
     private static boolean isInit = false;
 
@@ -152,19 +154,35 @@ public class ServerConnection implements Runnable {
             this.saveServer();
             return;
         }
-
-        if (recv.startsWith("updatebalance____")) {
-            DebugServer.println("updatabalance open");
-            updatebalance(recv);
-            DebugServer.println("updatebalance close");
+        
+         if (recv.startsWith("updatebalancebitcoin____")) {
+            DebugServer.println("updatabalancebitcoin open");
+            updatebalancebitcoin(recv);
+            DebugServer.println("updatebalancebitcoin close");
             this.saveServer();
             return;
         }
 
-        if (recv.startsWith("getbalance____")) {
-            DebugServer.println("getbalance open");
-            getbalance(recv);
-            DebugServer.println("getbalance close");
+        if (recv.startsWith("getbalancebitcoin____")) {
+            DebugServer.println("getbalancebitcoin open");
+            getbalancebitcoin(recv);
+            DebugServer.println("getbalancebitcoin close");
+            this.saveServer();
+            return;
+        }
+        
+         if (recv.startsWith("updatebalancebitcrystal____")) {
+            DebugServer.println("updatabalancebitcrystal open");
+            updatebalancebitcrystal(recv);
+            DebugServer.println("updatebalancebitcrystal close");
+            this.saveServer();
+            return;
+        }
+
+        if (recv.startsWith("getbalancebitcrystal____")) {
+            DebugServer.println("getbalancebitcrystal open");
+            getbalancebitcrystal(recv);
+            DebugServer.println("getbalancebitcrystal close");
             this.saveServer();
             return;
         }
@@ -1300,30 +1318,66 @@ public class ServerConnection implements Runnable {
         this.client.sendLight("ALL_OK");
         this.client.close();
     }
-
-    private void updatebalance(String recv) {
+    
+     private void updatebalancebitcoin(String recv) {
         String[] split = recv.split("____");
         if (split.length != 3) {
+            DebugServer.println("@ServerConnection 1307");
             this.client.close();
             return;
         }
+        DebugServer.println("@ServerConnection 1311");
         this.client.close();
-        balancedata.put(split[1], split[2]);
+        bitcoinbalancedata.put(split[1], split[2]);
     }
 
-    private void getbalance(String recv) {
+    private void getbalancebitcoin(String recv) {
         String[] split = recv.split("____");
         if (split.length != 2) {
+            DebugServer.println("@ServerConnection 1318");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        if (!balancedata.containsKey(split[0])) {
+        if (!bitcoinbalancedata.containsKey(split[1])) {
+            DebugServer.println("@ServerConnection 1324");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        this.client.send(balancedata.get(split[1]));
+        DebugServer.println("@ServerConnection 1329");
+        this.client.send(bitcoinbalancedata.get(split[1]));
+        this.client.close();
+    }
+    
+     private void updatebalancebitcrystal(String recv) {
+        String[] split = recv.split("____");
+        if (split.length != 3) {
+            DebugServer.println("@ServerConnection 1307");
+            this.client.close();
+            return;
+        }
+        DebugServer.println("@ServerConnection 1311");
+        this.client.close();
+        bitcrystalbalancedata.put(split[1], split[2]);
+    }
+
+    private void getbalancebitcrystal(String recv) {
+        String[] split = recv.split("____");
+        if (split.length != 2) {
+            DebugServer.println("@ServerConnection 1318");
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
+        }
+        if (!bitcrystalbalancedata.containsKey(split[1])) {
+            DebugServer.println("@ServerConnection 1324");
+            this.client.send("E_ERROR");
+            this.client.close();
+            return;
+        }
+        DebugServer.println("@ServerConnection 1329");
+        this.client.send(bitcrystalbalancedata.get(split[1]));
         this.client.close();
     }
 
@@ -1331,15 +1385,15 @@ public class ServerConnection implements Runnable {
         if (string == null || string.isEmpty()) {
             return "";
         }
-        if (!balancedata.containsKey(string)) {
+        if (!bitcoinbalancedata.containsKey(string)) {
             return "";
         }
-        string = balancedata.get(string);
+        string = bitcoinbalancedata.get(string);
         if (!string.contains(",,")) {
             return "";
         }
         String[] split = string.split(",,");
-        if (split.length != 4) {
+        if (split.length != 2) {
             return "";
         }
         return split[0];
@@ -1349,37 +1403,37 @@ public class ServerConnection implements Runnable {
         if (string == null || string.isEmpty()) {
             return "";
         }
-        if (!balancedata.containsKey(string)) {
+        if (!bitcrystalbalancedata.containsKey(string)) {
             return "";
         }
-        string = balancedata.get(string);
+        string = bitcrystalbalancedata.get(string);
         if (!string.contains(",,")) {
             return "";
         }
         String[] split = string.split(",,");
-        if (split.length != 4) {
+        if (split.length != 2) {
             return "";
         }
-        return split[1];
+        return split[0];
     }
 
     private static double getBitcoinBalanceOutBalanceData(String string) {
         if (string == null || string.isEmpty()) {
             return -1;
         }
-        if (!balancedata.containsKey(string)) {
+        if (!bitcoinbalancedata.containsKey(string)) {
             return -1;
         }
-        string = balancedata.get(string);
+        string = bitcoinbalancedata.get(string);
         if (!string.contains(",,")) {
             return -1;
         }
         String[] split = string.split(",,");
-        if (split.length != 4) {
+        if (split.length != 2) {
             return -1;
         }
         try {
-            return Double.parseDouble(split[2]);
+            return Double.parseDouble(split[1]);
         } catch (Exception ex) {
             return -1;
         }
@@ -1389,19 +1443,19 @@ public class ServerConnection implements Runnable {
         if (string == null || string.isEmpty()) {
             return -1;
         }
-        if (!balancedata.containsKey(string)) {
+        if (!bitcrystalbalancedata.containsKey(string)) {
             return -1;
         }
-        string = balancedata.get(string);
+        string = bitcrystalbalancedata.get(string);
         if (!string.contains(",,")) {
             return -1;
         }
         String[] split = string.split(",,");
-        if (split.length != 4) {
+        if (split.length != 2) {
             return -1;
         }
         try {
-            return Double.parseDouble(split[3]);
+            return Double.parseDouble(split[1]);
         } catch (Exception ex) {
             return -1;
         }
