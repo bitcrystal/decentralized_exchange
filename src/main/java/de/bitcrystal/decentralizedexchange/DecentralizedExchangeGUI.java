@@ -701,8 +701,8 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 startTrade = false;
                 return;
             }
-            double btc = ClientConnection.getBitcoinBalanceTradeAccount2();
-            double btcry = ClientConnection.getBitcrystalBalanceTradeAccount();
+            double btc = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
+            double btcry = ClientConnection.getBitcrystalBalanceTradeAccountEx();
             if (btc <= 0 || btcry <= 0) {
                 JOptionPane.showMessageDialog(null, "You have not enough balance!");
                 startTrade = false;

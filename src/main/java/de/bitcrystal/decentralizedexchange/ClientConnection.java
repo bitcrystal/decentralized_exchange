@@ -1489,6 +1489,7 @@ public class ClientConnection implements Runnable {
             this.server.send("updatebalancebitcoin____" + tradeAccount + "____" + txsendhashTradeAccountBitcoin + ",," + bitcoinTradeAccountBalance);
             this.server.close();
             DebugClient.println("@ClientConnection 1463");
+            this.saveClient();
             setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
@@ -1521,6 +1522,7 @@ public class ClientConnection implements Runnable {
             this.server.send("updatebalancebitcrystal____" + tradeAccount + "____" + txsendhashTradeAccountBitcrystal + ",," + bitcrystalTradeAccountBalance);
             this.server.close();
             DebugClient.println("@ClientConnection 1463");
+            this.saveClient();
             setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
@@ -1575,7 +1577,7 @@ public class ClientConnection implements Runnable {
             try {
                 tradeAccount2BitcoinBalance = Double.parseDouble(split[1]);
                 int balancefromtxids_multisigex = bitcoinrpc.getbalancefromtxids_multisigex(tradeAccount2, split[0]);
-                if (tradeAccount2BitcoinBalance != balancefromtxids_multisigex) {
+                if (tradeAccount2BitcoinBalance != balancefromtxids_multisigex || balancefromtxids_multisigex == 0) {
                     tradeAccount2BitcoinBalance = 0;
                     this.server.close();
                     setLastCommandStatus(false);
@@ -1586,6 +1588,7 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("@ClientConnection 1526");
                 txsendhashTradeAccount2Bitcoin = split[0];
                 bitcoinTradeAccount2Balance = tradeAccount2BitcoinBalance;
+                this.saveClient();
                 setLastCommandStatus(true);
                 return;
             } catch (Exception ex) {
@@ -1642,7 +1645,7 @@ public class ClientConnection implements Runnable {
             try {
                 tradeAccount2BitcrystalBalance = Double.parseDouble(split[1]);
                 int balancefromtxids_multisigex1 = bitcrystalrpc.getbalancefromtxids_multisigex(tradeAccount2, split[0]);
-                if (tradeAccount2BitcrystalBalance != balancefromtxids_multisigex1) {
+                if (tradeAccount2BitcrystalBalance != balancefromtxids_multisigex1 || balancefromtxids_multisigex1 == 0) {
                     tradeAccount2BitcrystalBalance = 0;
                     this.server.close();
                     setLastCommandStatus(false);
@@ -1653,6 +1656,7 @@ public class ClientConnection implements Runnable {
                 DebugClient.println("@ClientConnection 1526");
                 txsendhashTradeAccount2Bitcrystal = split[0];
                 bitcrystalTradeAccount2Balance = tradeAccount2BitcrystalBalance;
+                this.saveClient();
                 setLastCommandStatus(true);
                 return;
             } catch (Exception ex) {
