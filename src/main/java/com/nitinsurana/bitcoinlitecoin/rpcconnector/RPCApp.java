@@ -965,7 +965,7 @@ public class RPCApp {
         return jsonObj.get("result").getAsJsonArray();
     }
 
-    public int getbalance_multisigex(String account) throws Exception {
+    public double getbalance_multisigex(String account) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_MULTISIGEX, new Object[]{account});
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
@@ -974,10 +974,10 @@ public class RPCApp {
             String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
             throw new RpcInvalidResponseException(message);
         }
-        return jsonObj.get("result").getAsInt();
+        return jsonObj.get("result").getAsDouble();
     }
 
-    public int getbalancefrommultisigaddress_multisigex(String account_or_address) throws Exception {
+    public double getbalancefrommultisigaddress_multisigex(String account_or_address) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_FROM_MULTIISIG_ADDRESS_MULTISIG_EX, new Object[]{account_or_address});
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
@@ -986,10 +986,10 @@ public class RPCApp {
             String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
             throw new RpcInvalidResponseException(message);
         }
-        return jsonObj.get("result").getAsInt();
+        return jsonObj.get("result").getAsDouble();
     }
 
-    public int getbalancefromtxids_multisigex(String account_or_address, String txids) throws Exception {
+    public double getbalancefromtxids_multisigex(String account_or_address, String txids) throws Exception {
         JsonObject jsonObj = callAPIMethod(APICalls.GET_BALANCE_FROM_TXIDS_MULTISIG_EX, new Object[]{account_or_address, txids});
 
 //        ArrayResponse response = new Gson().fromJson(responseString, ArrayResponse.class);
@@ -998,7 +998,7 @@ public class RPCApp {
             String message = jsonObj.get("error").getAsJsonObject().get("message").getAsString();
             throw new RpcInvalidResponseException(message);
         }
-        return jsonObj.get("result").getAsInt();
+        return jsonObj.get("result").getAsDouble();
         //getbalancefrommultisigaddress_multisigex
     }
 

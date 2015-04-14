@@ -1192,36 +1192,42 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
             public void run() {
                 while (true) {
                     if (updateBalance) {
-                        DecentralizedExchange.command("updatebalance");
-                        DecentralizedExchange.command("getbalance");
-                        double bitcoinBalanceTradeAccount = ClientConnection.getBitcoinBalanceTradeAccountEx();
-                        double bitcrystalBalanceTradeAccount = ClientConnection.getBitcrystalBalanceTradeAccountEx();
-                        String txbtc = ClientConnection.getBitcoinTxSendHashTradeAccountEx();
-                        String txbtcry = ClientConnection.getBitcrystalTxSendHashTradeAccountEx();
-                        if (bitcoinBalanceTradeAccount <= 0) {
-                            bitcoinBalanceTradeAccount = 0.0;
+                        try {
+                            DecentralizedExchange.command("updatebalancebitcoin");
+                            DecentralizedExchange.command("getbalancebitcoin");
+                            DecentralizedExchange.command("updatebalancebitcrystal");
+                            DecentralizedExchange.command("getbalancebitcrystal");
+                            double bitcoinBalanceTradeAccount = ClientConnection.getBitcoinBalanceTradeAccountEx();
+                            double bitcrystalBalanceTradeAccount = ClientConnection.getBitcrystalBalanceTradeAccountEx();
+                            String txbtc = ClientConnection.getBitcoinTxSendHashTradeAccountEx();
+                            String txbtcry = ClientConnection.getBitcrystalTxSendHashTradeAccountEx();
+                            if (bitcoinBalanceTradeAccount <= 0) {
+                                bitcoinBalanceTradeAccount = 0.0;
+                            }
+                            if (bitcrystalBalanceTradeAccount <= 0) {
+                                bitcrystalBalanceTradeAccount = 0.0;
+                            }
+                            yourBitcoinBalance.setText("" + bitcoinBalanceTradeAccount);
+                            yourBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount);
+                            yourLastUsedBitcoinTxidHash.setText(txbtc);
+                            yourLastUsedBitcrystalTxidHash.setText(txbtcry);
+                            double bitcoinBalanceTradeAccount2 = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
+                            double bitcrystalBalanceTradeAccount2 = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
+                            String txbtc2 = ClientConnection.getBitcoinTxSendHashTradeAccount2Ex();
+                            String txbtcry2 = ClientConnection.getBitcrystalTxSendHashTradeAccount2Ex();
+                            if (bitcoinBalanceTradeAccount2 <= 0) {
+                                bitcoinBalanceTradeAccount2 = 0.0;
+                            }
+                            if (bitcrystalBalanceTradeAccount2 <= 0) {
+                                bitcrystalBalanceTradeAccount2 = 0.0;
+                            }
+                            partnerBitcoinBalance.setText("" + bitcoinBalanceTradeAccount2);
+                            partnerBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount2);
+                            partnerLastUsedBitcoinTxidHash.setText(txbtc2);
+                            partnerLastUsedBitcrystalTxidHash.setText(txbtcry2);
+                            Thread.currentThread().sleep(60000);
+                        } catch (Exception ex) {
                         }
-                        if (bitcrystalBalanceTradeAccount <= 0) {
-                            bitcrystalBalanceTradeAccount = 0.0;
-                        }
-                        yourBitcoinBalance.setText("" + bitcoinBalanceTradeAccount);
-                        yourBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount);
-                        yourLastUsedBitcoinTxidHash.setText(txbtc);
-                        yourLastUsedBitcrystalTxidHash.setText(txbtcry);
-                        double bitcoinBalanceTradeAccount2 = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
-                        double bitcrystalBalanceTradeAccount2 = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
-                        String txbtc2 = ClientConnection.getBitcoinTxSendHashTradeAccount2Ex();
-                        String txbtcry2 = ClientConnection.getBitcrystalTxSendHashTradeAccount2Ex();
-                        if (bitcoinBalanceTradeAccount2 <= 0) {
-                            bitcoinBalanceTradeAccount2 = 0.0;
-                        }
-                        if (bitcrystalBalanceTradeAccount2 <= 0) {
-                            bitcrystalBalanceTradeAccount2 = 0.0;
-                        }
-                        partnerBitcoinBalance.setText("" + bitcoinBalanceTradeAccount2);
-                        partnerBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount2);
-                        partnerLastUsedBitcoinTxidHash.setText(txbtc2);
-                        partnerLastUsedBitcrystalTxidHash.setText(txbtcry2);
                     }
                 }
             }
