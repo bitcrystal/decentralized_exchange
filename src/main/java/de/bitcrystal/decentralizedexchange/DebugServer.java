@@ -7,6 +7,7 @@ package de.bitcrystal.decentralizedexchange;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,10 +19,13 @@ public class DebugServer {
     private static boolean addlines = false;
     private static PrintStream out = System.out;
     private static List<String> list = new CopyOnWriteArrayList<String>();
+    private static boolean useJOption = false;
 
     public static void println(String string) {
-        if (debug) {
+        if (debug && !useJOption) {
             out.println(string);
+        } else if (debug && useJOption) {
+            JOptionPane.showMessageDialog(null, string);
         }
         if (addlines) {
             list.add(string);
@@ -30,8 +34,10 @@ public class DebugServer {
     }
 
     public static void println(int length) {
-        if (debug) {
-            out.println(length);
+        if (debug && !useJOption) {
+            out.println("" + length);
+        } else if (debug && useJOption) {
+            JOptionPane.showMessageDialog(null, "" + length);
         }
         if (addlines) {
             list.add("" + length);
@@ -40,8 +46,10 @@ public class DebugServer {
     }
 
     public static void println(double length) {
-        if (debug) {
-            out.println(length);
+        if (debug && !useJOption) {
+            out.println("" + length);
+        } else if (debug && useJOption) {
+            JOptionPane.showMessageDialog(null, "" + length);
         }
         if (addlines) {
             list.add("" + length);

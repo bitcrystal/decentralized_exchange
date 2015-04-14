@@ -1193,10 +1193,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                 while (true) {
                     if (updateBalance) {
                         try {
-                            DecentralizedExchange.command("updatebalancebitcoin");
-                            DecentralizedExchange.command("getbalancebitcoin");
-                            DecentralizedExchange.command("updatebalancebitcrystal");
-                            DecentralizedExchange.command("getbalancebitcrystal");
+                            DecentralizedExchange.command("updatebalance");
+                            DecentralizedExchange.command("getbalance");
                             double bitcoinBalanceTradeAccount = ClientConnection.getBitcoinBalanceTradeAccountEx();
                             double bitcrystalBalanceTradeAccount = ClientConnection.getBitcrystalBalanceTradeAccountEx();
                             String txbtc = ClientConnection.getBitcoinTxSendHashTradeAccountEx();
