@@ -1225,7 +1225,7 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                             partnerBitcrystalBalance.setText("" + bitcrystalBalanceTradeAccount2);
                             partnerLastUsedBitcoinTxidHash.setText(txbtc2);
                             partnerLastUsedBitcrystalTxidHash.setText(txbtcry2);
-                            Thread.currentThread().sleep(60000);
+                            Thread.currentThread().sleep(3000);
                         } catch (Exception ex) {
                         }
                     }

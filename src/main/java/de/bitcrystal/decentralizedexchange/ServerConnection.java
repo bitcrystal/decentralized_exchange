@@ -51,7 +51,6 @@ public class ServerConnection implements Runnable {
     private static Map<String, String> startedtradesaccount = new ConcurrentHashMap<String, String>();
     private static List<String> endedlasttrades = new CopyOnWriteArrayList<String>();
     private final static Map<String, String> lastUsedPubKeys = new ConcurrentHashMap<String, String>();
-    private static Map<String, String> balancedata = new ConcurrentHashMap<String, String>();
     private static Map<String, String> bitcoinbalancedata = new ConcurrentHashMap<String, String>();
     private static Map<String, String> bitcrystalbalancedata = new ConcurrentHashMap<String, String>();
     private static JSONObject serverJSON = null;
@@ -154,8 +153,8 @@ public class ServerConnection implements Runnable {
             this.saveServer();
             return;
         }
-        
-         if (recv.startsWith("updatebalancebitcoin____")) {
+
+        if (recv.startsWith("updatebalancebitcoin____")) {
             DebugServer.println("updatabalancebitcoin open");
             updatebalancebitcoin(recv);
             DebugServer.println("updatebalancebitcoin close");
@@ -170,8 +169,8 @@ public class ServerConnection implements Runnable {
             this.saveServer();
             return;
         }
-        
-         if (recv.startsWith("updatebalancebitcrystal____")) {
+
+        if (recv.startsWith("updatebalancebitcrystal____")) {
             DebugServer.println("updatabalancebitcrystal open");
             updatebalancebitcrystal(recv);
             DebugServer.println("updatebalancebitcrystal close");
@@ -679,7 +678,8 @@ public class ServerConnection implements Runnable {
                 json.put("endtradesme", mapToJSONObject(endtradesme));
                 json.put("endtradesother", mapToJSONObject(endtradesother));
                 json.put("startedtradesaccount", mapToJSONObject(startedtradesaccount));
-                json.put("balancedata", balancedata);
+                json.put("bitcoinbalancedata", mapToJSONObject(bitcoinbalancedata));
+                json.put("bitcrystalbalancedata", mapToJSONObject(bitcrystalbalancedata));
                 DebugServer.println(json.toString());
                 this.client.saveJSON(json, "server", "", "server.properties");
                 serverJSON = json;
@@ -788,6 +788,16 @@ public class ServerConnection implements Runnable {
             } catch (JSONException ex) {
                 startedtradesaccount = new ConcurrentHashMap<String, String>();
             }
+            try {
+                bitcoinbalancedata = jsonObjectToMap(serverJSON.get("bitcoinbalancedata"));
+            } catch (JSONException ex) {
+                bitcoinbalancedata = new ConcurrentHashMap<String, String>();
+            }
+            try {
+                bitcrystalbalancedata = jsonObjectToMap(serverJSON.get("bitcrystalbalancedata"));
+            } catch (JSONException ex) {
+                bitcrystalbalancedata = new ConcurrentHashMap<String, String>();
+            }
         }
     }
 
@@ -816,7 +826,8 @@ public class ServerConnection implements Runnable {
             json.put("endtradesme", mapToJSONObject(endtradesme));
             json.put("endtradesother", mapToJSONObject(endtradesother));
             json.put("startedtradesaccount", mapToJSONObject(startedtradesaccount));
-            json.put("balancedata", mapToJSONObject(balancedata));
+            json.put("bitcoinbalancedata", mapToJSONObject(bitcoinbalancedata));
+            json.put("bitcrystalbalancedata", mapToJSONObject(bitcrystalbalancedata));
             DebugServer.println(json.toString());
             client.saveJSON(json, "server", "", "server.properties");
             serverJSON = json;
@@ -919,12 +930,12 @@ public class ServerConnection implements Runnable {
                 this.client.close();
                 return;
             }
-            if (addresses.containsKey(hostAddress)) {
+            /*if (addresses.containsKey(hostAddress)) {
                 DebugServer.println("serverconnection@174");
                 this.client.sendLight("E_ERROR");
                 this.client.close();
                 return;
-            }
+            }*/
             if (!pubKeysMap.containsKey(hostAddress)) {
                 DebugServer.println("serverconnection@180");
                 this.client.sendLight("E_ERROR");
@@ -1318,8 +1329,8 @@ public class ServerConnection implements Runnable {
         this.client.sendLight("ALL_OK");
         this.client.close();
     }
-    
-     private void updatebalancebitcoin(String recv) {
+
+    private void updatebalancebitcoin(String recv) {
         String[] split = recv.split("____");
         if (split.length != 3) {
             DebugServer.println("@ServerConnection 1307");
@@ -1349,8 +1360,8 @@ public class ServerConnection implements Runnable {
         this.client.send(bitcoinbalancedata.get(split[1]));
         this.client.close();
     }
-    
-     private void updatebalancebitcrystal(String recv) {
+
+    private void updatebalancebitcrystal(String recv) {
         String[] split = recv.split("____");
         if (split.length != 3) {
             DebugServer.println("@ServerConnection 1307");

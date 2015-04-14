@@ -1,4 +1,4 @@
-Apr 11, 2015 2:56:52 AM de.bitcrystal.decentralizedexchange.TCPClient <init>
+Apr 14, 2015 3:12:59 PM de.bitcrystal.decentralizedexchange.TCPClient <init>
 SEVERE: null
 java.net.ConnectException: Connection timed out: connect
 	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
@@ -15,6 +15,6 @@ java.net.ConnectException: Connection timed out: connect
 	at de.bitcrystal.decentralizedexchange.TCPClient.<init>(TCPClient.java:66)
 	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:236)
 	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:95)
-	at de.bitcrystal.decentralizedexchange.DecentralizedExchangeGUI$17$1.run(DecentralizedExchangeGUI.java:1069)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchangeGUI$17$1.run(DecentralizedExchangeGUI.java:1175)
 	at java.lang.Thread.run(Thread.java:722)
 
