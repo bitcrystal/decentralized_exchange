@@ -67,10 +67,11 @@ public class ClientConnection implements Runnable {
         DebugClient.println("@clienctconnection 55");
         this.command = command;
         DebugClient.println("@clienctconnection 57");
-        if(clientJSON==null)
-        this.initClient();
-        else
-        this.saveClient();
+        if (clientJSON == null) {
+            this.initClient();
+        } else {
+            this.saveClient();
+        }
         DebugClient.println("@clienctconnection 59");
 
     }
@@ -198,6 +199,13 @@ public class ClientConnection implements Runnable {
                         return;
                     }
 
+                    if (split[0].equalsIgnoreCase("UPDATEBALANCEBITCOIN2")) {
+                        DebugClient.println("updatebalancebitcoin2 open");
+                        updatebalancebitcoin2();
+                        DebugClient.println("updatebalancebitcoin2 close");
+                        return;
+                    }
+
                     if (split[0].equalsIgnoreCase("GETBALANCEBITCOIN")) {
                         DebugClient.println("getbalancebitcoin open");
                         getbalancebitcoin();
@@ -209,6 +217,13 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("updatebalancebitcrystal open");
                         updatebalancebitcrystal();
                         DebugClient.println("updatebalancebitcrystal close");
+                        return;
+                    }
+
+                    if (split[0].equalsIgnoreCase("UPDATEBALANCEBITCRYSTAL2")) {
+                        DebugClient.println("updatebalancebitcrystal2 open");
+                        updatebalancebitcrystal2();
+                        DebugClient.println("updatebalancebitcrystal2 close");
                         return;
                     }
 
@@ -1183,7 +1198,7 @@ public class ClientConnection implements Runnable {
             double price = 0;
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            double balance = bitcrystalrpc.getBalance(tradeAccount);
+            double balance = bitcrystalrpc.getbalancefrommultisigaddress_multisigex(tradeAccount);
             try {
                 DebugClient.println("clientconnection@566");
                 amount = Double.parseDouble(split[1]);
@@ -1243,7 +1258,7 @@ public class ClientConnection implements Runnable {
             double price = 0;
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
-            double balance = bitcoinrpc.getBalance(tradeAccount);
+            double balance = bitcoinrpc.getbalancefrommultisigaddress_multisigex(tradeAccount);
             try {
                 System.out.println("clientconnection@607");
                 amount = Double.parseDouble(split[1]);
@@ -1469,10 +1484,10 @@ public class ClientConnection implements Runnable {
     }
 
     private void updatebalance() {
-        updatebalancebitcoin();
-        updatebalancebitcrystal();
-        updatebalancebitcoin2();
-        updatebalancebitcrystal2();
+        DecentralizedExchange.command("updatebalancebitcoin");
+        DecentralizedExchange.command("updatebalancebitcrystal");
+        DecentralizedExchange.command("updatebalancebitcoin2");
+        DecentralizedExchange.command("updatebalancebitcrystal2");
     }
 
     private void updatebalancebitcoin() {
@@ -1480,13 +1495,13 @@ public class ClientConnection implements Runnable {
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1483");
+                DebugClient.println("@@ClientConnection 1484");
                 setLastCommandStatus(false);
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1489");
+                DebugClient.println("@@ClientConnection 1491");
                 setLastCommandStatus(false);
                 return;
             }
@@ -1494,17 +1509,19 @@ public class ClientConnection implements Runnable {
             double balance_multisigex = bitcoinrpc.getbalancefrommultisigaddress_multisigex(tradeAccount);
             txsendhashTradeAccountBitcoin = sendedtxidsfrommultisigaddressex_multisigex;
             bitcoinTradeAccountBalance = balance_multisigex;
-            this.saveClient();
             this.server.send("updatebalancebitcoin____" + tradeAccount + "____" + txsendhashTradeAccountBitcoin + ",," + bitcoinTradeAccountBalance);
+            this.server.recv();
+            DebugClient.println("@@ClientConnection 1500 - " + "updatebalancebitcoin____" + tradeAccount + "____" + txsendhashTradeAccountBitcoin + ",," + bitcoinTradeAccountBalance);
             this.server.close();
-            DebugClient.println("@ClientConnection 1500");
+            DebugClient.println("@@ClientConnection 1502");
             this.saveClient();
             setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             this.server.close();
-            DebugClient.println("@ClientConnection 1506");
+            DebugClient.println("@@ClientConnection 1509");
             setLastCommandStatus(false);
+            DebugClient.println("@@ClientConnection 1509 - " + ex.getMessage());
             return;
         }
     }
@@ -1514,13 +1531,13 @@ public class ClientConnection implements Runnable {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1517");
+                DebugClient.println("@@ClientConnection 1519");
                 setLastCommandStatus(false);
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1523");
+                DebugClient.println("@@ClientConnection 1526");
                 setLastCommandStatus(false);
                 return;
             }
@@ -1530,45 +1547,58 @@ public class ClientConnection implements Runnable {
             bitcrystalTradeAccountBalance = balance_multisigex;
             this.saveClient();
             this.server.send("updatebalancebitcrystal____" + tradeAccount + "____" + txsendhashTradeAccountBitcrystal + ",," + bitcrystalTradeAccountBalance);
+            this.server.recv();
+            DebugClient.println("@@ClientConnection 1535 - " + "updatebalancebitcrystal____" + tradeAccount + "____" + txsendhashTradeAccountBitcrystal + ",," + bitcrystalTradeAccountBalance);
             this.server.close();
-            DebugClient.println("@ClientConnection 1534");
+            DebugClient.println("@@ClientConnection 1537");
+            this.saveClient();
             setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             this.server.close();
-            DebugClient.println("@ClientConnection 1539");
+            DebugClient.println("@@ClientConnection 1542");
             setLastCommandStatus(false);
+            DebugClient.println("@@ClientConnection 1542 - " + ex.toString());
             return;
         }
     }
-    
+
     private void updatebalancebitcoin2() {
         try {
             RPCApp bitcoinrpc = RPCApp.getAppOutRPCconf("bitcoinrpc.conf");
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1550");
+                DebugClient.println("@@ClientConnection 1553");
                 setLastCommandStatus(false);
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1556");
+                DebugClient.println("@@ClientConnection 1559");
                 setLastCommandStatus(false);
                 return;
             }
+            DebugClient.println("@@ClientConnection 1567");
             String sendedtxidsfrommultisigaddressex_multisigex = bitcoinrpc.getsendedtxidsfrommultisigaddressex_multisigex(tradeAccount2);
+            DebugClient.println("@@ClientConnection 1568");
             double balance_multisigex = bitcoinrpc.getbalancefrommultisigaddress_multisigex(tradeAccount2);
-            this.saveClient();
+            DebugClient.println("@@ClientConnection 1569");
+            DebugClient.println("@@ClientConnection 1569 - " + "updatebalancebitcoin2____" + tradeAccount2 + "____" + sendedtxidsfrommultisigaddressex_multisigex + ",," + balance_multisigex);
+            DebugClient.println("@@ClientConnection 1570");
             this.server.send("updatebalancebitcoin____" + tradeAccount2 + "____" + sendedtxidsfrommultisigaddressex_multisigex + ",," + balance_multisigex);
+            DebugClient.println("@@ClientConnection 1571");
+            this.server.recv();
+            DebugClient.println("@@ClientConnection 1572");
+            DebugClient.println("@@ClientConnection 1567 - " + "updatebalancebitcoin2____" + tradeAccount2 + "____" + sendedtxidsfrommultisigaddressex_multisigex + ",," + balance_multisigex);
             this.server.close();
-            DebugClient.println("@ClientConnection 1565");
+            DebugClient.println("@@ClientConnection 1569");
             this.saveClient();
             setLastCommandStatus(true);
             return;
         } catch (Exception ex) {
             this.server.close();
-            DebugClient.println("@ClientConnection 1468");
+            DebugClient.println("@@ClientConnection 1576");
+            DebugClient.println("@@ClientConnection 1576 - " + ex.toString());
             setLastCommandStatus(false);
             return;
         }
@@ -1579,35 +1609,38 @@ public class ClientConnection implements Runnable {
             RPCApp bitcrystalrpc = RPCApp.getAppOutRPCconf("bitcrystalrpc.conf");
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1443");
+                DebugClient.println("@@ClientConnection 1586");
                 setLastCommandStatus(false);
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
-                DebugClient.println("@ClientConnection 1449");
+                DebugClient.println("@@ClientConnection 1592");
                 setLastCommandStatus(false);
                 return;
             }
             String sendedtxidsfrommultisigaddressex_multisigex = bitcrystalrpc.getsendedtxidsfrommultisigaddressex_multisigex(tradeAccount2);
             double balance_multisigex = bitcrystalrpc.getbalancefrommultisigaddress_multisigex(tradeAccount2);
-            this.saveClient();
             this.server.send("updatebalancebitcrystal____" + tradeAccount2 + "____" + sendedtxidsfrommultisigaddressex_multisigex + ",," + balance_multisigex);
+            this.server.recv();
+            DebugClient.println("@@ClientConnection 1599 - " + "updatebalancebitcrystal2____" + tradeAccount2 + "____" + sendedtxidsfrommultisigaddressex_multisigex + ",," + balance_multisigex);
             this.server.close();
-            DebugClient.println("@ClientConnection 1596");
+            DebugClient.println("@@ClientConnection 1596");
             setLastCommandStatus(true);
+            this.saveClient();
             return;
         } catch (Exception ex) {
             this.server.close();
-            DebugClient.println("@ClientConnection 1602");
+            DebugClient.println("@@ClientConnection 1607");
+            DebugClient.println("@@ClientConnection 1607 - " + ex.toString());
             setLastCommandStatus(false);
             return;
         }
     }
 
     private void getbalance() {
-        getbalancebitcoin();
-        getbalancebitcrystal();
+        DecentralizedExchange.command("getbalancebitcoin");
+        DecentralizedExchange.command("getbalancebitcrystal");
     }
 
     private void getbalancebitcoin() {
@@ -1616,21 +1649,22 @@ public class ClientConnection implements Runnable {
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1480");
+                DebugClient.println("@@ClientConnection 1632");
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1487");
+                DebugClient.println("@@ClientConnection 1638");
                 return;
             }
+            DebugClient.println("@@ClientConnection 1641" + "getbalancebitcoin____" + tradeAccount2);
             this.server.send("getbalancebitcoin____" + tradeAccount2);
             String recv = this.server.recv();
             if (recv.equalsIgnoreCase("E_ERROR")) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1494");
+                DebugClient.println("@@ClientConnection 1647");
                 return;
             }
             if (!recv.contains(",,")) {
@@ -1642,7 +1676,7 @@ public class ClientConnection implements Runnable {
             if (split.length != 2) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1507");
+                DebugClient.println("@@ClientConnection 1659");
                 return;
             }
             double tradeAccount2BitcoinBalance = 0;
@@ -1653,25 +1687,26 @@ public class ClientConnection implements Runnable {
                     tradeAccount2BitcoinBalance = 0;
                     this.server.close();
                     setLastCommandStatus(false);
-                    DebugClient.println("@ClientConnection 1522");
+                    DebugClient.println("@@ClientConnection 1670");
                     return;
                 }
                 this.server.close();
-                DebugClient.println("@ClientConnection 1526");
+                DebugClient.println("@@ClientConnection 1674");
                 txsendhashTradeAccount2Bitcoin = split[0];
                 bitcoinTradeAccount2Balance = tradeAccount2BitcoinBalance;
                 this.saveClient();
                 setLastCommandStatus(true);
                 return;
             } catch (Exception ex) {
-                DebugClient.println("@ClientConnection 1534");
+                DebugClient.println("@@ClientConnection 1682");
+                DebugClient.println("@@ClientConnection 1682 - " + ex.toString());
                 tradeAccount2BitcoinBalance = 0;
                 this.server.close();
                 setLastCommandStatus(false);
                 return;
             }
         } catch (Exception ex) {
-            DebugClient.println("@ClientConnection 1542");
+            DebugClient.println("@@ClientConnection 1689");
             this.server.close();
             setLastCommandStatus(false);
             return;
@@ -1684,21 +1719,22 @@ public class ClientConnection implements Runnable {
             if (tradeAccount == null || tradeAccount.isEmpty() || tradeAccount2 == null || tradeAccount2.isEmpty()) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1480");
+                DebugClient.println("@@ClientConnection 1702");
                 return;
             }
             if (tradeAccountMultisigAddressBitcoin.isEmpty() || tradeAccountMultisigAddressBitcrystal.isEmpty() || tradeAccount2MultisigAddressBitcoin.isEmpty() || tradeAccount2MultisigAddressBitcrystal.isEmpty()) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1487");
+                DebugClient.println("@@ClientConnection 1709");
                 return;
             }
+            DebugClient.println("@@ClientConnection 1702 " + "getbalancebitcrystal____" + tradeAccount2);
             this.server.send("getbalancebitcrystal____" + tradeAccount2);
             String recv = this.server.recv();
             if (recv.equalsIgnoreCase("E_ERROR")) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1494");
+                DebugClient.println("@@ClientConnection 1718");
                 return;
             }
             if (!recv.contains(",,")) {
@@ -1710,7 +1746,7 @@ public class ClientConnection implements Runnable {
             if (split.length != 2) {
                 this.server.close();
                 setLastCommandStatus(false);
-                DebugClient.println("@ClientConnection 1507");
+                DebugClient.println("@@ClientConnection 1730");
                 return;
             }
             double tradeAccount2BitcrystalBalance = 0;
@@ -1721,25 +1757,26 @@ public class ClientConnection implements Runnable {
                     tradeAccount2BitcrystalBalance = 0;
                     this.server.close();
                     setLastCommandStatus(false);
-                    DebugClient.println("@ClientConnection 1522");
+                    DebugClient.println("@@ClientConnection 1740");
                     return;
                 }
                 this.server.close();
-                DebugClient.println("@ClientConnection 1526");
+                DebugClient.println("@@ClientConnection 1744");
                 txsendhashTradeAccount2Bitcrystal = split[0];
                 bitcrystalTradeAccount2Balance = tradeAccount2BitcrystalBalance;
                 this.saveClient();
                 setLastCommandStatus(true);
                 return;
             } catch (Exception ex) {
-                DebugClient.println("@ClientConnection 1534");
+                DebugClient.println("@@ClientConnection 1751");
                 tradeAccount2BitcrystalBalance = 0;
                 this.server.close();
+                DebugClient.println("@@ClientConnection 1754 - " + ex.getMessage());
                 setLastCommandStatus(false);
                 return;
             }
         } catch (Exception ex) {
-            DebugClient.println("@ClientConnection 1542");
+            DebugClient.println("@@ClientConnection 1759");
             this.server.close();
             setLastCommandStatus(false);
             return;

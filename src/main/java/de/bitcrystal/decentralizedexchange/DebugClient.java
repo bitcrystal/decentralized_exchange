@@ -6,8 +6,6 @@ package de.bitcrystal.decentralizedexchange;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,134 +16,104 @@ public class DebugClient {
     private static boolean debug = true;
     private static boolean addlines = false;
     private static PrintStream out = System.out;
-    private static List<String> list = new CopyOnWriteArrayList<String>();
     private static boolean useJOption = true;
+    private static String startsWithCondition="@@@";
+    private static boolean isInit = false;
+    private static Debugger debugger=null;
 
     public static void println(String string) {
-        if (debug && !useJOption) {
-            out.println(string);
-        } else if (debug && useJOption) {
-            JOptionPane.showMessageDialog(null, string);
-        }
-        if (addlines) {
-            list.add(string);
-        }
-        return;
+        init();
+        debugger.println(string);
     }
 
     public static void println(int length) {
-        if (debug && !useJOption) {
-            out.println("" + length);
-        } else if (debug && useJOption) {
-            JOptionPane.showMessageDialog(null, "" + length);
-        }
-        if (addlines) {
-            list.add("" + length);
-        }
-        return;
+        init();
+        debugger.println(length);
     }
 
     public static void println(double length) {
-        if (debug && !useJOption) {
-            out.println("" + length);
-        } else if (debug && useJOption) {
-            JOptionPane.showMessageDialog(null, "" + length);
-        }
-        if (addlines) {
-            list.add("" + length);
-        }
-        return;
+        init();
+        debugger.println(length);
+    }
+    
+    public static void setStartsWithCondition(String string)
+    {
+        init();
+        debugger.setStartsWithCondition(string);
+    }
+    
+    public static void resetStartsWithCondition()
+    {
+        init();
+        debugger.resetStartsWithCondition();
+    }
+    
+    public static String getStartsWithCondition()
+    {
+        init();
+        return debugger.getStartsWithCondition();
     }
 
     public static boolean containsDebugElement(String string) {
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        return list.contains(string);
+        init();
+        return debugger.containsDebugElement(string);
     }
 
     public static void clearDebugElements() {
-        list.clear();
+        init();
+        debugger.clearDebugElements();
     }
 
     public static boolean lastDebugElementEquals(String string) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        String get = list.get(list.size() - 1);
-        return get.equals(string);
+        init();
+        return debugger.lastDebugElementEquals(string);
     }
 
     public static boolean lastDebugElementEqualsIgnoreCase(String string) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        String get = list.get(list.size() - 1);
-        return get.equalsIgnoreCase(string);
+        init();
+        return debugger.lastDebugElementEqualsIgnoreCase(string);
     }
 
     public static boolean lastDebugElementStartsWith(String string) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        String get = list.get(list.size() - 1);
-        return get.startsWith(string);
+        init();
+        return debugger.lastDebugElementStartsWith(string);
     }
 
     public static boolean lastDebugElementEndsWith(String string) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        String get = list.get(list.size() - 1);
-        return get.endsWith(string);
+        init();
+        return debugger.lastDebugElementEndsWith(string);
     }
 
     public static boolean lastDebugElementContains(String string) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        String get = list.get(list.size() - 1);
-        return get.contains(string);
+        init();
+        return debugger.lastDebugElementContains(string);
     }
 
     public static boolean debugElementsEquals(List<String> list2) {
-        if (list2 == null || list2.isEmpty() || list2.size() != list.size()) {
-            return false;
-        }
-        int size = list2.size();
-        boolean set = false;
-        for (int i = 0; i < size; i++) {
-            set = list2.get(i).equals(list.get(i));
-            if (!set) {
-                return false;
-            }
-        }
-        return true;
+        init();
+        return debugger.debugElementsEquals(list2);
     }
 
     public static String getLastDebugElement() {
-        if (list == null || list.isEmpty()) {
-            return "";
-        }
-        return list.get(list.size() - 1);
+        init();
+        return debugger.getLastDebugElement();
     }
 
     public static boolean hasLastDebugElement() {
-        return !getLastDebugElement().isEmpty();
+        init();
+        return debugger.hasLastDebugElement();
+    }
+
+    private static void init() {
+        if (isInit) {
+            return;
+        }
+        debugger = new Debugger();
+        debugger.setAddLines(addlines);
+        debugger.setDebug(debug);
+        debugger.setOut(out);
+        debugger.setUseJOption(useJOption);
+        debugger.setStartsWithCondition(startsWithCondition);
+        isInit = true;
     }
 }

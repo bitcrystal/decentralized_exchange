@@ -69,6 +69,7 @@ public class ServerConnection implements Runnable {
         String recv = "";
         try {
             recv = this.client.recv();
+            DebugServer.println("@@ServerConnection recv - " + recv);
         } catch (Exception ex) {
             recv = "";
         }
@@ -300,12 +301,12 @@ public class ServerConnection implements Runnable {
 
         String get3 = ipsTradeAccounts.get(tradeAccount);
         String get4 = ipsTradeAccounts2.get(tradeAccount2);
-        if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
+        /*  if ((!get3.equals(hostAddress) && !get4.equals(hostAddress)) || (get3.equals(hostAddress) && get4.equals(hostAddress))) {
             DebugServer.println("serverconnection@568");
             this.client.sendLight("E_ERROR");
             this.client.close();
             return;
-        }
+        }*/
         String[] tradeAccountAddresses = split[3].split(",");
         String[] tradeWithAccountAddresses = split[4].split(",");
         String[] tradeAccount2Addresses = split2[3].split(",");
@@ -931,10 +932,10 @@ public class ServerConnection implements Runnable {
                 return;
             }
             /*if (addresses.containsKey(hostAddress)) {
-                DebugServer.println("serverconnection@174");
-                this.client.sendLight("E_ERROR");
-                this.client.close();
-                return;
+            DebugServer.println("serverconnection@174");
+            this.client.sendLight("E_ERROR");
+            this.client.close();
+            return;
             }*/
             if (!pubKeysMap.containsKey(hostAddress)) {
                 DebugServer.println("serverconnection@180");
@@ -1333,30 +1334,35 @@ public class ServerConnection implements Runnable {
     private void updatebalancebitcoin(String recv) {
         String[] split = recv.split("____");
         if (split.length != 3) {
-            DebugServer.println("@ServerConnection 1307");
+            DebugServer.println("@@ServerConnection 1336");
+            this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        DebugServer.println("@ServerConnection 1311");
+        DebugServer.println("@@ServerConnection 1340");
+        this.client.send("ALL_OK");
         this.client.close();
+        DebugServer.println("@@ServerConnection 1342 - " + split[1]);
+        DebugServer.println("@@ServerConnection 1343 - " + split[2]);
         bitcoinbalancedata.put(split[1], split[2]);
     }
 
     private void getbalancebitcoin(String recv) {
         String[] split = recv.split("____");
         if (split.length != 2) {
-            DebugServer.println("@ServerConnection 1318");
+            DebugServer.println("@@ServerConnection 1350");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
         if (!bitcoinbalancedata.containsKey(split[1])) {
-            DebugServer.println("@ServerConnection 1324");
+            DebugServer.println("@@ServerConnection 1357");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        DebugServer.println("@ServerConnection 1329");
+        DebugServer.println("@@ServerConnection 1362");
+        DebugServer.println("@@ServerConnection 1362 - " + split[1]);
         this.client.send(bitcoinbalancedata.get(split[1]));
         this.client.close();
     }
@@ -1364,30 +1370,35 @@ public class ServerConnection implements Runnable {
     private void updatebalancebitcrystal(String recv) {
         String[] split = recv.split("____");
         if (split.length != 3) {
-            DebugServer.println("@ServerConnection 1307");
+            DebugServer.println("@@ServerConnection 1370");
+            this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        DebugServer.println("@ServerConnection 1311");
+        DebugServer.println("@@ServerConnection 1375");
+        this.client.send("ALL_OK");
         this.client.close();
+        DebugServer.println("@@ServerConnection 1377 - " + split[1]);
+        DebugServer.println("@@ServerConnection 1378 - " + split[2]);
         bitcrystalbalancedata.put(split[1], split[2]);
     }
 
     private void getbalancebitcrystal(String recv) {
         String[] split = recv.split("____");
         if (split.length != 2) {
-            DebugServer.println("@ServerConnection 1318");
+            DebugServer.println("@@ServerConnection 1384");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
         if (!bitcrystalbalancedata.containsKey(split[1])) {
-            DebugServer.println("@ServerConnection 1324");
+            DebugServer.println("@@ServerConnection 1390");
             this.client.send("E_ERROR");
             this.client.close();
             return;
         }
-        DebugServer.println("@ServerConnection 1329");
+        DebugServer.println("@ServerConnection 1395");
+        DebugServer.println("@@ServerConnection 1396 - " + split[1]);
         this.client.send(bitcrystalbalancedata.get(split[1]));
         this.client.close();
     }
