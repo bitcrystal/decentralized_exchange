@@ -233,6 +233,13 @@ public class ClientConnection implements Runnable {
                         DebugClient.println("getbalancebitcrystal close");
                         return;
                     }
+
+                    if (split[0].equalsIgnoreCase("TRADERESET")) {
+                        DebugClient.println("tradereset open");
+                        tradereset();
+                        DebugClient.println("tradereset close");
+                        return;
+                    }
                 }
                 break;
 
@@ -618,6 +625,21 @@ public class ClientConnection implements Runnable {
         this.server.close();
         isTradeAborted = true;
         setLastCommandStatus(true);
+        return;
+    }
+
+    private void tradereset() {
+        this.server.close();
+        tradebtc2btcry = "";
+        tradebtcry2btc = "";
+        isEndedMe = false;
+        isEndedOther = false;
+        isSynced = false;
+        isEnded = false;
+        isStarted = false;
+        isTradeAborted = true;
+        setLastCommandStatus(true);
+        this.saveClient();
         return;
     }
 

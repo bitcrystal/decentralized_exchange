@@ -62,3 +62,9 @@ Caused by: java.net.ConnectException: Connection refused: connect
 	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:127)
 	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
 	... 16 more
+2015-04-15 19:00:18,155 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-15 19:00:20,767 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:18332/
+2015-04-15 19:00:22,239 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1CXJ7D2rQG4V5yiLN9vKWw7JtBb2VnR2B4","error":null,"id":null}
+2015-04-15 19:00:22,466 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"03a90d8e72807276900743fd7f2e9274778bd7f7c47b893e5c2da20e3befa474ea","error":null,"id":null}
+2015-04-15 19:00:22,746 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzUDUSTGf1rPNUjYeLANJ9tvaUncm85oFkYNj6LpaXa7GYM8nyT6","error":null,"id":null}
+2015-04-15 19:00:23,084 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":null,"error":null,"id":null}

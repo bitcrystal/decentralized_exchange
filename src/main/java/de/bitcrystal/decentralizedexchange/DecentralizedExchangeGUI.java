@@ -118,12 +118,17 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        yourLastUsedBitcoinTxidHash = new javax.swing.JTextField();
-        yourLastUsedBitcrystalTxidHash = new javax.swing.JTextField();
-        partnerLastUsedBitcoinTxidHash = new javax.swing.JTextField();
-        partnerLastUsedBitcrystalTxidHash = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        yourLastUsedBitcoinTxidHash = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        partnerLastUsedBitcoinTxidHash = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        partnerLastUsedBitcrystalTxidHash = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        yourLastUsedBitcrystalTxidHash = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -269,30 +274,30 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(partnerBitcoinBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(partnerBitcoinBalanceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(partnerDepositBitcoinAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(partnerDepositBitcoinAddressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(yourDepositBitcoinAddressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(currentTradeAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(getNewCurrentTradeAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(yourBitcoinBalanceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(yourDepositBitcoinAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(yourBitcoinBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+                    .addComponent(partnerBitcoinBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(partnerBitcoinBalanceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(partnerDepositBitcoinAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(partnerDepositBitcoinAddressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(yourDepositBitcoinAddressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(currentTradeAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(getNewCurrentTradeAddressButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(yourBitcoinBalanceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(yourDepositBitcoinAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(yourBitcoinBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(partnerDepositBitcrystalAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(partnerDepositBitcrystalAddressLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(yourDepositBitcrystalAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(yourDepositBitcrystalAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(yourBitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(yourBitcrystalBalanceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(partnerBitcrystalBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addComponent(partnerBitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                    .addComponent(partnerDepositBitcrystalAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(partnerDepositBitcrystalAddressLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(currentTradeWithAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(currentTradeWithAddressButton, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(yourDepositBitcrystalAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(yourDepositBitcrystalAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(yourBitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(yourBitcrystalBalanceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(partnerBitcrystalBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(partnerBitcrystalBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -342,7 +347,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(partnerBitcoinBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(partnerBitcrystalBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Main", jPanel2);
@@ -411,7 +416,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addComponent(startTradeBuyBtcrySellBtc)
-                .addContainerGap(424, Short.MAX_VALUE))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BTCRY/BTC", jPanel3);
@@ -484,7 +489,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(StartTradeBuyBtcSellBitcrystal)
-                .addContainerGap(434, Short.MAX_VALUE))
+                .addContainerGap(447, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BTC/BTCRY", jPanel4);
@@ -497,17 +502,40 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
 
         jLabel22.setText("Partner Last Used Bitcrystal Txid Hash");
 
+        jLabel23.setText("With the command decodetxidshash <txid hash> in the debug console on the");
+
+        jLabel24.setText(" bitcoin/bitcrystal wallet you can see the last used txids from the last sended transactions.");
+
+        yourLastUsedBitcoinTxidHash.setColumns(20);
         yourLastUsedBitcoinTxidHash.setEditable(false);
+        yourLastUsedBitcoinTxidHash.setRows(5);
+        yourLastUsedBitcoinTxidHash.setToolTipText("");
+        yourLastUsedBitcoinTxidHash.setOpaque(false);
+        jScrollPane2.setViewportView(yourLastUsedBitcoinTxidHash);
 
-        yourLastUsedBitcrystalTxidHash.setEditable(false);
-
+        partnerLastUsedBitcoinTxidHash.setColumns(20);
         partnerLastUsedBitcoinTxidHash.setEditable(false);
+        partnerLastUsedBitcoinTxidHash.setLineWrap(true);
+        partnerLastUsedBitcoinTxidHash.setRows(5);
+        partnerLastUsedBitcoinTxidHash.setAutoscrolls(false);
+        partnerLastUsedBitcoinTxidHash.setDoubleBuffered(true);
+        partnerLastUsedBitcoinTxidHash.setDragEnabled(true);
+        partnerLastUsedBitcoinTxidHash.setOpaque(false);
+        jScrollPane3.setViewportView(partnerLastUsedBitcoinTxidHash);
 
+        partnerLastUsedBitcrystalTxidHash.setColumns(20);
         partnerLastUsedBitcrystalTxidHash.setEditable(false);
+        partnerLastUsedBitcrystalTxidHash.setRows(5);
+        partnerLastUsedBitcrystalTxidHash.setOpaque(false);
+        jScrollPane4.setViewportView(partnerLastUsedBitcrystalTxidHash);
 
-        jLabel23.setText("With the command decodetxids <txid hash> in the debug console on the  bitcoin/bitcrystal wallet you can see the last");
-
-        jLabel24.setText("used txids from the last sended transactions.");
+        yourLastUsedBitcrystalTxidHash.setColumns(20);
+        yourLastUsedBitcrystalTxidHash.setEditable(false);
+        yourLastUsedBitcrystalTxidHash.setRows(5);
+        yourLastUsedBitcrystalTxidHash.setDoubleBuffered(true);
+        yourLastUsedBitcrystalTxidHash.setDragEnabled(true);
+        yourLastUsedBitcrystalTxidHash.setOpaque(false);
+        jScrollPane1.setViewportView(yourLastUsedBitcrystalTxidHash);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -517,49 +545,59 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(490, Short.MAX_VALUE))
+                        .addGap(549, 549, 549))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addContainerGap(463, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addContainerGap(429, Short.MAX_VALUE))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
+                        .addGap(1, 1, 1))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                        .addGap(180, 180, 180))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                            .addComponent(partnerLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(partnerLastUsedBitcoinTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yourLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yourLastUsedBitcoinTxidHash, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE))
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(7, 7, 7)
                 .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(yourLastUsedBitcoinTxidHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
-                .addComponent(jLabel20)
                 .addGap(18, 18, 18)
-                .addComponent(yourLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel20)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel21)
-                .addGap(27, 27, 27)
-                .addComponent(partnerLastUsedBitcoinTxidHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel22)
-                .addGap(40, 40, 40)
-                .addComponent(partnerLastUsedBitcrystalTxidHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel24)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addGap(387, 387, 387)
+                .addComponent(jLabel25)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Log", jPanel7);
@@ -602,7 +640,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addGap(22, 22, 22)
                 .addComponent(jLabel16)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("About", jPanel5);
@@ -614,14 +652,14 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
@@ -646,16 +684,16 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE))
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 327, Short.MAX_VALUE)
+                    .addGap(0, 345, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 328, Short.MAX_VALUE)))
+                    .addGap(0, 346, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -666,9 +704,9 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 301, Short.MAX_VALUE)
+                    .addGap(0, 307, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 301, Short.MAX_VALUE)))
+                    .addGap(0, 308, Short.MAX_VALUE)))
         );
 
         pack();
@@ -683,6 +721,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 JOptionPane.showMessageDialog(null, getWaitMessage());
                 return;
             }
+            DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
             String buyBitcoinText = buyBitcoin.getText();
@@ -816,6 +855,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
                 JOptionPane.showMessageDialog(null, getWaitMessage());
                 return;
             }
+            DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
             String buyBitcrystalText = buyBitcrystal.getText();
@@ -1329,6 +1369,7 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1343,6 +1384,10 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField partnerBitcoinBalance;
     private javax.swing.JLabel partnerBitcoinBalanceLabel;
@@ -1352,8 +1397,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel partnerDepositBitcoinAddressLabel;
     private javax.swing.JTextField partnerDepositBitcrystalAddress;
     private javax.swing.JLabel partnerDepositBitcrystalAddressLabel;
-    private javax.swing.JTextField partnerLastUsedBitcoinTxidHash;
-    private javax.swing.JTextField partnerLastUsedBitcrystalTxidHash;
+    private javax.swing.JTextArea partnerLastUsedBitcoinTxidHash;
+    private javax.swing.JTextArea partnerLastUsedBitcrystalTxidHash;
     private javax.swing.JTextField sellBitcoin;
     private javax.swing.JTextField sellBitcrystal;
     private javax.swing.JButton startTradeBuyBtcrySellBtc;
@@ -1365,7 +1410,7 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel yourDepositBitcoinAddressLabel;
     private javax.swing.JTextField yourDepositBitcrystalAddress;
     private javax.swing.JLabel yourDepositBitcrystalAddressLabel;
-    private javax.swing.JTextField yourLastUsedBitcoinTxidHash;
-    private javax.swing.JTextField yourLastUsedBitcrystalTxidHash;
+    private javax.swing.JTextArea yourLastUsedBitcoinTxidHash;
+    private javax.swing.JTextArea yourLastUsedBitcrystalTxidHash;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.071" errors="0" skipped="0" tests="1" name="de.bitcrystal.decentralizedexchange.AppTest">
+<testsuite failures="0" time="0.056" errors="0" skipped="0" tests="1" name="de.bitcrystal.decentralizedexchange.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre\bin"/>
@@ -20,7 +20,7 @@
     <property name="basedir" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange"/>
     <property name="java.endorsed.dirs" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre\lib\endorsed"/>
     <property name="os.arch" value="x86"/>
-    <property name="surefire.real.class.path" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter3778879267707391435.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter3750345482419876166.jar"/>
     <property name="java.io.tmpdir" value="C:\Users\ABC\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="C:\Program Files (x86)\Java\jdk1.7.0_10\jre"/>
-    <property name="sun.java.command" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter3778879267707391435.jar C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire5681813056541872270tmp C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire5646141389885538912tmp"/>
+    <property name="sun.java.command" value="C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefirebooter3750345482419876166.jar C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire6477274121222614918tmp C:\Users\ABC\Documents\NetBeansProjects\DecentralizedExchange\target\surefire\surefire8585768976434323483tmp"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="de"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,5 +61,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.013" classname="de.bitcrystal.decentralizedexchange.AppTest" name="testApp"/>
+  <testcase time="0.002" classname="de.bitcrystal.decentralizedexchange.AppTest" name="testApp"/>
 </testsuite>
