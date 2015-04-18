@@ -100,6 +100,90 @@ public class TCPClientSecurity {
         return this.tcpClient;
     }
 
+    public static String[] getSplit(String string, int length) {
+        int sl = string.length() / length;
+        int sb = string.length() % length;
+        int stringsLength = sl;
+        if (sb != 0) {
+            stringsLength++;
+        }
+        String[] strings = new String[stringsLength];
+        int i = 0;
+        for (i = 0; i < sl; i++) {
+            strings[i] = string.substring(i * length, (i + 1) * length);
+        }
+        if (stringsLength > sl) {
+            strings[i] = string.substring(i * length, string.length());
+        }
+        return strings;
+    }
+
+    public void sendSplitCool(String string) {
+        String[] split = getSplit(string, getPacketLengthCool());
+        int length = split.length;
+        this.sendSecurityCool("" + length);
+        for (int i = 0; i < length; i++) {
+            this.sendSecurityCool(split[i]);
+        }
+    }
+
+    public void sendSplitCoolLight(String string) {
+        String[] split = getSplit(string, getPacketLengthCoolLight());
+        int length = split.length;
+        this.sendSecurityCoolLight("" + length);
+        for (int i = 0; i < length; i++) {
+            this.sendSecurityCoolLight(split[i]);
+        }
+    }
+
+    public String recvSplitCool() {
+        String recvSecurityCool = this.recvSecurityCool();
+        int length = 0;
+        try {
+            length = Integer.parseInt(recvSecurityCool);
+        } catch (Exception ex) {
+            length = 0;
+        }
+        if (length == 0) {
+            return new String();
+        }
+
+        String[] split = new String[length];
+        for (int i = 0; i < length; i++) {
+            String recvSecurityCool1 = this.recvSecurityCool();
+            split[i] = recvSecurityCool1;
+        }
+        String n = "";
+        for (int i = 0; i < length; i++) {
+            n += split[i];
+        }
+        return n;
+    }
+
+    public String recvSplitCoolLight() {
+        String recvSecurityCoolLight = this.recvSecurityCoolLight();
+        int length = 0;
+        try {
+            length = Integer.parseInt(recvSecurityCoolLight);
+        } catch (Exception ex) {
+            length = 0;
+        }
+        if (length == 0) {
+            return new String();
+        }
+
+        String[] split = new String[length];
+        for (int i = 0; i < length; i++) {
+            String recvSecurityCoolLight1 = this.recvSecurityCoolLight();
+            split[i] = recvSecurityCoolLight1;
+        }
+        String n = "";
+        for (int i = 0; i < length; i++) {
+            n += split[i];
+        }
+        return n;
+    }
+
     private String encryptedString(String string) {
         if (string == null || string.isEmpty()) {
             return "";
@@ -447,20 +531,20 @@ public class TCPClientSecurity {
     }
 
     public void send(String string) {
-        this.sendSecurityCool(string);
+        this.sendSplitCool(string);
     }
 
     public String recv() {
-        String recv = this.recvSecurityCool();
+        String recv = this.recvSplitCool();
         return recv;
     }
 
     public void sendLight(String string) {
-        this.sendSecurityCoolLight(string);
+        this.sendSplitCoolLight(string);
     }
 
     public String recvLight() {
-        String recv = this.recvSecurityCoolLight();
+        String recv = this.recvSplitCoolLight();
         return recv;
     }
 
@@ -503,11 +587,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityCool(String string) {
-        this.tcpClient.send(encodeStringCool(string), getPacketLengthCool());
+        this.tcpClient.send(encodeStringCool(string), 40000);
     }
 
     public String recvSecurityCool() {
-        String recv = this.tcpClient.recv(getPacketLengthCool());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return "";
         }
@@ -515,11 +599,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityCoolLight(String string) {
-        this.tcpClient.send(encodeStringCoolLight(string), getPacketLengthCoolLight());
+        this.tcpClient.send(encodeStringCoolLight(string), 40000);
     }
 
     public String recvSecurityCoolLight() {
-        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return "";
         }
@@ -552,11 +636,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityWalletCool(String string) {
-        this.tcpClient.send(encodeWalletStringCool(string), getPacketLengthCool());
+        this.tcpClient.send(encodeWalletStringCool(string), 40000);
     }
 
     public String recvSecurityWalletCool() {
-        String recv = this.tcpClient.recv(getPacketLengthCool());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return "";
         }
@@ -564,11 +648,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityWalletCoolLight(String string) {
-        this.tcpClient.send(encodeWalletStringCoolLight(string), getPacketLengthCoolLight());
+        this.tcpClient.send(encodeWalletStringCoolLight(string), 40000);
     }
 
     public String recvSecurityWalletCoolLight() {
-        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return "";
         }
@@ -633,12 +717,12 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectCool(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeCool(jsonObject), getPacketLengthCool());
+        this.tcpClient.send(encodeCool(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectCool() {
 
-        String string = this.tcpClient.recv(getPacketLengthCool());
+        String string = this.tcpClient.recv(40000);
         if (string == null) {
             return null;
         }
@@ -648,11 +732,11 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectWalletCool(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeWalletCool(jsonObject), getPacketLengthCool());
+        this.tcpClient.send(encodeWalletCool(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectWalletCool() {
-        String recv = this.tcpClient.recv(getPacketLengthCool());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return null;
         }
@@ -661,12 +745,12 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectCoolLight(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeCoolLight(jsonObject), getPacketLengthCoolLight());
+        this.tcpClient.send(encodeCoolLight(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectCoolLight() {
 
-        String string = this.tcpClient.recv(getPacketLengthCoolLight());
+        String string = this.tcpClient.recv(40000);
         if (string == null) {
             return null;
         }
@@ -676,11 +760,11 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectWalletCoolLight(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeWalletCoolLight(jsonObject), getPacketLengthCoolLight());
+        this.tcpClient.send(encodeWalletCoolLight(jsonObject), 40000);
     }
 
     public JSONObject recvJSONObjectWalletCoolLight() {
-        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
+        String recv = this.tcpClient.recv(40000);
         if (recv == null) {
             return null;
         }
