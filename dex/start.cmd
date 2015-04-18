@@ -1,1 +1,0 @@
-jre\bin\java.exe -jar DecentralizedExchange.jar

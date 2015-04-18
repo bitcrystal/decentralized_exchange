@@ -13,13 +13,14 @@ import java.util.List;
  */
 public class DebugClient {
 
-    private static boolean debug = true;
-    private static boolean addlines = false;
+    private static boolean debug = false;
+    private static boolean addlines = true;
     private static PrintStream out = System.out;
-    private static boolean useJOption = true;
-    private static String startsWithCondition="@@@";
+    private static boolean useJOption = false;
+    private static String startsWithCondition = "";
     private static boolean isInit = false;
-    private static Debugger debugger=null;
+    private static Debugger debugger = null;
+    private static long count = 0L;
 
     public static void println(String string) {
         init();
@@ -35,21 +36,29 @@ public class DebugClient {
         init();
         debugger.println(length);
     }
-    
-    public static void setStartsWithCondition(String string)
-    {
+
+    public static void printList() {
+        init();
+        debugger.printList();
+    }
+
+    public static void printListToFile() {
+        init();
+        debugger.printListToFile("client" + "."+count + ".log");
+        count++;
+    }
+
+    public static void setStartsWithCondition(String string) {
         init();
         debugger.setStartsWithCondition(string);
     }
-    
-    public static void resetStartsWithCondition()
-    {
+
+    public static void resetStartsWithCondition() {
         init();
         debugger.resetStartsWithCondition();
     }
-    
-    public static String getStartsWithCondition()
-    {
+
+    public static String getStartsWithCondition() {
         init();
         return debugger.getStartsWithCondition();
     }

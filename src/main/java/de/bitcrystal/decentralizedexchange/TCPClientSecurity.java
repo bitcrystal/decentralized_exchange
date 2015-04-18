@@ -38,6 +38,8 @@ public class TCPClientSecurity {
     private TCPClient tcpClient;
     private String password;
     private String salt;
+    private int packetLengthCool = -1;
+    private int packetLengthCoolLight = -1;
 
     public TCPClientSecurity(int port) {
         this.tcpClient = new TCPClient(port);
@@ -492,7 +494,7 @@ public class TCPClientSecurity {
     }
 
     public String recvSecurityLight() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(500);
         if (recv == null) {
             return "";
         }
@@ -501,11 +503,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityCool(String string) {
-        this.tcpClient.send(encodeStringCool(string), 40000);
+        this.tcpClient.send(encodeStringCool(string), getPacketLengthCool());
     }
 
     public String recvSecurityCool() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCool());
         if (recv == null) {
             return "";
         }
@@ -513,11 +515,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityCoolLight(String string) {
-        this.tcpClient.send(encodeStringCoolLight(string), 40000);
+        this.tcpClient.send(encodeStringCoolLight(string), getPacketLengthCoolLight());
     }
 
     public String recvSecurityCoolLight() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
         if (recv == null) {
             return "";
         }
@@ -550,11 +552,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityWalletCool(String string) {
-        this.tcpClient.send(encodeWalletStringCool(string), 40000);
+        this.tcpClient.send(encodeWalletStringCool(string), getPacketLengthCool());
     }
 
     public String recvSecurityWalletCool() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCool());
         if (recv == null) {
             return "";
         }
@@ -562,11 +564,11 @@ public class TCPClientSecurity {
     }
 
     public void sendSecurityWalletCoolLight(String string) {
-        this.tcpClient.send(encodeWalletStringCoolLight(string), 40000);
+        this.tcpClient.send(encodeWalletStringCoolLight(string), getPacketLengthCoolLight());
     }
 
     public String recvSecurityWalletCoolLight() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
         if (recv == null) {
             return "";
         }
@@ -631,12 +633,12 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectCool(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeCool(jsonObject), 40000);
+        this.tcpClient.send(encodeCool(jsonObject), getPacketLengthCool());
     }
 
     public JSONObject recvJSONObjectCool() {
 
-        String string = this.tcpClient.recv(40000);
+        String string = this.tcpClient.recv(getPacketLengthCool());
         if (string == null) {
             return null;
         }
@@ -646,11 +648,11 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectWalletCool(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeWalletCool(jsonObject), 40000);
+        this.tcpClient.send(encodeWalletCool(jsonObject), getPacketLengthCool());
     }
 
     public JSONObject recvJSONObjectWalletCool() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCool());
         if (recv == null) {
             return null;
         }
@@ -659,12 +661,12 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectCoolLight(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeCoolLight(jsonObject), 40000);
+        this.tcpClient.send(encodeCoolLight(jsonObject), getPacketLengthCoolLight());
     }
 
     public JSONObject recvJSONObjectCoolLight() {
 
-        String string = this.tcpClient.recv(40000);
+        String string = this.tcpClient.recv(getPacketLengthCoolLight());
         if (string == null) {
             return null;
         }
@@ -674,11 +676,11 @@ public class TCPClientSecurity {
 
     public void sendJSONObjectWalletCoolLight(JSONObject jsonObject) {
 
-        this.tcpClient.send(encodeWalletCoolLight(jsonObject), 40000);
+        this.tcpClient.send(encodeWalletCoolLight(jsonObject), getPacketLengthCoolLight());
     }
 
     public JSONObject recvJSONObjectWalletCoolLight() {
-        String recv = this.tcpClient.recv(40000);
+        String recv = this.tcpClient.recv(getPacketLengthCoolLight());
         if (recv == null) {
             return null;
         }
@@ -707,6 +709,14 @@ public class TCPClientSecurity {
 
     public InputStream getInputStream() {
         return this.tcpClient.getInputStream();
+    }
+
+    public BitcrystalOutputStream getBitcrystalOutputStream() {
+        return this.tcpClient.getBitcrystalOutputStream();
+    }
+
+    public BitcrystalInputStream getBitcrystalInputStream() {
+        return this.tcpClient.getBitcrystalInputStream();
     }
 
     private void init() {
@@ -1089,5 +1099,33 @@ public class TCPClientSecurity {
 
     public String load(String key, String path, String filename) {
         return loadStringCool(key, path, filename);
+    }
+
+    public int getPacketLengthCool() {
+        if (packetLengthCool == -1) {
+            if (BitCrystalJSON.isNormalCool()) {
+                packetLengthCool = 300;
+            } else if (BitCrystalJSON.isFastCool()) {
+                packetLengthCool = 300;
+            } else if (BitCrystalJSON.isFastestCool()) {
+                packetLengthCool = 300;
+            } else {
+                packetLengthCool = 300;
+            }
+        }
+        return packetLengthCool;
+    }
+
+    public int getPacketLengthCoolLight() {
+        if (packetLengthCoolLight == -1) {
+            if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
+                packetLengthCoolLight = 300;
+            } else if (BitCrystalJSON.isFastestCool()) {
+                packetLengthCoolLight = 300;
+            } else {
+                packetLengthCoolLight = 300;
+            }
+        }
+        return packetLengthCoolLight;
     }
 }

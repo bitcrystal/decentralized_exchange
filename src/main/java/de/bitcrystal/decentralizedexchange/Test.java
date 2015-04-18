@@ -49,7 +49,7 @@ public class Test {
                         }
                         Socket accept = serverSocket.accept();
                         TCPClientSecurity tCPClientSecurity = new TCPClientSecurity(accept);
-                        String y = tCPClientSecurity.recvSecurity();
+                        String y = tCPClientSecurity.getBitcrystalInputStream().readBuffer(5);
                         System.out.println(y);
                     } catch (IOException ex) {
                         Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +59,7 @@ public class Test {
             Socket socket = new Socket("127.0.0.1", 5674);
 
             TCPClientSecurity tCPClientSecurity = new TCPClientSecurity(socket);
-            tCPClientSecurity.sendSecurity(x);
+            tCPClientSecurity.getBitcrystalOutputStream().writeBuffer("cool was", 5);
             System.out.println(x);
         } catch (Exception ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);

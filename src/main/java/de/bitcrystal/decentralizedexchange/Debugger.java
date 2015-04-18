@@ -4,8 +4,14 @@
  */
 package de.bitcrystal.decentralizedexchange;
 
+import de.demonbindestrichcraft.lib.bukkit.wbukkitlib.common.files.ConcurrentConfig;
+import java.io.File;
 import java.io.PrintStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,94 +27,78 @@ public final class Debugger {
     private List<String> list;
     private boolean useJOption;
     private String startsWithCondition;
-    
-    public Debugger()
-    {
-        this.debug=true;
-        this.addlines=true;
-        this.out=System.out;
-        this.list=new CopyOnWriteArrayList<String>();
-        this.useJOption=false;
-        this.startsWithCondition="";
-    }
-    
-    public boolean getDebug()
-    {
-        return debug;
-    }
-    
-    public boolean getAddLines()
-    {
-        return addlines;
-    }
-    
-    public PrintStream getOut()
-    {
-        return out;
-    }
-    
-    public List<String> getList()
-    {
-        return list;
-    }
-    
-    public boolean getUseJOption()
-    {
-        return useJOption;
-    }
-    
-    public String getStartsWithCondition()
-    {
-        return startsWithCondition;
-    }
-    
-    public boolean hasStartsWithCondition()
-    {
-        return startsWithCondition!=null&&!startsWithCondition.isEmpty();
-    }
-    
-    public void setDebug(boolean set)
-    {
-        this.debug=set;
+
+    public Debugger() {
+        this.debug = true;
+        this.addlines = true;
+        this.out = System.out;
+        this.list = new CopyOnWriteArrayList<String>();
+        this.useJOption = false;
+        this.startsWithCondition = "";
     }
 
-    public void setAddLines(boolean set)
-    {
-        this.addlines=set;
+    public boolean getDebug() {
+        return debug;
     }
-    
-    public void setOut(PrintStream out)
-    {
-        this.out=out;
+
+    public boolean getAddLines() {
+        return addlines;
     }
-    
-    public void setList(List<String> list)
-    {
-        this.list=list;
+
+    public PrintStream getOut() {
+        return out;
     }
-    
-    public void setUseJOption(boolean set)
-    {
-        this.useJOption=set;
+
+    public List<String> getList() {
+        return list;
     }
-    
-    public void setStartsWithCondition(String string)
-    {
-        this.startsWithCondition=string;
+
+    public boolean getUseJOption() {
+        return useJOption;
     }
-    
-    public void resetStartsWithCondition()
-    {
-        this.startsWithCondition="";
+
+    public String getStartsWithCondition() {
+        return startsWithCondition;
     }
-    
+
+    public boolean hasStartsWithCondition() {
+        return startsWithCondition != null && !startsWithCondition.isEmpty();
+    }
+
+    public void setDebug(boolean set) {
+        this.debug = set;
+    }
+
+    public void setAddLines(boolean set) {
+        this.addlines = set;
+    }
+
+    public void setOut(PrintStream out) {
+        this.out = out;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
+    public void setUseJOption(boolean set) {
+        this.useJOption = set;
+    }
+
+    public void setStartsWithCondition(String string) {
+        this.startsWithCondition = string;
+    }
+
+    public void resetStartsWithCondition() {
+        this.startsWithCondition = "";
+    }
+
     public void println(String string) {
-        if(string==null||string.isEmpty())
+        if (string == null || string.isEmpty()) {
             return;
-        if(hasStartsWithCondition())
-        {
-            if(!string.startsWith(startsWithCondition))
-            {
+        }
+        if (hasStartsWithCondition()) {
+            if (!string.startsWith(startsWithCondition)) {
                 return;
             }
         }
@@ -124,11 +114,52 @@ public final class Debugger {
     }
 
     public void println(int length) {
-        this.println(""+length);
+        this.println("" + length);
     }
 
     public void println(double length) {
-        this.println(""+length);
+        this.println("" + length);
+    }
+    
+    public void printList() {
+        if (!addlines) {
+            return;
+        }
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        List<String> n = new CopyOnWriteArrayList<String>();
+        n.addAll(list);
+        int size = n.size();
+        for (int i = 0; i < size; i++) {
+            out.println(n.get(i));
+        }
+    }
+
+    public void printListToFile(String string) {
+        if (!addlines) {
+            return;
+        }
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        List<String> n = new CopyOnWriteArrayList<String>();
+        Map<String, String> map = new ConcurrentHashMap<String, String>();
+        n.addAll(list);
+        int size = n.size();
+        for (int i = 0; i < size; i++) {
+            map.put("" + i, n.get(i));
+        }
+        File file = new File(string);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (Exception ex) {
+        }
+        ConcurrentConfig config = new ConcurrentConfig(file);
+        config.update(map);
+        config.save("=");
     }
 
     public boolean containsDebugElement(String string) {

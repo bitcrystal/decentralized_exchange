@@ -31,6 +31,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
     private static boolean startTrade = false;
     private static boolean updateBalance = false;
     private static long timestamp;
+    private static boolean canTrade=false;
 
     /** Creates new form DecentralizedExchangeGUI */
     public DecentralizedExchangeGUI() {
@@ -724,6 +725,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
             DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
+            while(canTrade==false);
             String buyBitcoinText = buyBitcoin.getText();
             String sellBitcrystalText = sellBitcrystal.getText();
             double buyBitcoinDouble = -1;
@@ -762,12 +764,14 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
             }
             DecentralizedExchange.command("createtradebtcry2btc " + buyBitcoinDouble + " " + sellBitcrystalDouble);
             if (!ClientConnection.getLastCommandStatus()) {
+                DebugClient.printListToFile();
                 startTrade = false;
                 JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
                 return;
             }
             DecentralizedExchange.command("synctrade");
             if (!ClientConnection.getLastCommandStatus()) {
+                DebugClient.printListToFile();
                 startTrade = false;
                 JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
                 return;
@@ -784,6 +788,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -800,6 +805,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -816,6 +822,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -833,6 +840,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -858,6 +866,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
             DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
+            while(canTrade==false);
             String buyBitcrystalText = buyBitcrystal.getText();
             String sellBitcoinText = sellBitcoin.getText();
             double buyBitcrystalDouble = -1;
@@ -898,12 +907,14 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
             if (!ClientConnection.getLastCommandStatus()) {
                 JOptionPane.showMessageDialog(null, "Trade can not be created, Trade is aborted!");
                 startTrade = false;
+                DebugClient.printListToFile();
                 return;
             }
             DecentralizedExchange.command("synctrade");
             if (!ClientConnection.getLastCommandStatus()) {
                 startTrade = false;
                 JOptionPane.showMessageDialog(null, "Trade can not be synced, Trade is aborted!");
+                DebugClient.printListToFile();
                 return;
             }
             JOptionPane.showMessageDialog(null, "All Cool! Make sure that your partner with you trade also has the same message as you.");
@@ -918,6 +929,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be started, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -934,6 +946,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -950,6 +963,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -967,6 +981,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
                 }
             }
             if (!lastStatus) {
+                DebugClient.printListToFile();
                 JOptionPane.showMessageDialog(null, "Trade can not be ended, Trade is aborted!");
                 startTrade = false;
                 return;
@@ -1231,7 +1246,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
 
             public void run() {
                 while (true) {
-                    if (updateBalance) {
+                    if (updateBalance&&startTrade==false) {
+                        canTrade=false;
                         try {
                             DecentralizedExchange.command("updatebalance");
                             DecentralizedExchange.command("getbalance");
@@ -1266,6 +1282,10 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                             Thread.currentThread().sleep(3000);
                         } catch (Exception ex) {
                         }
+                    } else if(updateBalance) {
+                        canTrade=true;
+                    } else {
+                        canTrade=false;
                     }
                 }
             }

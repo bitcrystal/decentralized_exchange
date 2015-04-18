@@ -1,64 +1,20 @@
-@DecentralizedExchange 67
-@DecentralizedExchange 89
-@DecentralizedExchange 93
-@DecentralizedExchange 193
-@clienctconnection 54
-@clienctconnection 55
-@clienctconnection 57
-test
-cool
-coolvvv
-nein
-hier
-@clienctconnection 59
-mausge
-1
-tradeabort
-tradeabort open
-tradeabort close
-@DecentralizedExchange 95
-@DecentralizedExchange 89
-@DecentralizedExchange 93
-@DecentralizedExchange 193
-@clienctconnection 54
-@clienctconnection 55
-@clienctconnection 57
-test
-cool
-coolffff
-coolfffddf
-cxxxxxxxxool
-xxadadaadcool
-cxyxcaysacxycool
-cossafdasfdcdsdfol
-cdycycycyool
-coasdadadol
-daaadadadadadadaddcool
-cossssssol
-@clienctconnection 59
-mausge
-1
-add
-add open
-clientconnection@79
-clientconnection@85
-maadadadadadadadadusge
-mauadadadadadsge
-clientconnection@91
-clientconnection@727
-clientconnection@733
-clientconnection@745
-end
-madaadadadaadaadadadusge
-KxaKc9jtgDkJvkWLZhtn4L7AkYaeGLczYH3T5x5nygEfXttconJp
-147fNZEC5NVLuCwcAgvYDzoGLZNw1aYtbZ
-mausssdadsasdasdasdge
-mausasadsasdssge
-ALL_OK
-cool
-clientconnection@727
-clientconnection@733
-clientconnection@745
-end
-add close
-@DecentralizedExchange 95
+Apr 17, 2015 8:36:29 PM de.bitcrystal.decentralizedexchange.TCPClient <init>
+SEVERE: null
+java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:69)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:157)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:391)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at java.net.Socket.<init>(Socket.java:425)
+	at java.net.Socket.<init>(Socket.java:208)
+	at de.bitcrystal.decentralizedexchange.TCPClient.<init>(TCPClient.java:66)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.serverConnection(DecentralizedExchange.java:236)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchange.command(DecentralizedExchange.java:95)
+	at de.bitcrystal.decentralizedexchange.DecentralizedExchangeGUI$16.run(DecentralizedExchangeGUI.java:1053)
+	at java.lang.Thread.run(Thread.java:722)
+

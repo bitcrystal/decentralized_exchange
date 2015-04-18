@@ -26,6 +26,8 @@ final class TCPClient {
     private OutputStream out;
     private BufferedReader din;
     private DataOutputStream dout;
+    private BitcrystalInputStream bin;
+    private BitcrystalOutputStream bout;
 
     public TCPClient(Socket socket) {
         this.clientSocket = null;
@@ -38,6 +40,8 @@ final class TCPClient {
             out = this.clientSocket.getOutputStream();
             din = new BufferedReader(new InputStreamReader(in));
             dout = new DataOutputStream(out);
+            bin = new BitcrystalInputStream(in);
+            bout = new BitcrystalOutputStream(out);
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -121,8 +125,9 @@ final class TCPClient {
             return null;
         }
         String recv = this.recv(100);
-        if(recv==null)
+        if (recv == null) {
             return null;
+        }
         try {
             return new JSONObject(recv);
         } catch (JSONException ex) {
@@ -165,13 +170,39 @@ final class TCPClient {
         }
     }
 
+    private boolean writeByte(OutputStream outputStream, byte b) {
+        try {
+            outputStream.write(b & 0xFF);
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+
+    private void write(OutputStream outputStream, byte[] b, int off, int len) {
+        int trys_ = 0;
+        int i = 0;
+        while (i < len && trys_ < 10) {
+            boolean trysb = writeByte(outputStream, b[i + off]);
+            if (!trysb) {
+                trys_++;
+                continue;
+            }
+            i++;
+            trys_ = 0;
+        }
+        try {
+            outputStream.flush();
+        } catch (IOException ex) {
+        }
+    }
+
     public void send(String data, int buffer) {
         if (buffer <= 0) {
             buffer = 100;
         }
-        if(buffer%2!=0)
-        {
-            buffer=100;
+        if (buffer % 2 != 0) {
+            buffer = 100;
         }
         try {
 
@@ -193,6 +224,36 @@ final class TCPClient {
         } catch (Exception ex) {
             Logger.getLogger(TCPClientSecurity.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private byte readByte(InputStream inputStream) {
+        int read = 0;
+        try {
+            read = inputStream.read();
+            if (read == (byte)-1) {
+                return (byte) -1;
+            }
+            return (byte) read;
+        } catch (IOException ex) {
+            return (byte) -1;
+        }
+    }
+
+    private int read(InputStream inputStream, byte[] b, int off, int len) {
+        int i = 0;
+        int trys_ = 0;
+        byte read = 0;
+        while (i < len && trys_ < 10) {
+            read = readByte(inputStream);
+            if (read == (byte) -1) {
+                trys_++;
+                continue;
+            }
+            trys_ = 0;
+            b[i + off] = read;
+            i++;
+        }
+        return i;
     }
 
     public String recv(int buffer) {
@@ -222,6 +283,9 @@ final class TCPClient {
                         bytes[i] = b[i];
                     }
                     string += new String(bytes, "UTF-8");
+                } else if (read == 0)
+                {
+                    read = buffer;
                 }
             } while (read == buffer);
             return string;
@@ -241,6 +305,14 @@ final class TCPClient {
 
     public InputStream getInputStream() {
         return in;
+    }
+
+    public BitcrystalOutputStream getBitcrystalOutputStream() {
+        return bout;
+    }
+
+    public BitcrystalInputStream getBitcrystalInputStream() {
+        return bin;
     }
 
     public void close() {
