@@ -31,7 +31,8 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
     private static boolean startTrade = false;
     private static boolean updateBalance = false;
     private static long timestamp;
-    private static boolean canTrade=false;
+    private static boolean canTrade = false;
+    private boolean mustrestart = false;
 
     /** Creates new form DecentralizedExchangeGUI */
     public DecentralizedExchangeGUI() {
@@ -54,6 +55,7 @@ public class DecentralizedExchangeGUI extends javax.swing.JFrame {
         partnerDepositBitcrystalAddressLabel.setEnabled(false);
         partnerDepositBitcoinAddress.setEnabled(false);
         partnerDepositBitcrystalAddress.setEnabled(false);
+        mustrestart = false;
         rpcTests();
         balanceUpdater();
         currentTradeAddressUpdater();
@@ -717,6 +719,9 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
     new NotInterruptableThread(new Runnable() {
 
         public void run() {
+            if (mustrestart) {
+                return;
+            }
             if (startTrade == true) {
                 JOptionPane.showMessageDialog(null, "You have start already a trade!");
                 JOptionPane.showMessageDialog(null, getWaitMessage());
@@ -725,7 +730,7 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
             DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
-            while(canTrade==false);
+            while (canTrade == false);
             String buyBitcoinText = buyBitcoin.getText();
             String sellBitcrystalText = sellBitcrystal.getText();
             double buyBitcoinDouble = -1;
@@ -847,9 +852,15 @@ private void StartTradeBuyBtcSellBitcrystalActionPerformed(java.awt.event.Action
             }
             startTrade = false;
             JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
+            mustrestart = true;
+            JOptionPane.showMessageDialog(null, "All Successfull! You must restart the client for another trade! Sorry no other option available!");
         }
     }).start();
 }//GEN-LAST:event_StartTradeBuyBtcSellBitcrystalActionPerformed
+
+    private void reset() {
+        this.mustrestart = true;
+    }
 
 private void buyBitcoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBitcoinActionPerformed
 }//GEN-LAST:event_buyBitcoinActionPerformed
@@ -858,6 +869,9 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
     new NotInterruptableThread(new Runnable() {
 
         public void run() {
+            if (mustrestart) {
+                return;
+            }
             if (startTrade == true) {
                 JOptionPane.showMessageDialog(null, "You have start already a trade!");
                 JOptionPane.showMessageDialog(null, getWaitMessage());
@@ -866,7 +880,7 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
             DecentralizedExchange.command("tradereset");
             setDiff(150);
             startTrade = true;
-            while(canTrade==false);
+            while (canTrade == false);
             String buyBitcrystalText = buyBitcrystal.getText();
             String sellBitcoinText = sellBitcoin.getText();
             double buyBitcrystalDouble = -1;
@@ -988,11 +1002,16 @@ private void startTradeBuyBtcrySellBtcActionPerformed(java.awt.event.ActionEvent
             }
             startTrade = false;
             JOptionPane.showMessageDialog(null, "Trade is successfully ended!");
+            mustrestart = true;
+            JOptionPane.showMessageDialog(null, "All Successfull! You must restart the client for another trade! Sorry no other option available!");
         }
     }).start();
 }//GEN-LAST:event_startTradeBuyBtcrySellBtcActionPerformed
 
 private void yourBitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yourBitcrystalBalanceFocusLost
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1001,6 +1020,9 @@ private void yourBitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GE
 }//GEN-LAST:event_yourBitcrystalBalanceFocusLost
 
 private void yourBitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yourBitcrystalBalanceFocusGained
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1009,6 +1031,9 @@ private void yourBitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//
 }//GEN-LAST:event_yourBitcrystalBalanceFocusGained
 
 private void yourBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourBitcrystalBalanceActionPerformed
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1017,6 +1042,9 @@ private void yourBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt
 }//GEN-LAST:event_yourBitcrystalBalanceActionPerformed
 
 private void yourBitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yourBitcoinBalanceFocusLost
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1025,6 +1053,9 @@ private void yourBitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-F
 }//GEN-LAST:event_yourBitcoinBalanceFocusLost
 
 private void yourBitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yourBitcoinBalanceFocusGained
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1033,6 +1064,9 @@ private void yourBitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN
 }//GEN-LAST:event_yourBitcoinBalanceFocusGained
 
 private void yourBitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourBitcoinBalanceActionPerformed
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccountEx();
     if (balance <= 0) {
         balance = 0;
@@ -1041,7 +1075,9 @@ private void yourBitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {
 }//GEN-LAST:event_yourBitcoinBalanceActionPerformed
 
 private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentTradeWithAddressButtonActionPerformed
-
+    if (mustrestart) {
+        return;
+    }
     if (!isInit) {
         JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
         JOptionPane.showMessageDialog(null, getWaitMessage());
@@ -1119,6 +1155,9 @@ private void currentTradeWithAddressButtonActionPerformed(java.awt.event.ActionE
 }//GEN-LAST:event_currentTradeWithAddressButtonActionPerformed
 
 private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getNewCurrentTradeAddressButtonActionPerformed
+    if (mustrestart) {
+        return;
+    }
     if (!isInit) {
         JOptionPane.showMessageDialog(null, "The Decentralized Exchange Server is not initialized. Please wait a minute or two!");
         JOptionPane.showMessageDialog(null, getWaitMessage());
@@ -1131,6 +1170,9 @@ private void getNewCurrentTradeAddressButtonActionPerformed(java.awt.event.Actio
 }//GEN-LAST:event_getNewCurrentTradeAddressButtonActionPerformed
 
 private void partnerBitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceActionPerformed
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1139,6 +1181,9 @@ private void partnerBitcoinBalanceActionPerformed(java.awt.event.ActionEvent evt
 }//GEN-LAST:event_partnerBitcoinBalanceActionPerformed
 
 private void partnerBitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceFocusGained
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1147,6 +1192,9 @@ private void partnerBitcoinBalanceFocusGained(java.awt.event.FocusEvent evt) {//
 }//GEN-LAST:event_partnerBitcoinBalanceFocusGained
 
 private void partnerBitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcoinBalanceFocusLost
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcoinBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1155,6 +1203,9 @@ private void partnerBitcoinBalanceFocusLost(java.awt.event.FocusEvent evt) {//GE
 }//GEN-LAST:event_partnerBitcoinBalanceFocusLost
 
 private void partnerBitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceFocusGained
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1163,6 +1214,9 @@ private void partnerBitcrystalBalanceFocusGained(java.awt.event.FocusEvent evt) 
 }//GEN-LAST:event_partnerBitcrystalBalanceFocusGained
 
 private void partnerBitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceFocusLost
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1171,6 +1225,9 @@ private void partnerBitcrystalBalanceFocusLost(java.awt.event.FocusEvent evt) {/
 }//GEN-LAST:event_partnerBitcrystalBalanceFocusLost
 
 private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partnerBitcrystalBalanceActionPerformed
+    if (mustrestart) {
+        return;
+    }
     double balance = ClientConnection.getBitcrystalBalanceTradeAccount2Ex();
     if (balance <= 0) {
         balance = 0;
@@ -1246,8 +1303,8 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
 
             public void run() {
                 while (true) {
-                    if (updateBalance&&startTrade==false) {
-                        canTrade=false;
+                    if (updateBalance && startTrade == false && mustrestart == false) {
+                        canTrade = false;
                         try {
                             DecentralizedExchange.command("updatebalance");
                             DecentralizedExchange.command("getbalance");
@@ -1282,10 +1339,20 @@ private void partnerBitcrystalBalanceActionPerformed(java.awt.event.ActionEvent 
                             Thread.currentThread().sleep(3000);
                         } catch (Exception ex) {
                         }
-                    } else if(updateBalance) {
-                        canTrade=true;
+                    } else if (updateBalance && !mustrestart) {
+                        canTrade = true;
+                    } else if (!mustrestart) {
+                        canTrade = false;
                     } else {
                         canTrade=false;
+                        yourBitcoinBalance.setText("");
+                        yourBitcrystalBalance.setText("");
+                        yourLastUsedBitcoinTxidHash.setText("");
+                        yourLastUsedBitcrystalTxidHash.setText("");
+                        partnerBitcoinBalance.setText("");
+                        partnerBitcrystalBalance.setText("");
+                        partnerLastUsedBitcoinTxidHash.setText("");
+                        partnerLastUsedBitcrystalTxidHash.setText("");
                     }
                 }
             }

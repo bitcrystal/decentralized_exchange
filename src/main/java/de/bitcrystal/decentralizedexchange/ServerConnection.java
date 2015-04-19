@@ -472,14 +472,6 @@ public class ServerConnection implements Runnable {
         String otherip = "";
         try {
             hostAddress = this.client.getHostAddress();
-            if (endedlasttrades.contains(tradeAccount) && endedlasttrades.contains(tradeWithAccount) && endedlasttrades.contains(hostAddress)) {
-                this.client.sendLight("ALL_OK");
-                this.client.close();
-                endedlasttrades.remove(tradeAccount);
-                endedlasttrades.remove(tradeWithAccount);
-                endedlasttrades.remove(hostAddress);
-                return;
-            }
             if (!ips.containsKey(hostAddress)) {
                 DebugServer.println("@@@serverconnection@881");
                 this.client.sendLight("E_ERROR");
@@ -496,23 +488,25 @@ public class ServerConnection implements Runnable {
             if (tradeAccountsIp.containsKey(hostAddress)) {
                 DebugServer.println("@@@serverconnection@887");
                 tradeAccount = tradeAccountsIp.get(hostAddress);
-            } else if (tradeAccountsIp2.containsKey(hostAddress)) {
-                DebugServer.println("@@@serverconnection@889");
-                tradeAccount = tradeAccountsIp2.get(hostAddress);
             }
 
             if (tradeAccountsIp.containsKey(otherip)) {
                 DebugServer.println("@@@serverconnection@895");
                 tradeWithAccount = tradeAccountsIp.get(otherip);
-            } else if (tradeAccountsIp2.containsKey(otherip)) {
-                DebugServer.println("@@@serverconnection@898");
-                tradeWithAccount = tradeAccountsIp2.get(otherip);
             }
 
             if (tradeAccount.isEmpty() || tradeWithAccount.isEmpty()) {
                 DebugServer.println("@@@serverconnection@904");
                 this.client.sendLight("E_ERROR");
                 this.client.close();
+                return;
+            }
+            if (endedlasttrades.contains(tradeAccount) && endedlasttrades.contains(tradeWithAccount) && endedlasttrades.contains(hostAddress)) {
+                this.client.sendLight("ALL_OK");
+                this.client.close();
+                endedlasttrades.remove(tradeAccount);
+                endedlasttrades.remove(tradeWithAccount);
+                endedlasttrades.remove(hostAddress);
                 return;
             }
             if (!endtradesother.containsKey(tradeAccount) || !endtradesother.containsKey(tradeWithAccount)) {
@@ -1047,9 +1041,7 @@ public class ServerConnection implements Runnable {
 
                 tradeAccounts.add(account);
                 ipsTradeAccounts.put(account, hostAddress);
-                ipsTradeAccounts2.put(account, get);
                 tradeAccountsIp.put(hostAddress, account);
-                tradeAccountsIp2.put(get, account);
             }
             if (!tradeAccounts.contains(account2)) {
                 DebugServer.println("serverconnection@233");
@@ -1062,10 +1054,8 @@ public class ServerConnection implements Runnable {
                 } catch (Exception ex2) {
                 }
                 tradeAccounts.add(account2);
-                ipsTradeAccounts.put(account2, hostAddress);
-                ipsTradeAccounts2.put(account2, get);
-                tradeAccountsIp.put(hostAddress, account2);
-                tradeAccountsIp2.put(get, account2);
+                ipsTradeAccounts.put(account2, get);
+                tradeAccountsIp.put(get, account2);
             }
 
             DebugServer.println("serverconnection@241");
@@ -1528,8 +1518,7 @@ public class ServerConnection implements Runnable {
             return;
         }
         String get = ipsTradeAccounts.get(split[1]);
-        if(!get.equals(hostAddress))
-        {
+        if (!get.equals(hostAddress)) {
             this.client.close();
             return;
         }

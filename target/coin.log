@@ -68,3 +68,11 @@ Caused by: java.net.ConnectException: Connection refused: connect
 2015-04-15 19:00:22,466 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"03a90d8e72807276900743fd7f2e9274778bd7f7c47b893e5c2da20e3befa474ea","error":null,"id":null}
 2015-04-15 19:00:22,746 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"KzUDUSTGf1rPNUjYeLANJ9tvaUncm85oFkYNj6LpaXa7GYM8nyT6","error":null,"id":null}
 2015-04-15 19:00:23,084 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":null,"error":null,"id":null}
+2015-04-19 17:18:21,724 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-19 17:18:24,001 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:18332/
+2015-04-19 17:18:26,437 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"13nkABzLZGF6w3qhUK3fRLhUURg94yW6sE","error":null,"id":null}
+2015-04-19 17:18:27,053 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":"1FgaFKnu4DJFpu1NCSwUXEd3fg3nq5ebwp","error":null,"id":null}
+2015-04-19 17:18:27,068 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:18332/
+2015-04-19 17:18:27,198 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":25987,"error":null,"id":null}
+2015-04-19 17:18:27,199 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - Base RPC URL : http://WernerChainer:fickdiehenne@127.0.0.1:19332/
+2015-04-19 17:18:27,295 INFO  com.nitinsurana.bitcoinlitecoin.rpcconnector.RPCApp - RPC Response : {"result":25968,"error":null,"id":null}
