@@ -38,8 +38,8 @@ public class TCPClientSecurity {
     private TCPClient tcpClient;
     private String password;
     private String salt;
-    private int packetLengthCool = -1;
-    private int packetLengthCoolLight = -1;
+    private int packetLengthCool = 50;
+    private int packetLengthCoolLight = 50;
 
     public TCPClientSecurity(int port) {
         this.tcpClient = new TCPClient(port);
@@ -531,20 +531,20 @@ public class TCPClientSecurity {
     }
 
     public void send(String string) {
-        this.sendSplitCool(string);
+        this.sendSecurityCool(string);
     }
 
     public String recv() {
-        String recv = this.recvSplitCool();
+        String recv = this.recvSecurityCool();
         return recv;
     }
 
     public void sendLight(String string) {
-        this.sendSplitCoolLight(string);
+        this.sendSecurityCoolLight(string);
     }
 
     public String recvLight() {
-        String recv = this.recvSplitCoolLight();
+        String recv = this.recvSecurityCool();
         return recv;
     }
 
@@ -793,14 +793,6 @@ public class TCPClientSecurity {
 
     public InputStream getInputStream() {
         return this.tcpClient.getInputStream();
-    }
-
-    public BitcrystalOutputStream getBitcrystalOutputStream() {
-        return this.tcpClient.getBitcrystalOutputStream();
-    }
-
-    public BitcrystalInputStream getBitcrystalInputStream() {
-        return this.tcpClient.getBitcrystalInputStream();
     }
 
     private void init() {
@@ -1188,13 +1180,13 @@ public class TCPClientSecurity {
     public int getPacketLengthCool() {
         if (packetLengthCool == -1) {
             if (BitCrystalJSON.isNormalCool()) {
-                packetLengthCool = 300;
+                packetLengthCool = 50;
             } else if (BitCrystalJSON.isFastCool()) {
-                packetLengthCool = 300;
+                packetLengthCool = 50;
             } else if (BitCrystalJSON.isFastestCool()) {
-                packetLengthCool = 300;
+                packetLengthCool = 50;
             } else {
-                packetLengthCool = 300;
+                packetLengthCool = 50;
             }
         }
         return packetLengthCool;
@@ -1203,11 +1195,11 @@ public class TCPClientSecurity {
     public int getPacketLengthCoolLight() {
         if (packetLengthCoolLight == -1) {
             if (BitCrystalJSON.isNormalCool() || BitCrystalJSON.isFastCool()) {
-                packetLengthCoolLight = 300;
+                packetLengthCoolLight = 50;
             } else if (BitCrystalJSON.isFastestCool()) {
-                packetLengthCoolLight = 300;
+                packetLengthCoolLight = 50;
             } else {
-                packetLengthCoolLight = 300;
+                packetLengthCoolLight = 50;
             }
         }
         return packetLengthCoolLight;

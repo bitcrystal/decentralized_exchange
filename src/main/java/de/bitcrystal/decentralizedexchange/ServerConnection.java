@@ -1049,7 +1049,7 @@ public class ServerConnection implements Runnable {
                 ipsTradeAccounts.put(account, hostAddress);
                 ipsTradeAccounts2.put(account, get);
                 tradeAccountsIp.put(hostAddress, account);
-                tradeAccountsIp.put(get, account);
+                tradeAccountsIp2.put(get, account);
             }
             if (!tradeAccounts.contains(account2)) {
                 DebugServer.println("serverconnection@233");
@@ -1064,7 +1064,7 @@ public class ServerConnection implements Runnable {
                 tradeAccounts.add(account2);
                 ipsTradeAccounts.put(account2, hostAddress);
                 ipsTradeAccounts2.put(account2, get);
-                tradeAccountsIp2.put(hostAddress, account2);
+                tradeAccountsIp.put(hostAddress, account2);
                 tradeAccountsIp2.put(get, account2);
             }
 

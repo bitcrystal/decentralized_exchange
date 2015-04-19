@@ -26,8 +26,6 @@ final class TCPClient {
     private OutputStream out;
     private BufferedReader din;
     private DataOutputStream dout;
-    private BitcrystalInputStream bin;
-    private BitcrystalOutputStream bout;
 
     public TCPClient(Socket socket) {
         this.clientSocket = null;
@@ -40,8 +38,6 @@ final class TCPClient {
             out = this.clientSocket.getOutputStream();
             din = new BufferedReader(new InputStreamReader(in));
             dout = new DataOutputStream(out);
-            bin = new BitcrystalInputStream(in);
-            bout = new BitcrystalOutputStream(out);
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -206,7 +202,7 @@ final class TCPClient {
         }
         try {
 
-            OutputStream outputStream = this.getOutputStream();
+            OutputStream outputStream = new BitCrystalOutputStreamEx(this.getOutputStream());
             byte[] b = data.getBytes("UTF-8");
             int length = b.length;
             int maxi = length / buffer;
@@ -265,9 +261,8 @@ final class TCPClient {
         } else {
             buffer = buffer / 2;
         }
-
         try {
-            InputStream in = this.getInputStream();
+            InputStream in = new BitCrystalInputStreamEx(this.getInputStream());
             int len = buffer;
             byte[] b = new byte[buffer];
             int off = 0;
@@ -283,9 +278,8 @@ final class TCPClient {
                         bytes[i] = b[i];
                     }
                     string += new String(bytes, "UTF-8");
-                } else if (read == 0)
-                {
-                    read = buffer;
+                    if(in.available()>0)
+                        read=buffer;
                 }
             } while (read == buffer);
             return string;
@@ -305,14 +299,6 @@ final class TCPClient {
 
     public InputStream getInputStream() {
         return in;
-    }
-
-    public BitcrystalOutputStream getBitcrystalOutputStream() {
-        return bout;
-    }
-
-    public BitcrystalInputStream getBitcrystalInputStream() {
-        return bin;
     }
 
     public void close() {
